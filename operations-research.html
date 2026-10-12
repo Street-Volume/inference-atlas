@@ -56,8 +56,24 @@ window.MathJax = {
     <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
     <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
     <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
-    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/19</span></div>
     <a href="#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-topic" data-hue="simplex">Simplex method (HW5)</div>
+    <a href="#or-s1" data-hue="simplex" data-p="or-s1"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S1</span><span class="lbl">Two-resource model</span></a>
+    <a href="#or-s2" data-hue="simplex" data-p="or-s2"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S2</span><span class="lbl">Tighter resource</span></a>
+    <a href="#or-s3" data-hue="simplex" data-p="or-s3"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S3</span><span class="lbl">Three variables</span></a>
+    <a href="#or-s4" data-hue="simplex" data-p="or-s4"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S4</span><span class="lbl">Alternative optima</span></a>
+    <a href="#or-s5" data-hue="simplex" data-p="or-s5"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S5</span><span class="lbl">Unbounded</span></a>
+    <a href="#or-s6" data-hue="simplex" data-p="or-s6"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S6</span><span class="lbl">Two BF solutions</span></a>
+    <a href="#or-s7" data-hue="simplex" data-p="or-s7"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">S7</span><span class="lbl">Degeneracy</span></a>
+    <div class="nav-topic" data-hue="bigm">Big M method (HW6)</div>
+    <a href="#or-m1" data-hue="bigm" data-p="or-m1"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M1</span><span class="lbl">Reformulating</span></a>
+    <a href="#or-m2" data-hue="bigm" data-p="or-m2"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M2</span><span class="lbl">Two artificials</span></a>
+    <a href="#or-m3" data-hue="bigm" data-p="or-m3"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M3</span><span class="lbl">Infeasibility</span></a>
+    <a href="#or-m4" data-hue="bigm" data-p="or-m4"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M4</span><span class="lbl">Minimization</span></a>
+    <a href="#or-m5" data-hue="bigm" data-p="or-m5"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M5</span><span class="lbl">Free variable</span></a>
+    <a href="#or-m6" data-hue="bigm" data-p="or-m6"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M6</span><span class="lbl">Solved 3 ways</span></a>
+    <a href="#or-m7" data-hue="bigm" data-p="or-m7"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">M7</span><span class="lbl">Minimize directly</span></a>
     <div class="nav-topic" data-hue="shadow">Two-resource model</div>
     <a href="#or1" data-hue="shadow" data-p="or1"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR1</span><span class="lbl">Resource prices</span></a>
     <a href="#or2" data-hue="range" data-p="or2"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR2</span><span class="lbl">Tilting the objective</span></a>
@@ -83,18 +99,581 @@ window.MathJax = {
 </aside>
 
 <main class="main" id="main">
-<div class="part-banner" id="partC" data-hue="shadow"><span class="pb-letter">C</span><div><div class="eyebrow">M447 / M577 Homework 7 · Hillier and Lieberman, Section 4.7</div><h2>Operations research: shadow prices and sensitivity</h2><p>Five linear programs. Read off which constraints bind, price each resource by how much one more unit raises the optimum, and find how far the objective can tilt before the optimal corner changes.</p></div></div>
+<div class="part-banner" id="partC" data-hue="shadow"><span class="pb-letter">C</span><div><div class="eyebrow">M447 / M577 Homeworks 5, 6 &amp; 7 · Hillier and Lieberman, Sections 4.4&ndash;4.7</div><h2>Operations research: from the simplex method to shadow prices</h2><p>Three homework sets end to end: solve linear programs by hand with the simplex method in tableau form, handle ≥ and = constraints with the Big M method, then read shadow prices and sensitivity ranges off the optimal tableau — nineteen problems in total.</p></div></div>
 
 <section class="ex" id="readC" data-hue="neutral">
   <div class="ex-head"><span class="ex-num">00</span><h2>Part C reading list</h2></div>
   <p class="prose">Textbook: Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. The syllabus allows another edition, and section numbers move between editions, so match by topic.</p>
   <ol class="reading">
-    <li><div><b>Graphical method for two-variable linear programs</b> (Chapter 3)<br><span class="for">Feasible region, corner points, iso-profit lines. Needed for OR1 to OR4</span></div></li>
-    <li><div><b>Postoptimality analysis: shadow prices and sensitivity analysis</b> (Section 4.7, the homework's own reference)<br><span class="for">Needed for all five problems</span></div></li>
+    <li><div><b>Graphical method for two-variable linear programs</b> (Chapter 3)<br><span class="for">Feasible region, corner points, iso-profit lines. Needed throughout, and directly for OR1 to OR4</span></div></li>
+    <li><div><b>The simplex method in tabular form</b> (Sections 4.4&ndash;4.5)<br><span class="for">Needed for Homework 5, problems S1&ndash;S7</span></div></li>
+    <li><div><b>The Big M method for ≥ and = constraints</b> (Section 4.6)<br><span class="for">Needed for Homework 6, problems M1&ndash;M7, including the minimize-directly variant in M7</span></div></li>
+    <li><div><b>Postoptimality analysis: shadow prices and sensitivity analysis</b> (Section 4.7, the homework's own reference)<br><span class="for">Needed for OR1&ndash;OR5</span></div></li>
     <li><div><b>Reading shadow prices from the final simplex tableau</b> (Section 4.7)<br><span class="for">Needed for OR5</span></div></li>
     <li><div><b>Duality and the economic meaning of shadow prices</b> (the duality chapter)<br><span class="for">Optional depth for OR5. Chapter number varies by edition</span></div></li>
   </ol>
-  <div class="flag"><b>Verify</b><span>I'm confident Section 4.7 covers shadow prices and sensitivity because the homework says so. I'm not certain of the chapter numbers for duality and the deeper sensitivity treatment in the 10th edition, so I left them out. Check your table of contents.</span></div>
+  <div class="flag"><b>Verify</b><span>I'm confident Sections 4.4&ndash;4.7 cover the simplex method, Big M, and shadow prices/sensitivity in that order because the homeworks cite them directly. I'm not certain of the chapter numbers for duality and the deeper sensitivity treatment in the 10th edition, so I left them out. Check your table of contents.</span></div>
+</section>
+
+<div class="chapter" data-hue="simplex">Homework 5 · the simplex method in tabular form</div>
+<!-- ================= OR-S1 ================= -->
+<section class="ex" id="or-s1" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S1</span><h2>Two resources, one binding pair</h2><span class="ex-id">HW5 · Problem 1</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=x_1+2x_2\) subject to \(x_1+3x_2\le8\), \(x_1+x_2\le4\), \(x_1,x_2\ge0\). Work the simplex method in tabular form, step by step.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Augmented form</dt><dd>Turn every \(\le\) constraint into an equation by adding a nonnegative <i>slack variable</i>, one per constraint: \(\class{tb}{x_1+3x_2+x_3=8}\), \(\class{tb}{x_1+x_2+x_4=4}\). The slacks double as the first basic feasible solution: set \(x_1=x_2=0\), read \(x_3=8,x_4=4\) straight off.</dd>
+    <dt>Entering variable</dt><dd>Write \(Z\) into row 0 as \(Z-x_1-2x_2=0\). The most negative coefficient marks the variable that increases \(Z\) fastest per unit — enter it.</dd>
+    <dt>Minimum ratio test</dt><dd>For each row with a <i>positive</i> coefficient in the entering column, divide RHS by that coefficient. The smallest ratio names the leaving variable — the first basic variable to hit zero as the entering variable grows.</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>This is the same engine behind any "maximize return subject to linear limits" problem — the simplex method is how a portfolio construction system with linear constraints (sector caps, turnover limits, factor exposures) actually finds its optimal weights, one pivot at a time, rather than by inspection the way a textbook two-variable picture lets you cheat.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Augmented form and iteration 0.</b> With \(x_1=x_2=0\), the slacks \(x_3=8,x_4=4\) are feasible, so this is basic feasible solution #1. Row 0 is \(Z-x_1-2x_2=0\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−1</td><td>−2</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="leave"><td>x₃</td><td>(1)</td><td>0</td><td>1</td><td class="piv">3</td><td>1</td><td>0</td><td>8</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>4</td></tr>
+</tbody></table></div>
+        <p class="why">Entering: \(x_2\) has the most negative row-0 coefficient (\(-2\)). Ratios: \(8/3=2.667\) vs \(4/1=4\) — row 1 (\(x_3\)) wins, so \(x_3\) leaves and the pivot is the circled 3.</p></div></li>
+      <li><div><p><b>Iteration 1.</b> Divide row 1 by 3, then clear \(x_2\) out of every other row (including row 0) by subtracting the right multiple of the new row.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−1/3</td><td>0</td><td>2/3</td><td>0</td><td>16/3</td></tr>
+<tr class="leave"><td>x₂</td><td>(1)</td><td>0</td><td class="piv">1/3</td><td>1</td><td>1/3</td><td>0</td><td>8/3</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>2/3</td><td>0</td><td>−1/3</td><td>1</td><td>4/3</td></tr>
+</tbody></table></div>
+        <p class="why">Entering: \(x_1\) is now the only negative row-0 entry (\(-1/3\)). Ratios: \((8/3)/(1/3)=8\) vs \((4/3)/(2/3)=2\) — row 2 (\(x_4\)) wins.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b> Pivot on the circled \(2/3\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>1/2</td><td>1/2</td><td>6</td></tr>
+<tr><td>x₂</td><td>(1)</td><td>0</td><td>0</td><td>1</td><td>1/2</td><td>−1/2</td><td>2</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>0</td><td>−1/2</td><td>3/2</td><td>2</td></tr>
+</tbody></table></div>
+        <p>Row 0 has no negative entries left, so this is optimal: \(\class{dv}{x_1^*=2,\ x_2^*=2,\ Z^*=6}\) — exactly the solution OR1 (further down this page) takes as a given and does post-optimality analysis on.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>Optimal</td><td>\(x_1^*=\) <b>2</b>, \(x_2^*=\) <b>2</b>, \(Z^*=\) <b>6</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S2 ================= -->
+<section class="ex" id="or-s2" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S2</span><h2>A tighter second resource</h2><span class="ex-id">HW5 · Problem 2</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=2x_1+x_2\) subject to \(x_1+x_2\le40\), \(4x_1+x_2\le100\), \(x_1,x_2\ge0\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Same three moves</dt><dd>Augment with slacks, pick the entering variable from row 0, pick the leaving variable by the minimum ratio test. Repeat until row 0 has no negative entries.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b> \(x_1+x_2+x_3=40\), \(4x_1+x_2+x_4=100\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−2</td><td>−1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="leave"><td>x₃</td><td>(1)</td><td>0</td><td class="piv">1</td><td>1</td><td>1</td><td>0</td><td>40</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>4</td><td>1</td><td>0</td><td>1</td><td>100</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\) (row 0's only negative beats \(-1\) for \(x_2\) — well, both are negative, but \(-2\) is more negative). Ratios \(40/1=40\) vs \(100/4=25\): row 2 (\(x_4\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−1/2</td><td>0</td><td>1/2</td><td>50</td></tr>
+<tr class="leave"><td>x₃</td><td>(1)</td><td>0</td><td>0</td><td class="piv">3/4</td><td>1</td><td>−1/4</td><td>15</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>1/4</td><td>0</td><td>1/4</td><td>25</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (only negative left). Ratios \(15/(3/4)=20\) vs \(25/(1/4)=100\): row 1 (\(x_3\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>2/3</td><td>1/3</td><td>60</td></tr>
+<tr><td>x₂</td><td>(1)</td><td>0</td><td>0</td><td>1</td><td>4/3</td><td>−1/3</td><td>20</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>0</td><td>−1/3</td><td>1/3</td><td>20</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{x_1^*=20,\ x_2^*=20,\ Z^*=60}\). Check: both constraints hold with equality — both binding, exactly as a textbook two-corner picture would show.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\(x_1^*=\) <b>20</b>, \(x_2^*=\) <b>20</b>, \(Z^*=\) <b>60</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S3 ================= -->
+<section class="ex" id="or-s3" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S3</span><h2>Three constraints, three variables</h2><span class="ex-id">HW5 · Problem 3</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=2x_1-x_2+x_3\) subject to \(3x_1+x_2+x_3\le6\), \(x_1-x_2+2x_3\le1\), \(x_1+x_2-x_3\le2\), \(x_1,x_2,x_3\ge0\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>A negative row-0 coefficient can sit next to a positive one</dt><dd>With three decision variables, row 0 can have several negative entries at once (here \(-2\) for \(x_1\) and \(-1\) for \(x_3\), with \(+1\) for \(x_2\)). Only the sign of each entry matters for picking the entering variable — the most negative, full stop.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b> Slacks \(x_4,x_5,x_6\) on the three constraints.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−2</td><td>1</td><td>−1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>x₄</td><td>(1)</td><td>0</td><td>3</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>6</td></tr>
+<tr class="leave"><td>x₅</td><td>(2)</td><td>0</td><td class="piv">1</td><td>−1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>x₆</td><td>(3)</td><td>0</td><td>1</td><td>1</td><td>−1</td><td>0</td><td>0</td><td>1</td><td>2</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\) (\(-2\), more negative than \(x_3\)'s \(-1\)). Ratios: \(6/3=2\), \(1/1=1\), \(2/1=2\) — row 2 (\(x_5\)) wins with the smallest ratio.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−1</td><td>3</td><td>0</td><td>2</td><td>0</td><td>2</td></tr>
+<tr><td>x₄</td><td>(1)</td><td>0</td><td>0</td><td>4</td><td>−5</td><td>1</td><td>−3</td><td>0</td><td>3</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>−1</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="leave"><td>x₆</td><td>(3)</td><td>0</td><td>0</td><td class="piv">2</td><td>−3</td><td>0</td><td>−1</td><td>1</td><td>1</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (the only negative entry left, \(-1\)). Ratios: row 1 (\(x_4\)) \(3/4=0.75\); row 2 (\(x_1\)) has a negative coefficient (\(-1\)), skip; row 3 (\(x_6\)) \(1/2=0.5\) — row 3 wins.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>3/2</td><td>0</td><td>3/2</td><td>1/2</td><td>5/2</td></tr>
+<tr><td>x₄</td><td>(1)</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−1</td><td>−2</td><td>1</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>0</td><td>1/2</td><td>0</td><td>1/2</td><td>1/2</td><td>3/2</td></tr>
+<tr><td>x₂</td><td>(3)</td><td>0</td><td>0</td><td>1</td><td>−3/2</td><td>0</td><td>−1/2</td><td>1/2</td><td>1/2</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{x_1^*=1.5,\ x_2^*=0.5,\ x_3^*=0,\ Z^*=2.5}\). Check: \(3(1.5)+0.5+0=5\le6\) (slack 1 left), the other two constraints hold with equality.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\(x_1^*=\) <b>1.5</b>, \(x_2^*=\) <b>0.5</b>, \(x_3^*=\) <b>0</b>, \(Z^*=\) <b>2.5</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S4 ================= -->
+<section class="ex" id="or-s4" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S4</span><h2>Alternative optima — a whole tied edge</h2><span class="ex-id">HW5 · Problem 4</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=3x_1+2x_2\) subject to \(x_1\le4\), \(2x_2\le12\), \(3x_1+2x_2\le12\), \(x_1,x_2\ge0\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Alternative optima</dt><dd>If the final row 0 has a <i>zero</i> coefficient on some nonbasic variable, pivoting it in keeps \(Z\) exactly the same — a whole edge (or face) of the feasible region is tied for optimal, not just one corner.</dd>
+    <dt>Don't stop early</dt><dd>Row 0 must have <i>no negative entries anywhere</i> before you stop — a tableau that merely "looks done" because a degenerate pivot left \(Z\) unchanged can still have one more negative entry hiding in row 0.</dd>
+  </dl></div>
+  <div class="flag"><b>Verify</b><span>A solutions draft that was circulating for this problem stopped after iteration 1, calling it optimal because \(Z=12\) matched the final answer. But iteration 1's row 0 still has \(-2\) under \(x_2\) — not yet optimal by the actual stopping rule. The derivation below runs the one additional (degenerate, \(\Delta=0\)) pivot the rule requires; the optimal value doesn't change, but the tableau's own \(0\)-coefficient check for alternative optima does, and it points at \(x_3\), not \(x_2\). Logged in the <a href="workbench.html#audit">audit log</a>.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−3</td><td>−2</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="leave"><td>x₃</td><td>(1)</td><td>0</td><td class="piv">1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>12</td></tr>
+<tr><td>x₅</td><td>(3)</td><td>0</td><td>3</td><td>2</td><td>0</td><td>0</td><td>1</td><td>12</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\) (most negative, \(-3\)). Ratios tie at \(4\) between row 1 (\(x_3\)) and row 3 (\(x_5\)) — ties break to the lower row index, so \(x_3\) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b> Row 0 still has a negative entry (\(-2\) under \(x_2\)) — one more pivot is required.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−2</td><td>3</td><td>0</td><td>0</td><td>12</td></tr>
+<tr><td>x₁</td><td>(1)</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>12</td></tr>
+<tr class="leave"><td>x₅</td><td>(3)</td><td>0</td><td>0</td><td class="piv">2</td><td>−3</td><td>0</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\). Ratios: row 2 (\(x_4\)) \(12/2=6\); row 3 (\(x_5\)) \(0/2=0\) — a <i>degenerate</i> pivot (zero ratio, \(Z\) won't move this step), but it's still the required minimum, so \(x_5\) leaves.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>12</td></tr>
+<tr><td>x₁</td><td>(1)</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>0</td><td>0</td><td>3</td><td>1</td><td>−1</td><td>12</td></tr>
+<tr><td>x₂</td><td>(3)</td><td>0</td><td>0</td><td>1</td><td>−3/2</td><td>0</td><td>1/2</td><td>0</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{x_1^*=4,\ x_2^*=0,\ Z^*=12}\). Row 0 is finally all \(\ge0\). The nonbasic slack \(x_3\) has coefficient \(0\) in row 0 — pivoting it in reaches the alternative optimum \((x_1,x_2)=(0,6)\), also \(Z=12\). Check: \(3(0)+2(6)=12\ \checkmark\)</p>
+        <p class="why">Geometrically, \(Z\)'s gradient \((3,2)\) is exactly parallel to the binding edge \(3x_1+2x_2=12\), so every point on the segment from \((4,0)\) to \((0,6)\) ties for optimal — not just the two corners the tableau happens to visit.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\((x_1^*,x_2^*)=\) <b>(4, 0)</b> or <b>(0, 6)</b> — the whole edge between them, \(Z^*=\) <b>12</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S5 ================= -->
+<section class="ex" id="or-s5" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S5</span><h2>Proving unboundedness</h2><span class="ex-id">HW5 · Problem 5</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=x_1-x_2\) subject to \(-x_1+3x_2\le30\), \(-3x_1+x_2\le30\), \(x_1,x_2\ge0\). Show \(Z\) is unbounded.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Unboundedness test</dt><dd>If the entering column has <i>no positive entry in any constraint row</i>, the minimum ratio test has nothing to divide by — that variable can grow forever without any basic variable hitting zero, and \(Z\) grows with it.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>−1</td><td>3</td><td>1</td><td>0</td><td>30</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>−3</td><td>1</td><td>0</td><td>1</td><td>30</td></tr>
+</tbody></table></div>
+        <p>Entering \(x_1\) (row 0's only negative, \(-1\)). But its column is \((-1,-3)\) in the two constraint rows — <i>both negative</i>. There's no row with a positive coefficient to test a ratio against.</p>
+        <p class="why">Increasing \(x_1\) only ever <i>relaxes</i> both constraints (their slacks grow), so nothing stops it. As \(x_1\to\infty\) with \(x_2\) held at the value that keeps row 0 improving, \(Z=x_1-x_2\to\infty\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Conclusion</td><td><b>Unbounded</b> — no finite optimum exists</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S6 ================= -->
+<section class="ex" id="or-s6" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S6</span><h2>Two optimal basic feasible solutions</h2><span class="ex-id">HW5 · Problem 6</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=x_1+x_2+x_3+x_4\) subject to \(x_1+x_2\le3\), \(x_3+x_4\le2\), all variables \(\ge0\). Find two optimal BF solutions.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Ties in row 0 are a choice, not an error</dt><dd>When two nonbasic variables share the same (most negative) row-0 coefficient, either is a valid entering variable — they lead to <i>different</i> optimal basic feasible solutions with the same \(Z^*\), the discrete-variable analogue of problem S4's tied edge.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b> All four row-0 coefficients tie at \(-1\); take them left to right.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−1</td><td>−1</td><td>−1</td><td>−1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="leave"><td>x₅</td><td>(1)</td><td>0</td><td class="piv">1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td></tr>
+<tr><td>x₆</td><td>(2)</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>2</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\): only row 1 has a positive coefficient, ratio \(3/1=3\) — \(x_5\) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b> Row 0 still ties at \(-1\) for \(x_3\) and \(x_4\); take \(x_3\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th class="enter">x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>−1</td><td>−1</td><td>1</td><td>0</td><td>3</td></tr>
+<tr><td>x₁</td><td>(1)</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td></tr>
+<tr class="leave"><td>x₆</td><td>(2)</td><td>0</td><td>0</td><td>0</td><td class="piv">1</td><td>1</td><td>0</td><td>1</td><td>2</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_3\): only row 2 has a positive coefficient, ratio \(2/1=2\) — \(x_6\) leaves.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>5</td></tr>
+<tr><td>x₁</td><td>(1)</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td></tr>
+<tr><td>x₃</td><td>(2)</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>2</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{Z^*=5}\) at \((x_1,x_3)=(3,2)\), \(x_2=x_4=0\). Row 0's zero coefficients on nonbasic \(x_2\) and \(x_4\) each mark a second optimal BF solution: pivoting \(x_2\) in instead gives \((x_1,x_2)=(0,3)\) paired with \((x_3,x_4)=(2,0)\) or \((0,2)\) — any split of 3 between \(x_1,x_2\) and of 2 between \(x_3,x_4\) gives \(Z=5\), since the two constraints never interact.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\(Z^*=\) <b>5</b>; one BF solution \((x_1,x_3)=(3,2)\), another \((x_2,x_3)=(3,2)\) — any \(x_1{+}x_2{=}3,\ x_3{+}x_4{=}2\) split ties</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-S7 ================= -->
+<section class="ex" id="or-s7" data-hue="simplex" data-problem>
+  <div class="ex-head"><span class="ex-num">S7</span><h2>Degeneracy and a redundant constraint</h2><span class="ex-id">HW5 · Problem 7 · graduate (M577)</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=2x_1+x_2\) subject to \(4x_1+3x_2\le12\), \(4x_1+x_2\le8\), \(4x_1+2x_2\le8\), \(x_1,x_2\ge0\). (a) After iteration 1, is any basic variable 0 (degenerate)? (b) Find the optimum. (c) Plot the region and identify the redundant constraint. (d) Re-solve the simplified program.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Degeneracy from a tied ratio test</dt><dd>When the minimum-ratio test ties (here, \(8/4=2\) for both constraints 2 and 3), whichever row doesn't become the pivot row still forces its basic variable to \(0\) on the very next iteration — a <i>degenerate</i> basic feasible solution, geometrically three boundary lines meeting at one point instead of two.</dd></dl></div>
+  <div class="flag"><b>Verify</b><span>Same early-stop issue as S4: the circulating solution called iteration 1 optimal with \(Z=4\), but row 0 there still has \(-1/2\) under \(x_2\). The extra (again degenerate) pivot below reaches the genuine all-nonnegative row 0 — same \(x_1,Z\) values, confirming the numeric answer was right even though the stopping test hadn't actually been satisfied yet. Logged in the <a href="workbench.html#audit">audit log</a>.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−2</td><td>−1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>4</td><td>3</td><td>1</td><td>0</td><td>0</td><td>12</td></tr>
+<tr class="leave"><td>x₄</td><td>(2)</td><td>0</td><td class="piv">4</td><td>1</td><td>0</td><td>1</td><td>0</td><td>8</td></tr>
+<tr><td>x₅</td><td>(3)</td><td>0</td><td>4</td><td>2</td><td>0</td><td>0</td><td>1</td><td>8</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\) (only negative, \(-2\)). Ratios: \(12/4=3\); \(8/4=2\) and \(8/4=2\) — a <i>tie</i> between constraints 2 and 3. Row 2 (\(x_4\)) leaves by convention.</p></div></li>
+      <li><div><p><b>Iteration 1 — (a) degenerate.</b> \(x_5=0\) is basic: the tied row 3 didn't leave, so its variable is forced to zero the moment row 2 does. Row 0 still has a negative entry, so keep going.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−1/2</td><td>0</td><td>1/2</td><td>0</td><td>4</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>0</td><td>2</td><td>1</td><td>−1</td><td>0</td><td>4</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>1/4</td><td>0</td><td>1/4</td><td>0</td><td>2</td></tr>
+<tr class="leave"><td>x₅</td><td>(3)</td><td>0</td><td>0</td><td class="piv">1</td><td>0</td><td>−1</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (only negative, \(-1/2\)). Ratios: row 1 (\(x_3\)) \(4/2=2\); row 2 (\(x_1\)) \(2/(1/4)=8\); row 3 (\(x_5\)) \(0/1=0\) — the degenerate row wins with ratio \(0\).</p></div></li>
+      <li><div><p><b>Iteration 2 — (b) optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1/2</td><td>4</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−2</td><td>4</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1/2</td><td>−1/4</td><td>2</td></tr>
+<tr><td>x₂</td><td>(3)</td><td>0</td><td>0</td><td>1</td><td>0</td><td>−1</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{x_1^*=2,\ x_2^*=0,\ Z^*=4}\). (c), (d) Constraint 2 (\(4x_1+x_2\le8\)) is <span class="src">redundant</span>: constraint 3 (\(4x_1+2x_2\le8\)) is strictly tighter everywhere \(x_2>0\) and ties it exactly at \(x_2=0\), so dropping constraint 2 leaves the same feasible region and the same optimum — simplex on the 2-constraint version reaches \((2,0)\) in one fewer pivot, with no degeneracy.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Yes — \(x_5=0\) after iteration 1</td></tr>
+      <tr><td>(b)</td><td>\(x_1^*=\) <b>2</b>, \(x_2^*=\) <b>0</b>, \(Z^*=\) <b>4</b></td></tr>
+      <tr><td>(c)</td><td>Constraint 2 is redundant (constraint 3 dominates it)</td></tr>
+      <tr><td>(d)</td><td>Same optimum, reached without degeneracy</td></tr></table></div></div>
+  </div>
+</section>
+
+<div class="chapter" data-hue="bigm">Homework 6 · the Big M method</div>
+<!-- ================= OR-M1 ================= -->
+<section class="ex" id="or-m1" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M1</span><h2>Reformulating for ≥, =, and minimize</h2><span class="ex-id">HW6 · Problem 1</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Worked example: \(\text{Max }Z=2x_1+3x_2\) s.t. \(-x_1-2x_2\ge-4\), \(x_1+x_2=3\), \(2x_1+5x_2\ge8\) becomes \(\text{Max }Z=2x_1+3x_2-M\bar x_5-M\bar x_6\) s.t. \(x_1+2x_2+x_3=4\), \(x_1+x_2+\bar x_5=3\), \(2x_1+5x_2-x_4+\bar x_6=8\). Slack: \(x_3\). Surplus: \(x_4\). Artificial: \(\bar x_5,\bar x_6\).</p>
+    <p>Following that pattern: (a) Maximize \(Z=x_1+x_2\) s.t. \(x_1-x_2\le-3\), \(2x_1+7x_2\le4\). (b) Minimize \(Z=x_1-3x_2+4x_3\) s.t. \(x_1-x_2+x_3=6\), \(2x_1+7x_2-x_3\le4\). Reformulate each into augmented standard form; identify every slack, surplus and artificial variable. No need to solve.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Why an artificial variable at all</dt><dd>A slack/surplus alone can't give an all-zero starting basic feasible solution for a \(=\) or \(\ge\) constraint (plugging \(x=0\) would make it negative). An <i>artificial variable</i> \(\bar x\ge0\) patches that — but it has no meaning in the original problem, so it's penalized by \(-M\bar x\) (\(M\) astronomically large) in the objective to force it to \(0\) by the time the method finishes, if the problem is feasible at all.</dd>
+    <dt>Flip a negative right-hand side first</dt><dd>\(x_1-x_2\le-3\) has no obvious nonnegative starting point; multiply by \(-1\) to get \(-x_1+x_2\ge3\), a form the standard recipe (surplus + artificial on \(\ge\)) handles directly.</dd>
+  </dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a)</b> Flip the first constraint: \(x_1-x_2\le-3 \Leftrightarrow -x_1+x_2\ge3\). The second, \(2x_1+7x_2\le4\), is already a normal \(\le\) and just needs a slack.</p>
+        \[ \text{Max }Z=x_1+x_2-M\bar x_5 \]
+        \[ -x_1+x_2-x_3+\bar x_5=3,\qquad 2x_1+7x_2+x_4=4 \]
+        <p class="why">Slack: \(x_4\). Surplus: \(x_3\). Artificial: \(\bar x_5\).</p></div></li>
+      <li><div><p><b>(b)</b> Minimize \(Z\) \(\Leftrightarrow\) maximize \(-Z\). The equality constraint needs an artificial directly; the \(\le\) just needs a slack.</p>
+        \[ \text{Max }{-Z}=-x_1+3x_2-4x_3-M\bar x_5 \]
+        \[ x_1-x_2+x_3+\bar x_5=6,\qquad 2x_1+7x_2-x_3+x_4=4 \]
+        <p class="why">Slack: \(x_4\). Surplus: none. Artificial: \(\bar x_5\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Slack \(x_4\) · Surplus \(x_3\) · Artificial \(\bar x_5\)</td></tr>
+      <tr><td>(b)</td><td>Slack \(x_4\) · Surplus none · Artificial \(\bar x_5\)</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M2 ================= -->
+<section class="ex" id="or-m2" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M2</span><h2>Two equality constraints, two artificials</h2><span class="ex-id">HW6 · Problem 2</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=4x_1+2x_2+3x_3+5x_4\) subject to \(2x_1+3x_2+4x_3+2x_4=300\), \(8x_1+x_2+x_3+5x_4=300\), all variables \(\ge0\). Use the Big M method.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Clearing M from row 0</dt><dd>Both constraints are equalities, so both get artificials \(\bar x_5,\bar x_6\), both initially basic. Before the first pivot, row 0 must be rewritten to eliminate \(M\) from the basic columns: subtract \(M\times\) each artificial's row from row 0, producing combined \(M\)-and-constant coefficients like \(-10M-4\).</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Set up and clear \(M\).</b> \(\text{Max }Z=4x_1+2x_2+3x_3+5x_4-M\bar x_5-M\bar x_6\), both constraints equalities with artificials \(\bar x_5,\bar x_6\) basic. Subtracting \(M\cdot\)row1 \(+M\cdot\)row2 from row 0:</p>
+        \[ Z-(10M{+}4)x_1-(4M{+}2)x_2-(5M{+}3)x_3-(7M{+}5)x_4=-600M \]
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x̄₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−10M−4</td><td>−4M−2</td><td>−5M−3</td><td>−7M−5</td><td>0</td><td>0</td><td>−600M</td></tr>
+<tr><td>x̄₅</td><td>(1)</td><td>0</td><td>2</td><td>3</td><td>4</td><td>2</td><td>1</td><td>0</td><td>300</td></tr>
+<tr class="leave"><td>x̄₆</td><td>(2)</td><td>0</td><td class="piv">8</td><td>1</td><td>1</td><td>5</td><td>0</td><td>1</td><td>300</td></tr>
+</tbody></table></div>
+        <p class="why">For large \(M\), the \(-10M\) coefficient on \(x_1\) dwarfs the others, so \(x_1\) enters. Ratios \(300/2=150\) vs \(300/8=37.5\) — row 2 (\(\bar x_6\)) leaves, driving the artificial out for good.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th class="enter">x₃</th><th>x₄</th><th>x̄₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−11M/4−3/2</td><td>−15M/4−5/2</td><td>−3M/4−5/2</td><td>0</td><td>5M/4+1/2</td><td>−225M+150</td></tr>
+<tr class="leave"><td>x̄₅</td><td>(1)</td><td>0</td><td>0</td><td>11/4</td><td class="piv">15/4</td><td>3/4</td><td>1</td><td>−1/4</td><td>225</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>1/8</td><td>1/8</td><td>5/8</td><td>0</td><td>1/8</td><td>75/2</td></tr>
+</tbody></table></div>
+        <p class="why">Comparing M-coefficients, \(x_3\)'s \(-15M/4\) is the most negative. Ratios: \(225/(15/4)=60\) vs \((75/2)/(1/8)=300\) — row 1 (\(\bar x_5\)) leaves, clearing the second artificial.</p></div></li>
+      <li><div><p><b>Iteration 2.</b> Both artificials are now gone from the basis — the rest is ordinary simplex on \(x_1,x_2,x_3,x_4\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th class="enter">x₄</th><th>x̄₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>1/3</td><td>0</td><td>−2</td><td>M+2/3</td><td>M+1/3</td><td>300</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>0</td><td>11/15</td><td>1</td><td>1/5</td><td>4/15</td><td>−1/15</td><td>60</td></tr>
+<tr class="leave"><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>1/30</td><td>0</td><td class="piv">3/5</td><td>−1/30</td><td>2/15</td><td>30</td></tr>
+</tbody></table></div>
+        <p class="why">Only \(x_4\) has a genuinely negative (non-\(M\)) coefficient, \(-2\). Ratios: \(60/(1/5)=300\) vs \(30/(3/5)=50\) — row 2 (\(x_1\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 3 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x̄₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>10/3</td><td>4/9</td><td>0</td><td>0</td><td>M+5/9</td><td>M+7/9</td><td>400</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>−1/3</td><td>13/18</td><td>1</td><td>0</td><td>5/18</td><td>−1/9</td><td>50</td></tr>
+<tr><td>x₄</td><td>(2)</td><td>0</td><td>5/3</td><td>1/18</td><td>0</td><td>1</td><td>−1/18</td><td>2/9</td><td>50</td></tr>
+</tbody></table></div>
+        <p>No negative coefficients anywhere in row 0 (the remaining \(M\)-terms are positive). \(\class{dv}{x_1^*=0,\ x_2^*=0,\ x_3^*=50,\ x_4^*=50,\ Z^*=400}\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\(x_3^*=\) <b>50</b>, \(x_4^*=\) <b>50</b> (\(x_1^*=x_2^*=0\)), \(Z^*=\) <b>400</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M3 ================= -->
+<section class="ex" id="or-m3" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M3</span><h2>Proving infeasibility</h2><span class="ex-id">HW6 · Problem 3</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=90x_1+70x_2\) subject to \(2x_1+x_2\le2\), \(x_1-x_2\ge2\), \(x_1,x_2\ge0\). Use the Big M method to show this has no feasible solution.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Reading infeasibility off the optimal tableau</dt><dd>Run the method to completion as usual. If an artificial variable is still <i>basic and positive</i> once row 0 has no negative entries, the "optimum" the method found only works by keeping an impossible artificial unit active — the real problem has no feasible region at all.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Iteration 0.</b> Slack \(x_3\) on constraint 1; surplus \(x_4\) and artificial \(\bar x_5\) on constraint 2.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x̄₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−M−90</td><td>M−70</td><td>0</td><td>M</td><td>0</td><td>−2M</td></tr>
+<tr class="leave"><td>x₃</td><td>(1)</td><td>0</td><td class="piv">2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>2</td></tr>
+<tr><td>x̄₅</td><td>(2)</td><td>0</td><td>1</td><td>−1</td><td>0</td><td>−1</td><td>1</td><td>2</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\) (most negative, \(-M-90\)). Ratios \(2/2=1\) vs \(2/1=2\) — row 1 (\(x_3\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1 — stop.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x̄₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>(3/2)M−25</td><td>(1/2)M+45</td><td>M</td><td>0</td><td>−M+90</td></tr>
+<tr><td>x₁</td><td>(1)</td><td>0</td><td>1</td><td>1/2</td><td>1/2</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>x̄₅</td><td>(2)</td><td>0</td><td>0</td><td>−3/2</td><td>−1/2</td><td>−1</td><td>1</td><td>1</td></tr>
+</tbody></table></div>
+        <p>Row 0 has no negative entries (for large \(M\), \((3/2)M-25>0\)), so the method declares this optimal. But the artificial \(\bar x_5=1\) is still <i>basic and positive</i>.</p>
+        <p class="why">Geometrically: \(2x_1+x_2\le2\) forces \(x_1\le1\) when \(x_2\ge0\), while \(x_1-x_2\ge2\) forces \(x_1\ge2\) — those can never both hold, which is exactly what the stranded artificial is reporting.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Conclusion</td><td><b>No feasible solution</b> — \(\bar x_5=1>0\) remains basic at "optimality"</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M4 ================= -->
+<section class="ex" id="or-m4" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M4</span><h2>A genuine minimization, two kinds of constraint</h2><span class="ex-id">HW6 · Problem 4</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Minimize \(Z=3x_1+2x_2+7x_3\) subject to \(-x_1+x_2=10\), \(2x_1-x_2+x_3\ge10\), \(x_1,x_2,x_3\ge0\). Use the Big M method.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Minimize via maximize \(-Z\)</dt><dd>Everything about entering/leaving/ratio rules stays the same once you maximize \(-Z=-3x_1-2x_2-7x_3\) — just remember to flip the sign back at the end to report \(Z\), not \(-Z\).</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Set up.</b> Equality constraint 1 needs artificial \(\bar x_4\) directly; constraint 2 needs surplus \(x_5\) and artificial \(\bar x_6\).</p>
+        \[ \text{Max }{-Z}=-3x_1-2x_2-7x_3-M\bar x_4-M\bar x_6 \]
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>−Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x̄₄</th><th>x₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>−Z</td><td>(0)</td><td>1</td><td>−M+3</td><td>2</td><td>−M+7</td><td>0</td><td>M</td><td>0</td><td>−20M</td></tr>
+<tr><td>x̄₄</td><td>(1)</td><td>0</td><td>−1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>10</td></tr>
+<tr class="leave"><td>x̄₆</td><td>(2)</td><td>0</td><td class="piv">2</td><td>−1</td><td>1</td><td>0</td><td>−1</td><td>1</td><td>10</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1\): row 1's coefficient is \(-1\) (skip, no ratio), row 2's is \(2\), ratio \(10/2=5\) — row 2 (\(\bar x_6\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>−Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x̄₄</th><th>x₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>−Z</td><td>(0)</td><td>1</td><td>0</td><td>−M/2+7/2</td><td>−M/2+11/2</td><td>0</td><td>M/2+3/2</td><td>M/2−3/2</td><td>−15M−15</td></tr>
+<tr class="leave"><td>x̄₄</td><td>(1)</td><td>0</td><td>0</td><td class="piv">1/2</td><td>1/2</td><td>1</td><td>−1/2</td><td>1/2</td><td>15</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>−1/2</td><td>1/2</td><td>0</td><td>−1/2</td><td>1/2</td><td>5</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (the only negative, \(-M/2+7/2\)). Ratio: row 1 (\(\bar x_4\)) \(15/(1/2)=30\) — the only row with a positive coefficient, so it leaves, clearing the last artificial.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>−Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x̄₄</th><th>x₅</th><th>x̄₆</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>−Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>2</td><td>M−7</td><td>5</td><td>M−5</td><td>−120</td></tr>
+<tr><td>x₂</td><td>(1)</td><td>0</td><td>0</td><td>1</td><td>1</td><td>2</td><td>−1</td><td>1</td><td>30</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>−1</td><td>1</td><td>20</td></tr>
+</tbody></table></div>
+        <p>Row 0 is all \(\ge0\) (the \(M\)-terms are positive). \(-Z^*=-120\Rightarrow\class{dv}{Z^*=120}\) at \(x_1^*=20,\,x_2^*=30,\,x_3^*=0\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Optimal</td><td>\(x_1^*=\) <b>20</b>, \(x_2^*=\) <b>30</b>, \(x_3^*=\) <b>0</b>, minimum \(Z^*=\) <b>120</b></td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M5 ================= -->
+<section class="ex" id="or-m5" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M5</span><h2>A free variable and a non-sign constraint</h2><span class="ex-id">HW6 · Problem 5</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=2x_1-2x_2+3x_3\) subject to \(-x_1+x_2+x_3\le4\), \(2x_1-x_2+x_3\le2\), \(x_1\ge-4\), \(x_2\ge0\) (no sign restriction on \(x_3\)). Reformulate so there are only two functional constraints and every variable is nonnegative. No need to solve.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>A lower-bounded variable isn't a constraint</dt><dd>\(x_1\ge-4\) is a simple bound, not a real resource limit — fold it into a nonnegative shift \(x_1'=x_1+4\ge0\) rather than carrying it as a third functional constraint.</dd>
+    <dt>An unrestricted variable splits in two</dt><dd>Any \(x_3\) (positive, negative, or zero) can be written \(x_3=x_3^+-x_3^-\) with \(x_3^+,x_3^-\ge0\) — the standard trick for a variable with no sign restriction at all.</dd>
+  </dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Substitute.</b> \(x_1'=x_1+4\ge0\) (so \(x_1=x_1'-4\)), and \(x_3=x_3^+-x_3^-\), \(x_3^+,x_3^-\ge0\).</p>
+        \[ Z=2(x_1'-4)-2x_2+3(x_3^+-x_3^-)=2x_1'-2x_2+3x_3^+-3x_3^--8 \]</div></li>
+      <li><div><p><b>Rewrite the two functional constraints</b> in terms of the new variables, folding the constant from the shift into the right-hand side.</p>
+        \[ -(x_1'-4)+x_2+x_3^+-x_3^-\le4\ \Rightarrow\ -x_1'+x_2+x_3^+-x_3^-\le0 \]
+        \[ 2(x_1'-4)-x_2+x_3^+-x_3^-\le2\ \Rightarrow\ 2x_1'-x_2+x_3^+-x_3^-\le10 \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>Reformulated</td><td>Max \(Z=2x_1'-2x_2+3x_3^+-3x_3^--8\) s.t. \(-x_1'+x_2+x_3^+-x_3^-\le0\), \(2x_1'-x_2+x_3^+-x_3^-\le10\), all four variables \(\ge0\)</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M6 ================= -->
+<section class="ex" id="or-m6" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M6</span><h2>One free variable, solved three ways</h2><span class="ex-id">HW6 · Problem 6</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=x_1+4x_2+2x_3\) subject to \(4x_1+x_2+2x_3\le5\), \(-x_1+x_2+2x_3\le10\), \(x_2,x_3\ge0\) (\(x_1\) unrestricted in sign). (a) Solve with a solver. (b) Reformulate with every variable nonnegative. (c) Work the simplex method step by step.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Split, then simplex</dt><dd>Once \(x_1=x_1^+-x_1^-\) is substituted everywhere, this is an ordinary \(\le\)-constraint problem — plain simplex, no Big M needed, since both constraints start out \(\le\) with a nonnegative right-hand side.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Solver result.</b> Maximize \(Z\), by changing \(x_1,x_2,x_3\), with \(x_1\) left unconstrained in sign: \(\class{dv}{x_1=-1,\ x_2=9,\ x_3=0,\ Z=35}\).</p></div></li>
+      <li><div><p><b>(b) Reformulate.</b> \(x_1=x_1^+-x_1^-\), \(x_1^+,x_1^-\ge0\).</p>
+        \[ \text{Max }Z=x_1^+-x_1^-+4x_2+2x_3 \]
+        \[ 4x_1^+-4x_1^-+x_2+2x_3\le5,\qquad -x_1^++x_1^-+x_2+2x_3\le10 \]</div></li>
+      <li><div><p><b>(c) Iteration 0.</b> Slacks \(x_4,x_5\).</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁⁺</th><th>x₁⁻</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−1</td><td>1</td><td>−4</td><td>−2</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="leave"><td>x₄</td><td>(1)</td><td>0</td><td>4</td><td>−4</td><td class="piv">1</td><td>2</td><td>1</td><td>0</td><td>5</td></tr>
+<tr><td>x₅</td><td>(2)</td><td>0</td><td>−1</td><td>1</td><td>1</td><td>2</td><td>0</td><td>1</td><td>10</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (most negative, \(-4\)). Ratios \(5/1=5\) vs \(10/1=10\) — row 1 (\(x_4\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁⁺</th><th class="enter">x₁⁻</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>15</td><td>−15</td><td>0</td><td>6</td><td>4</td><td>0</td><td>20</td></tr>
+<tr><td>x₂</td><td>(1)</td><td>0</td><td>4</td><td>−4</td><td>1</td><td>2</td><td>1</td><td>0</td><td>5</td></tr>
+<tr class="leave"><td>x₅</td><td>(2)</td><td>0</td><td>−5</td><td class="piv">5</td><td>0</td><td>0</td><td>−1</td><td>1</td><td>5</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_1^-\) (the only negative, \(-15\)). Ratios: row 1 (\(x_2\)) has coefficient \(-4\), skip; row 2 (\(x_5\)) \(5/5=1\) — leaves.</p></div></li>
+      <li><div><p><b>Iteration 2 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁⁺</th><th>x₁⁻</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>0</td><td>0</td><td>6</td><td>1</td><td>3</td><td>35</td></tr>
+<tr><td>x₂</td><td>(1)</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>1/5</td><td>4/5</td><td>9</td></tr>
+<tr><td>x₁⁻</td><td>(2)</td><td>0</td><td>−1</td><td>1</td><td>0</td><td>0</td><td>−1/5</td><td>1/5</td><td>1</td></tr>
+</tbody></table></div>
+        <p>\(\class{dv}{x_1^+=0,\ x_1^-=1\Rightarrow x_1=-1,\ x_2=9,\ x_3=0,\ Z^*=35}\) — matching the solver exactly.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table><tr><td>(a)&ndash;(c)</td><td>\(x_1^*=\) <b>&minus;1</b>, \(x_2^*=\) <b>9</b>, \(x_3^*=\) <b>0</b>, \(Z^*=\) <b>35</b> (all three methods agree)</td></tr></table></div></div>
+  </div>
+</section>
+<!-- ================= OR-M7 ================= -->
+<section class="ex" id="or-m7" data-hue="bigm" data-problem>
+  <div class="ex-head"><span class="ex-num">M7</span><h2>Minimizing directly, without flipping to −Z</h2><span class="ex-id">HW6 · Problem 7 · graduate (M577)</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>(a) Describe how to modify the simplex steps to minimize directly, instead of maximizing \(-Z\). (b) Apply it with the Big M method: minimize \(Z=3x_1+8x_2+5x_3\) subject to \(3x_2+4x_3\ge70\), \(3x_1+5x_2+2x_3\ge70\), \(x_1,x_2,x_3\ge0\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl><dt>Mirror-image stopping and entering rules</dt><dd>Keep \(Z\) a minimization throughout: stop when row 0 has <i>no positive</i> entry (instead of no negative), and enter the <i>most positive</i> coefficient (instead of most negative). The minimum-ratio test and row operations are unchanged — only the sign you're hunting for flips.</dd></dl></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) The modification.</b> Big M still penalizes artificials, but with \(+M\bar x\) (a penalty that <i>increases</i> \(Z\), since we're minimizing). Stop when no positive entry remains in row 0; enter the most positive; ratio test and pivoting stay exactly as before.</p></div></li>
+      <li><div><p><b>(b) Set up.</b> Surplus \(x_4,x_5\), artificials \(\bar x_6,\bar x_7\) on the two \(\ge\) constraints.</p>
+        \[ \text{Min }Z=3x_1+8x_2+5x_3+M\bar x_6+M\bar x_7 \]
+        \[ Z+(3M{-}3)x_1+(8M{-}8)x_2+(6M{-}5)x_3-Mx_4-Mx_5=140M \]
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th class="enter">x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x̄₆</th><th>x̄₇</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>3M−3</td><td>8M−8</td><td>6M−5</td><td>−M</td><td>−M</td><td>0</td><td>0</td><td>140M</td></tr>
+<tr><td>x̄₆</td><td>(1)</td><td>0</td><td>0</td><td>3</td><td>4</td><td>−1</td><td>0</td><td>1</td><td>0</td><td>70</td></tr>
+<tr class="leave"><td>x̄₇</td><td>(2)</td><td>0</td><td>3</td><td class="piv">5</td><td>2</td><td>0</td><td>−1</td><td>0</td><td>1</td><td>70</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_2\) (most positive \(M\)-coefficient, \(8M\)). Ratios \(70/3=23.3\) vs \(70/5=14\) — row 2 (\(\bar x_7\)) leaves.</p></div></li>
+      <li><div><p><b>Iteration 1.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th class="enter">x₃</th><th>x₄</th><th>x₅</th><th>x̄₆</th><th>x̄₇</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>−9M/5+9/5</td><td>0</td><td>14M/5−9/5</td><td>−M</td><td>3M/5−8/5</td><td>0</td><td>−8M/5+8/5</td><td>28M+112</td></tr>
+<tr class="leave"><td>x̄₆</td><td>(1)</td><td>0</td><td>−9/5</td><td>0</td><td class="piv">14/5</td><td>−1</td><td>3/5</td><td>1</td><td>−3/5</td><td>28</td></tr>
+<tr><td>x₂</td><td>(2)</td><td>0</td><td>3/5</td><td>1</td><td>2/5</td><td>0</td><td>−1/5</td><td>0</td><td>1/5</td><td>14</td></tr>
+</tbody></table></div>
+        <p class="why">Entering \(x_3\) (its \(M\)-coefficient, \(14M/5\), beats \(x_1\)'s negative one). Ratios \(28/(14/5)=10\) vs \(14/(2/5)=35\) — row 1 (\(\bar x_6\)) leaves, clearing the last artificial.</p></div></li>
+      <li><div><p><b>Iteration 2.</b> Both artificials gone — ordinary minimization simplex from here.</p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th class="enter">x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x̄₆</th><th>x̄₇</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0"><td>Z</td><td>(0)</td><td>1</td><td>9/14</td><td>0</td><td>0</td><td>−9/14</td><td>−17/14</td><td>−M+9/14</td><td>−M+17/14</td><td>130</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>−9/14</td><td>0</td><td>1</td><td>−5/14</td><td>3/14</td><td>5/14</td><td>−3/14</td><td>10</td></tr>
+<tr class="leave"><td>x₂</td><td>(2)</td><td>0</td><td class="piv">6/7</td><td>1</td><td>0</td><td>1/7</td><td>−2/7</td><td>−1/7</td><td>2/7</td><td>10</td></tr>
+</tbody></table></div>
+        <p class="why">\(x_1\) has the only positive coefficient (\(9/14\)) left. Ratio: row 2 (\(x_2\)) \(10/(6/7)=35/3\) — the only candidate, so it leaves.</p></div></li>
+      <li><div><p><b>Iteration 3 — optimal.</b></p>
+        <div class="tablewrap tableau-wrap"><table class="tableau">
+<thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th>x₄</th><th>x₅</th><th>x̄₆</th><th>x̄₇</th><th>RHS</th></tr></thead>
+<tbody>
+<tr class="r0 optimal"><td>Z</td><td>(0)</td><td>1</td><td>0</td><td>−3/4</td><td>0</td><td>−3/4</td><td>−1</td><td>−M+3/4</td><td>−M+1</td><td>245/2</td></tr>
+<tr><td>x₃</td><td>(1)</td><td>0</td><td>0</td><td>3/4</td><td>1</td><td>−1/4</td><td>0</td><td>1/4</td><td>0</td><td>35/2</td></tr>
+<tr><td>x₁</td><td>(2)</td><td>0</td><td>1</td><td>7/6</td><td>0</td><td>1/6</td><td>−1/3</td><td>−1/6</td><td>1/3</td><td>35/3</td></tr>
+</tbody></table></div>
+        <p>No positive coefficients anywhere in row 0 (the \(M\)-terms are negative). \(\class{dv}{x_1^*=35/3,\ x_2^*=0,\ x_3^*=35/2,\ Z^*=245/2=122.5}\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Flip the optimality test and entering-variable rule; keep ratio test and pivoting the same</td></tr>
+      <tr><td>(b)</td><td>\(x_1^*=\) <b>35/3</b>, \(x_2^*=\) <b>0</b>, \(x_3^*=\) <b>35/2</b>, minimum \(Z^*=\) <b>245/2</b> (122.5)</td></tr></table></div></div>
+  </div>
 </section>
 
 <div class="chapter" data-hue="shadow">Problems 1 and 2 · the two-resource model</div>

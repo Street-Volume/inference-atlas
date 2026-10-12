@@ -56,7 +56,7 @@ window.MathJax = {
     <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
     <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
     <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
-    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/19</span></div>
     <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
     <div class="nav-group">Encyclopedia</div>
     <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
@@ -112,7 +112,7 @@ window.MathJax = {
 <!-- ================= AUDIT ================= -->
 <section class="ex" id="audit" data-hue="neutral">
   <div class="ex-head"><span class="ex-num">✓</span><h2>Audit log</h2></div>
-  <p class="prose">Three source drafts went into this page: two Gemini LaTeX guides and the learning-lab HTML. Every numeric answer in all three was recomputed independently, and all of them check out. These are the problems that remain, one I introduced in an earlier version of this page and have fixed, and notes on traps in the M447 homework.</p>
+  <p class="prose">Three source drafts went into this page: two Gemini LaTeX guides and the learning-lab HTML. Every numeric answer in all three was recomputed independently, and all of them check out. These are the problems that remain, one I introduced in an earlier version of this page and have fixed, and notes on traps in the M447 homework. A later session added the Homework 5 (simplex) and Homework 6 (Big M) problems on the Operations Research page; every tableau there was re-derived from scratch and checked against the final answers, catching two places where the original solutions stopped one iteration early.</p>
   <div class="chips" id="auditChips" role="group" aria-label="Filter audit rows">
     <button class="chip" data-f="all" data-hue="neutral" aria-pressed="true"><i></i>All</button>
     <button class="chip" data-f="self" data-hue="test" aria-pressed="false"><i></i>My fixes</button>
@@ -125,6 +125,8 @@ window.MathJax = {
     <thead><tr><th>Source</th><th>Severity</th><th>Issue</th><th>Resolution here</th></tr></thead>
     <tbody>
       <tr data-src="self"><td><span class="srcpill" data-hue="test">v1 atlas</span></td><td><span class="sev hi">Wrong claim</span></td><td>The power-curve caption said Test 2 climbs faster for small θ and that Test 1 reaches power 1 first. Both were wrong.</td><td>Corrected: Test 1 is more powerful for θ below 0.184; Test 2 wins above that and reaches power 1 at θ = c/2 ≈ 0.842, before Test 1 at 0.95. Live figures B7 and B8 show it.</td></tr>
+      <tr data-src="self"><td><span class="srcpill" data-hue="simplex">HW5 source</span></td><td><span class="sev hi">Stopped early</span></td><td>S4 (alternative optima): the circulating solution called iteration 1 optimal because Z = 12 matched the final answer, but row 0 there still had −2 under x₂ — the actual stopping test (no negative entries) hadn't been met.</td><td>Ran the required extra, degenerate pivot. Z* = 12 is confirmed, but the tied alternative-optimum variable is x₃, not x₂ as the source implied.</td></tr>
+      <tr data-src="self"><td><span class="srcpill" data-hue="simplex">HW5 source</span></td><td><span class="sev hi">Stopped early</span></td><td>S7 (degeneracy, graduate): same pattern — iteration 1 was called optimal with Z = 4 despite a −1/2 remaining in row 0.</td><td>Ran the extra degenerate pivot; x₁* = 2, Z* = 4 confirmed unchanged, row 0 now genuinely all ≥ 0.</td></tr>
 <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Trap</span></td><td>OR5(c): resource 3’s shadow price of 0.5 only holds for the first half unit (allowable Δ ≤ 0.5).</td><td>A full unit gains 0.25, not 0.5. The answer is still no. Live figure C5 shows the bend.</td></tr>
       <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Edge case</span></td><td>OR5(c): for resource 2, Δ = 1 is exactly the edge of the allowable range [−3, 1].</td><td>The full 1.5 gain holds for that one unit; a second unit would earn less.</td></tr>
       <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Trap</span></td><td>OR4(d) asks for a range of c₁/c₂, but c₁/c₂ ≤ 0 also covers c₁ &lt; 0 &lt; c₂, where (0, 5) wins.</td><td>The answer states the sign conditions c₁ ≥ 0, c₂ ≤ 0 along with the ratio.</td></tr>

@@ -31,6 +31,20 @@
     { id: 'ex982', n: '9.82', t: 'Sufficient statistic, MLE and MVUE', topic: 'Point estimation', hue: 'est', part: 'B', page: 'inference.html', ans: 'U = ΣYᵢʳ · θ̂ = U/n · MVUE: yes', kw: 'sufficiency factorization likelihood score mle mvue rao blackwell weibull gamma' },
     { id: 'ex996', n: '9.96', t: 'MLE of σ for a normal sample', topic: 'Point estimation', hue: 'est', part: 'B', page: 'inference.html', ans: 'σ̂ = √((1/n) Σ(Yᵢ − Ȳ)²)', kw: 'normal sigma invariance mle bias' },
     { id: 'ex105', n: '10.5', t: 'Matching α for two tests', topic: 'Hypothesis testing', hue: 'test', part: 'B', page: 'inference.html', ans: 'c = 2 − √0.10 ≈ 1.684', kw: 'type i error alpha rejection region triangle uniform power test' },
+    { id: 'or-s1', n: 'S1', t: 'Two resources, one binding pair', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'x₁* = 2 · x₂* = 2 · Z* = 6', kw: 'simplex tableau augmented form slack entering leaving pivot ratio test' },
+    { id: 'or-s2', n: 'S2', t: 'A tighter second resource', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'x₁* = 20 · x₂* = 20 · Z* = 60', kw: 'simplex tableau pivot both binding' },
+    { id: 'or-s3', n: 'S3', t: 'Three constraints, three variables', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'x₁* = 1.5 · x₂* = 0.5 · x₃* = 0 · Z* = 2.5', kw: 'simplex tableau three variables negative coefficient' },
+    { id: 'or-s4', n: 'S4', t: 'Alternative optima — a whole tied edge', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: '(4,0) or (0,6) · Z* = 12', kw: 'simplex tableau alternative optima tie degenerate edge' },
+    { id: 'or-s5', n: 'S5', t: 'Proving unboundedness', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'Unbounded — no finite optimum', kw: 'simplex tableau unbounded no ratio' },
+    { id: 'or-s6', n: 'S6', t: 'Two optimal basic feasible solutions', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'Z* = 5 · (x₁,x₃) = (3,2) or (x₂,x₃) = (3,2)', kw: 'simplex tableau tie entering variable two bf solutions' },
+    { id: 'or-s7', n: 'S7', t: 'Degeneracy and a redundant constraint', topic: 'Simplex method', hue: 'simplex', part: 'C', page: 'operations-research.html', ans: 'x₁* = 2 · x₂* = 0 · Z* = 4 · constraint 2 redundant', kw: 'simplex tableau degeneracy redundant constraint tie ratio test graduate' },
+    { id: 'or-m1', n: 'M1', t: 'Reformulating for ≥, =, and minimize', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'Slack/surplus/artificial identified for (a) and (b)', kw: 'big m artificial slack surplus reformulate standard form' },
+    { id: 'or-m2', n: 'M2', t: 'Two equality constraints, two artificials', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'x₃* = 50 · x₄* = 50 · Z* = 400', kw: 'big m two artificials equality constraints' },
+    { id: 'or-m3', n: 'M3', t: 'Proving infeasibility', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'No feasible solution — artificial stays positive', kw: 'big m infeasible artificial basic positive' },
+    { id: 'or-m4', n: 'M4', t: 'A genuine minimization, two kinds of constraint', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'x₁* = 20 · x₂* = 30 · min Z* = 120', kw: 'big m minimize maximize negative z equality surplus' },
+    { id: 'or-m5', n: 'M5', t: 'A free variable and a non-sign constraint', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'Reformulated to two constraints, all variables ≥ 0', kw: 'big m free variable unrestricted split shift bound' },
+    { id: 'or-m6', n: 'M6', t: 'One free variable, solved three ways', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'x₁* = −1 · x₂* = 9 · x₃* = 0 · Z* = 35', kw: 'big m solver reformulate simplex unrestricted variable' },
+    { id: 'or-m7', n: 'M7', t: 'Minimizing directly, without flipping to −Z', topic: 'Big M method', hue: 'bigm', part: 'C', page: 'operations-research.html', ans: 'x₁* = 35/3 · x₂* = 0 · x₃* = 35/2 · min Z* = 245/2', kw: 'big m minimize directly most positive stopping rule graduate' },
     { id: 'or1', n: 'OR1', t: 'Binding constraints and the price of a resource', topic: 'Shadow prices', hue: 'shadow', part: 'C', page: 'operations-research.html', ans: 'Both binding · y₁ = y₂ = 0.5 · 3 more units', kw: 'linear programming lp shadow price binding resource graphical hillier operations research' },
     { id: 'or2', n: 'OR2', t: 'How far can the objective tilt?', topic: 'Objective ranging', hue: 'range', part: 'C', page: 'operations-research.html', ans: 'Yes · No · 1 ≤ c₂ ≤ 3 · 2/3 ≤ c₁ ≤ 2', kw: 'objective coefficient sensitivity range slope optimal corner lp' },
     { id: 'or3', n: 'OR3', t: 'Three resources, one with slack', topic: 'Shadow prices', hue: 'shadow', part: 'C', page: 'operations-research.html', ans: 'Binding: 2, 3 · y = (0, 0.2, 1.4)', kw: 'shadow price nonbinding slack graphical lp' },
@@ -304,6 +318,27 @@
     if ($('kbdHint')) $('kbdHint').textContent = mac ? '⌘K' : 'Ctrl K';
   }
 
+  /* ---------- step-through derivation walker (.part.walk, Back/Step through/Show all) ---------- */
+  document.querySelectorAll('.part.walk').forEach(part => {
+    const list = part.querySelector('ol.steps'); if (!list) return;
+    const items = [...list.children];
+    const pos = part.querySelector('.walkbar .pos');
+    let idx = -1; // -1 = show all steps
+    function render() {
+      items.forEach((li, i) => { li.classList.toggle('dim', idx >= 0 && i !== idx); li.classList.toggle('cur', idx >= 0 && i === idx); });
+      if (pos) pos.textContent = idx < 0 ? '' : `Step ${idx + 1} / ${items.length}`;
+    }
+    part.querySelectorAll('.walkbar [data-a]').forEach(btn => btn.addEventListener('click', () => {
+      const a = btn.dataset.a;
+      if (a === 'all') idx = -1;
+      else if (a === 'next') idx = idx < 0 ? 0 : Math.min(items.length - 1, idx + 1);
+      else if (a === 'prev') idx = idx <= 0 ? -1 : idx - 1;
+      render();
+      if (idx >= 0) items[idx].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }));
+    render();
+  });
+
   /* ---------- keyboard ---------- */
   document.addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); if (window.Atlas.openPal) window.Atlas.openPal(); return; }
@@ -320,7 +355,7 @@
   });
 
   /* ---------- animated stat counters (works with any .stat b[data-count] on the page) ---------- */
-  if ($('stSteps')) $('stSteps').dataset.count = 109;
+  if ($('stSteps')) $('stSteps').dataset.count = 151;
   if ($('stFigs')) $('stFigs').dataset.count = 20;
   if ($('stChecks')) $('stChecks').dataset.count = 49;
   if ($('stDists')) $('stDists').dataset.count = 16;

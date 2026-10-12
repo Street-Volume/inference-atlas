@@ -489,10 +489,11 @@ footer { color: var(--muted); font-size: 13.5px; border-top: 1px solid var(--rul
 }
 
 /* ================= v3 additions ================= */
-:root { --h-shadow: #FF9D5C; --h-range: #EC8CFF; --h-ency: #B9F35B; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --h-shadow: #C2410C; --h-range: #A21CAF; --h-ency: #4D7C0F; } }
-:root[data-theme="light"] { --h-shadow: #C2410C; --h-range: #A21CAF; --h-ency: #4D7C0F; }
+:root { --h-shadow: #FF9D5C; --h-range: #EC8CFF; --h-ency: #B9F35B; --h-simplex: #5B8DEF; --h-bigm: #E0665C; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --h-shadow: #C2410C; --h-range: #A21CAF; --h-ency: #4D7C0F; --h-simplex: #3730A4; --h-bigm: #B91C1C; } }
+:root[data-theme="light"] { --h-shadow: #C2410C; --h-range: #A21CAF; --h-ency: #4D7C0F; --h-simplex: #3730A4; --h-bigm: #B91C1C; }
 [data-hue="shadow"] { --c: var(--h-shadow); } [data-hue="range"] { --c: var(--h-range); } [data-hue="ency"] { --c: var(--h-ency); }
+[data-hue="simplex"] { --c: var(--h-simplex); } [data-hue="bigm"] { --c: var(--h-bigm); }
 
 /* living aurora behind everything */
 body { background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px, 32px 32px; background-attachment: scroll; }
@@ -582,6 +583,12 @@ table.tableau td.sp::after { content: ""; position: absolute; inset: 3px; border
 table.tableau td.sp.on { background: color-mix(in srgb, var(--dv) 18%, transparent); }
 table.tableau td.sp.on::after { opacity: 1; box-shadow: 0 0 14px var(--dv); animation: cellpulse 1.8s ease-in-out infinite; }
 @keyframes cellpulse { 50% { box-shadow: 0 0 2px var(--dv); } }
+table.tableau th.enter { color: var(--dv); background: color-mix(in srgb, var(--dv) 14%, var(--paper)); }
+table.tableau tr.leave td { background: color-mix(in srgb, var(--bad) 10%, transparent); }
+table.tableau tr.leave td:first-child { color: var(--bad); font-weight: 700; }
+table.tableau td.piv { position: relative; font-weight: 700; color: var(--dv); background: color-mix(in srgb, var(--dv) 20%, transparent); }
+table.tableau td.piv::after { content: ""; position: absolute; inset: 2px; border-radius: 6px; border: 1.5px solid var(--dv); box-shadow: 0 0 10px color-mix(in srgb, var(--dv) 60%, transparent); }
+table.tableau tr.optimal td { background: color-mix(in srgb, var(--ok) 10%, transparent); }
 .seg { display: inline-flex; padding: 3px; border-radius: 12px; background: var(--paper); border: 1px solid var(--rule); gap: 3px; flex-wrap: wrap; }
 .seg button { border: 0 !important; background: none !important; box-shadow: none !important; padding: 6px 12px !important; border-radius: 9px !important; color: var(--muted) !important; }
 .seg button[aria-pressed="true"] { background: var(--c) !important; color: var(--bg) !important; }
