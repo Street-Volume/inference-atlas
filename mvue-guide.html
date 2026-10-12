@@ -141,6 +141,18 @@ window.MathJax = {
     </ol>
   </div>
 
+  <figure class="lab" id="labRB">
+    <div class="lab-head"><span class="tag">Live figure Ω1</span><h3>Rao–Blackwell, seen as a shrinking histogram</h3>
+      <p>Both of these are unbiased for θ in the Weibull example above. The crude estimator \(T=Y_1^2\) uses only the first observation. The MVUE \(\hat\theta=\frac1n\sum Y_i^2\) uses all of them. Run 2,000 samples and watch \(T\)'s histogram stay wide while \(\hat\theta\)'s collapses toward θ — that gap <i>is</i> Rao–Blackwell's variance reduction, made visible.</p></div>
+    <canvas id="cvRB" class="tall" aria-label="Overlaid sampling distributions of the crude estimator and the MVUE"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="rb_theta">True θ <output id="o_rbtheta">2.00</output></label><input type="range" id="rb_theta" min="0.5" max="4" step="0.05" value="2"></div>
+      <div class="ctl"><label for="rb_n">Sample size n <output id="o_rbn">10</output></label><input type="range" id="rb_n" min="2" max="60" step="1" value="10"></div>
+      <div class="btnrow"><button id="rb_run" class="primary">Run 2,000 samples</button><button id="rb_clear">Clear</button></div>
+    </div>
+    <div class="readout" id="r_rb"></div>
+  </figure>
+
   <div class="flag"><b>Do not memorize</b><span>"Exponential family ⇒ complete" as an unconditional rule. Many standard one-parameter regular exponential-family models (Bernoulli, Poisson, exponential, and relatives) have natural statistics that are complete and sufficient <i>under the relevant conditions</i> — but membership in the family alone doesn't establish completeness; the natural-parameter-space conditions matter. Multiparameter models need extra care: Example 9.8 (pp. 467–468) treats a normal model with both \(\mu\) and \(\sigma^2\) unknown and gets \(\sum Y_i\) and \(\sum Y_i^2\) as <i>jointly</i> sufficient — don't argue "normal is exponential family, so automatically complete."</span></div>
 
   <div class="answer">
@@ -191,6 +203,20 @@ window.MathJax = {
     <div class="answer"><span class="tag">Extended pooled estimator</span><p>\[ \class{dv}{S_p^2=\frac{\dfrac1a(n-1)S_1^2+\dfrac1b(m-1)S_2^2}{n+m-2}} \]</p>
     <p class="why">Set \(a=b=1\) and this collapses back to the familiar equal-variance pooled estimator.</p></div>
   </div>
+
+  <figure class="lab" id="labPooled">
+    <div class="lab-head"><span class="tag">Live figure Ω2</span><h3>Sₚ² settles on σ², even with unequal scales</h3>
+      <p>Draw repeated pairs of samples from \(N(\mu_1,a\sigma^2)\) and \(N(\mu_2,b\sigma^2)\) and compute \(S_p^2\) each time. The histogram should center on the true σ² regardless of how different \(a\) and \(b\) are — that's unbiasedness in action.</p></div>
+    <canvas id="cvPooled" aria-label="Sampling distribution of the extended pooled estimator"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="p_sigma2">True σ² <output id="o_psig">1.50</output></label><input type="range" id="p_sigma2" min="0.3" max="4" step="0.05" value="1.5"></div>
+      <div class="ctl"><label for="p_a">a (Var X = aσ²) <output id="o_pa">1.00</output></label><input type="range" id="p_a" min="0.2" max="4" step="0.1" value="1"></div>
+      <div class="ctl"><label for="p_b">b (Var Y = bσ²) <output id="o_pb">3.00</output></label><input type="range" id="p_b" min="0.2" max="4" step="0.1" value="3"></div>
+      <div class="ctl"><label for="p_n">n = m (per group) <output id="o_pn">8</output></label><input type="range" id="p_n" min="3" max="50" step="1" value="8"></div>
+      <div class="btnrow"><button id="p_run" class="primary">Run 2,000 samples</button><button id="p_clear">Clear</button></div>
+    </div>
+    <div class="readout" id="r_pooled"></div>
+  </figure>
 </section>
 
 <footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
@@ -217,4 +243,176 @@ window.MathJax = {
 </dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="assets/app.js"></script>
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 3) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function frame(ctx, box, xr, yr, opts) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11.5px ' + tok('--f-mono');
+    ctx.lineWidth = 1;
+    (opts.yt || []).forEach(t => {
+      ctx.strokeStyle = rule; ctx.globalAlpha = 0.6;
+      ctx.beginPath(); ctx.moveTo(x0, Y(t)); ctx.lineTo(x1, Y(t)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(opts.yf ? opts.yf(t) : t, x0 - 6, Y(t));
+    });
+    (opts.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(opts.xf ? opts.xf(t) : t, X(t), y1 + 6);
+      ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(X(t), y1); ctx.lineTo(X(t), y1 + 4); ctx.stroke();
+    });
+    ctx.strokeStyle = muted;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (opts.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(opts.xl, x1, y1 - 4); }
+    if (opts.yl) { ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(opts.yl, x0 + 6, y0); }
+    return { X, Y };
+  }
+  function vline(ctx, X, Y, x, yr, color, dash, label, labelSide) {
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(X(x), Y(yr[0])); ctx.lineTo(X(x), Y(yr[1])); ctx.stroke(); ctx.restore();
+    if (label) {
+      ctx.fillStyle = color; ctx.font = '600 12px ' + tok('--f-mono');
+      ctx.textAlign = labelSide === 'left' ? 'right' : 'left'; ctx.textBaseline = 'top';
+      ctx.fillText(label, X(x) + (labelSide === 'left' ? -5 : 5), Y(yr[1]) + 2);
+    }
+  }
+  function niceTicks(a, b, n) {
+    const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw) || raw;
+    const out = []; for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) out.push(+t.toFixed(10));
+    return out;
+  }
+  const expo = () => -Math.log(1 - Math.random());
+  const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+
+  /* ============ Live figure Ω1: Rao-Blackwell variance shrink ============ */
+  const RB = { theta: 2, n: 10, crude: [], mvue: [], running: false, target: 2000 };
+  function oneCrude() { return RB.theta * expo(); } // Y1^2 ~ Exp(theta)
+  function oneMVUE() { let u = 0; for (let i = 0; i < RB.n; i++) u += RB.theta * expo(); return u / RB.n; }
+  function renderRB() {
+    const cv = $('cvRB'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const hi = RB.theta * 4, bins = 44, bw = hi / bins;
+    const cc = new Array(bins).fill(0), mc = new Array(bins).fill(0);
+    RB.crude.forEach(v => { const b = Math.floor(v / bw); if (b >= 0 && b < bins) cc[b]++; });
+    RB.mvue.forEach(v => { const b = Math.floor(v / bw); if (b >= 0 && b < bins) mc[b]++; });
+    const cmax = Math.max(5, ...cc, ...mc);
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, hi], [0, cmax * 1.12], { xt: niceTicks(0, hi, 6), yt: niceTicks(0, cmax, 4), xl: 'value', yl: 'count' });
+    const drawBars = (counts, color, alpha) => {
+      ctx.fillStyle = color; ctx.globalAlpha = alpha;
+      counts.forEach((c, b) => { if (c) ctx.fillRect(X(b * bw) + 0.5, Y(c), Math.max(1, X((b + 1) * bw) - X(b * bw) - 1), Y(0) - Y(c)); });
+      ctx.globalAlpha = 1;
+    };
+    drawBars(cc, tok('--h-shadow'), 0.45);
+    drawBars(mc, tok('--dv'), 0.55);
+    vline(ctx, X, Y, RB.theta, [0, cmax * 1.1], tok('--muted'), [5, 4], 'true θ', 'right');
+    const legend = (x, color, label) => { ctx.fillStyle = color; ctx.fillRect(x, 16, 10, 10); ctx.fillStyle = tok('--ink'); ctx.font = '12px ' + tok('--f-body'); ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(label, x + 14, 15); };
+    legend(box.x0 + 4, tok('--h-shadow'), 'T = Y₁² (crude)');
+    legend(box.x0 + 150, tok('--dv'), 'θ̂ = Ū (MVUE)');
+    const sdOf = arr => { if (!arr.length) return NaN; const m = arr.reduce((a, b) => a + b, 0) / arr.length; return Math.sqrt(arr.reduce((a, v) => a + (v - m) ** 2, 0) / Math.max(1, arr.length - 1)); };
+    const sdC = sdOf(RB.crude), sdM = sdOf(RB.mvue);
+    $('r_rb').innerHTML = RB.crude.length ?
+      `<span><span class="k">samples</span> <b>${RB.crude.length}</b></span>` +
+      `<span><span class="k">sd of T</span> <b>${fmt(sdC)}</b></span>` +
+      `<span><span class="k">sd of θ̂</span> <b class="v-dv">${fmt(sdM)}</b></span>` +
+      `<span><span class="k">sd ratio</span> <b class="v-hl">${fmt(sdC / sdM, 2)}× ≈ √n = ${fmt(Math.sqrt(RB.n), 2)}</b></span>`
+      : `<span class="k">Press Run — both estimators are unbiased for θ, but their spread tells a very different story.</span>`;
+  }
+  function runRB() {
+    if (RB.running) return;
+    RB.crude = []; RB.mvue = []; RB.running = true;
+    const per = reduce ? RB.target : 40;
+    const step = () => {
+      for (let k = 0; k < per && RB.crude.length < RB.target; k++) { RB.crude.push(oneCrude()); RB.mvue.push(oneMVUE()); }
+      renderRB();
+      if (RB.crude.length < RB.target) requestAnimationFrame(step); else RB.running = false;
+    };
+    step();
+  }
+  function clearRB() { if (!RB.running) { RB.crude = []; RB.mvue = []; renderRB(); } }
+  if ($('cvRB')) {
+    $('rb_theta').addEventListener('input', e => { RB.theta = +e.target.value; $('o_rbtheta').textContent = RB.theta.toFixed(2); clearRB(); });
+    $('rb_n').addEventListener('input', e => { RB.n = +e.target.value; $('o_rbn').textContent = RB.n; clearRB(); });
+    $('rb_run').addEventListener('click', runRB);
+    $('rb_clear').addEventListener('click', clearRB);
+    new ResizeObserver(() => renderRB()).observe($('cvRB'));
+    renderRB();
+  }
+
+  /* ============ Live figure Ω2: pooled estimator sampling distribution ============ */
+  const PE = { sigma2: 1.5, a: 1, b: 3, n: 8, vals: [], running: false, target: 2000 };
+  function oneSp2() {
+    const sd1 = Math.sqrt(PE.a * PE.sigma2), sd2 = Math.sqrt(PE.b * PE.sigma2);
+    let sx = 0, sxx = 0; for (let i = 0; i < PE.n; i++) { const x = sd1 * gauss(); sx += x; sxx += x * x; }
+    const mx = sx / PE.n, s1 = (sxx - PE.n * mx * mx) / (PE.n - 1);
+    let sy = 0, syy = 0; for (let i = 0; i < PE.n; i++) { const y = sd2 * gauss(); sy += y; syy += y * y; }
+    const my = sy / PE.n, s2 = (syy - PE.n * my * my) / (PE.n - 1);
+    return ((PE.n - 1) * s1 / PE.a + (PE.n - 1) * s2 / PE.b) / (2 * PE.n - 2);
+  }
+  function renderPooled() {
+    const cv = $('cvPooled'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const hi = PE.sigma2 * 3, bins = 40, bw = hi / bins;
+    const counts = new Array(bins).fill(0);
+    PE.vals.forEach(v => { const b = Math.floor(v / bw); if (b >= 0 && b < bins) counts[b]++; });
+    const cmax = Math.max(5, ...counts);
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, hi], [0, cmax * 1.12], { xt: niceTicks(0, hi, 6), yt: niceTicks(0, cmax, 4), xl: 'Sₚ²', yl: 'count' });
+    ctx.fillStyle = tok('--hl'); ctx.globalAlpha = 0.55;
+    counts.forEach((c, b) => { if (c) ctx.fillRect(X(b * bw) + 0.5, Y(c), Math.max(1, X((b + 1) * bw) - X(b * bw) - 1), Y(0) - Y(c)); });
+    ctx.globalAlpha = 1;
+    vline(ctx, X, Y, PE.sigma2, [0, cmax * 1.1], tok('--muted'), [5, 4], 'true σ²', 'right');
+    if (PE.vals.length) {
+      const m = PE.vals.reduce((a, b) => a + b, 0) / PE.vals.length;
+      vline(ctx, X, Y, m, [0, cmax * 1.1], tok('--dv'), [], 'mean Sₚ²', m > PE.sigma2 ? 'right' : 'left');
+      $('r_pooled').innerHTML =
+        `<span><span class="k">samples</span> <b>${PE.vals.length}</b></span>` +
+        `<span><span class="k">mean Sₚ²</span> <b class="v-dv">${fmt(m)}</b></span>` +
+        `<span><span class="k">true σ²</span> <b>${fmt(PE.sigma2, 2)}</b></span>` +
+        `<span><span class="k">a, b</span> <b>${fmt(PE.a, 2)}, ${fmt(PE.b, 2)}</b></span>`;
+    } else {
+      $('r_pooled').innerHTML = `<span class="k">Press Run — even with a ≠ b, Sₚ² centers on σ².</span>`;
+    }
+  }
+  function runPooled() {
+    if (PE.running) return;
+    PE.vals = []; PE.running = true;
+    const per = reduce ? PE.target : 25;
+    const step = () => {
+      for (let k = 0; k < per && PE.vals.length < PE.target; k++) PE.vals.push(oneSp2());
+      renderPooled();
+      if (PE.vals.length < PE.target) requestAnimationFrame(step); else PE.running = false;
+    };
+    step();
+  }
+  function clearPooled() { if (!PE.running) { PE.vals = []; renderPooled(); } }
+  if ($('cvPooled')) {
+    $('p_sigma2').addEventListener('input', e => { PE.sigma2 = +e.target.value; $('o_psig').textContent = PE.sigma2.toFixed(2); clearPooled(); });
+    $('p_a').addEventListener('input', e => { PE.a = +e.target.value; $('o_pa').textContent = PE.a.toFixed(2); clearPooled(); });
+    $('p_b').addEventListener('input', e => { PE.b = +e.target.value; $('o_pb').textContent = PE.b.toFixed(2); clearPooled(); });
+    $('p_n').addEventListener('input', e => { PE.n = +e.target.value; $('o_pn').textContent = PE.n; clearPooled(); });
+    $('p_run').addEventListener('click', runPooled);
+    $('p_clear').addEventListener('click', clearPooled);
+    new ResizeObserver(() => renderPooled()).observe($('cvPooled'));
+    renderPooled();
+  }
+})();
+</script>
 </body></html>
