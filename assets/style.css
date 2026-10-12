@@ -247,25 +247,26 @@ h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.12rem; letter
    which read as interchangeable chrome no matter what it labeled. */
 .tag { font-family: var(--f-body); font-size: 13px; font-weight: 700; font-style: italic; letter-spacing: 0; text-transform: none; }
 
-/* Each block type gets its own silhouette so the page isn't a stack of
-   identical rounded cards — the shape itself says what kind of thing you're
-   looking at (a problem to read, a quoted tool, a flagged aside, a result). */
-.problem { position: relative; background: linear-gradient(140deg, color-mix(in srgb, var(--c) 8%, var(--sheet)), var(--sheet) 55%);
-  border: 1px solid var(--rule); border-left: 3px solid var(--c); border-radius: 2px 20px 2px 20px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); }
+/* Most blocks are text with an accent, not a box: a filled, bordered,
+   shadowed rectangle for every paragraph is what reads as "a stack of
+   cards" no matter how the corners are cut. Only .answer and figure.lab
+   (the payoff, and the thing that genuinely needs a frame) keep a full
+   background+border; everything else is page background plus a rule. */
+.problem { position: relative; border-left: 3px solid var(--c); padding: 4px 0 4px 18px; display: flex; flex-direction: column; gap: 10px; }
 .problem .tag { color: var(--c); }
-.tools { background: var(--tb-bg); border: 1px solid color-mix(in srgb, var(--tb) 28%, transparent); border-top: 2px dashed color-mix(in srgb, var(--tb) 45%, transparent); border-radius: 3px; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+.tools { border-top: 2px dashed color-mix(in srgb, var(--tb) 45%, transparent); padding: 14px 2px 2px; display: flex; flex-direction: column; gap: 10px; }
 .tools .tag { color: var(--tb); }
 .tools dl { margin: 0; display: flex; flex-direction: column; gap: 12px; }
 .tools dt { font-weight: 600; } .tools dd { margin: 0; }
-.flag { background: var(--flag-bg); border: 1px solid color-mix(in srgb, var(--flag) 28%, transparent); border-left: 5px solid var(--flag); border-radius: 0 12px 12px 0; padding: 12px 16px; font-size: 14.5px; display: flex; gap: 12px; align-items: flex-start; }
+.flag { border-left: 3px solid var(--flag); padding: 2px 0 2px 16px; font-size: 14.5px; display: flex; gap: 12px; align-items: flex-start; }
 .flag b { color: var(--flag); font-family: var(--f-body); font-size: 13px; font-weight: 700; font-style: italic; white-space: nowrap; padding-top: 1px; }
-.qf { background: var(--qf-bg); border: 1px solid color-mix(in srgb, var(--qf) 35%, transparent); border-radius: 4px 18px 18px 4px; padding: 14px 18px; font-size: 14px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+.qf { border-left: 3px solid var(--qf); padding: 2px 0 2px 16px; font-size: 14px; display: flex; flex-direction: column; gap: 8px; position: relative; }
 .qf > b { color: var(--qf); font-family: var(--f-body); font-size: 13px; font-weight: 700; font-style: italic; white-space: nowrap; }
 .qf-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .qf-badge { display: inline-flex; align-items: center; gap: 6px; color: var(--qf); font-family: var(--f-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .qf-tag { font-size: 10px; font-family: var(--f-mono); padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--qf) 18%, transparent); color: var(--qf); border: 1px solid color-mix(in srgb, var(--qf) 35%, transparent); font-weight: 600; }
 .qf-body { line-height: 1.6; color: var(--ink-2); }
-.qf-interview { margin-top: 6px; padding: 10px 14px; background: color-mix(in srgb, var(--bg) 70%, var(--qf-bg)); border-left: 3px solid var(--qf); border-radius: 6px; font-size: 13px; line-height: 1.55; color: var(--ink); }
+.qf-interview { margin-top: 6px; padding: 2px 0 2px 14px; border-left: 2px dotted color-mix(in srgb, var(--qf) 55%, transparent); font-size: 13px; line-height: 1.55; color: var(--ink); }
 .qf-interview b { color: var(--qf); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-bottom: 3px; }
 
 .part { display: flex; flex-direction: column; gap: 10px; }
@@ -328,7 +329,7 @@ canvas { width: 100%; height: 260px; display: block; }
 canvas.tall { height: 310px; }
 canvas.short { height: 120px; }
 canvas.square { height: 360px; }
-.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 20px; align-items: end; padding: 12px 14px; background: color-mix(in srgb, var(--paper) 65%, transparent); border: 1px solid var(--rule); border-radius: 14px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 20px; align-items: end; padding: 14px 2px 2px; border-top: 1px solid var(--rule); }
 .ctl { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .ctl label { font-size: 13px; display: flex; justify-content: space-between; gap: 8px; color: var(--muted); }
 .ctl label output { font-family: var(--f-mono); font-size: 12px; color: var(--c); font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--c) 12%, transparent); padding: 0 7px; border-radius: 6px; }
