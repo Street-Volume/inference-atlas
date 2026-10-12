@@ -314,7 +314,9 @@ body.quiz .key-ans:hover { filter: none; }
 .pfoot a.next b { color: var(--ink); font-weight: 600; }
 
 /* ---------- figures ---------- */
-figure.lab { position: relative; margin: 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 20px; padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow); overflow: hidden; }
+/* A specimen tray: flush/square where the label sits, rounded where the figure
+   is cradled — reads as an exhibit, not another rounded card in the stack. */
+figure.lab { position: relative; margin: 0; background: var(--sheet); border: 1px solid var(--rule); border-top: 2px solid var(--c); border-radius: 2px 2px 20px 20px; padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow); overflow: hidden; }
 figure.lab::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 130px; background: radial-gradient(60% 100% at 18% 0%, color-mix(in srgb, var(--c) 15%, transparent), transparent); pointer-events: none; }
 figure.lab > * { position: relative; }
 figure.lab .tag { color: var(--c); display: inline-flex; align-items: center; gap: 8px; }
@@ -340,12 +342,14 @@ input[type=range] { width: 100%; accent-color: var(--c, var(--dv)); }
 .v-dv { color: var(--dv); } .v-rej { color: var(--rej); } .v-hl { color: var(--hl); } .v-tb { color: var(--tb); }
 .takeaway { font-size: 14px; color: var(--muted); border-left: 2px solid var(--c); padding-left: 12px; max-width: 72ch; }
 
+/* A citation slip, not a card: flush left rule in the textbook hue, square corners,
+   no background fill — it's a reference note, not content to solve. */
 ol.reading { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; counter-reset: rd; }
-ol.reading li { counter-increment: rd; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 12px 14px 12px 12px; }
+ol.reading li { counter-increment: rd; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; border-left: 2px solid color-mix(in srgb, var(--tb) 55%, transparent); padding: 6px 14px 6px 12px; }
 ol.reading li::before { content: counter(rd); font-family: var(--f-display); font-weight: 800; font-size: 1.45rem; color: var(--tb); line-height: 1.1; }
 ol.reading li div { min-width: 0; }
 ol.reading .for { font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
-.tablewrap { overflow-wrap: normal; overflow-x: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 16px; }
+.tablewrap { overflow-wrap: normal; overflow-x: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px; }
 table.fix { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.fix th, table.fix td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
 table.fix th { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--paper); white-space: nowrap; }
@@ -389,7 +393,8 @@ table.fix tr[hidden] { display: none; }
 .wb-score span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
 .wb-score span b { color: var(--ink); }
 .checker { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
-.ck { background: var(--sheet); border: 1px solid var(--rule); border-radius: 14px; padding: 12px 13px; display: flex; flex-direction: column; gap: 8px; transition: border-color .3s, box-shadow .3s; }
+/* A punch card, not a card-kit card: square shoulders, rounded foot. */
+.ck { background: var(--sheet); border: 1px solid var(--rule); border-radius: 3px 3px 13px 13px; padding: 12px 13px; display: flex; flex-direction: column; gap: 8px; transition: border-color .3s, box-shadow .3s; }
 .ck-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .ck-q { font-family: var(--f-mono); font-size: 11px; color: var(--c); font-weight: 600; }
 .ck-l { font-size: 13.5px; color: var(--ink-2); }
