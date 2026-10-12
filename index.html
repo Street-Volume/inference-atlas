@@ -638,6 +638,7 @@ button.pick[aria-pressed="true"] i { background: var(--bg); }
 .seen-chip em { font-style: normal; font-family: var(--f-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; padding: 1px 6px; border-radius: 999px; background: var(--dv-bg); color: var(--dv); }
 .seen-chip[data-k="chapter"] em { background: var(--tb-bg); color: var(--tb); }
 .seen-chip[data-k="m447"] em { background: color-mix(in srgb, var(--h-shadow) 16%, transparent); color: var(--h-shadow); }
+.seen-chip[data-k="qf"] em { background: var(--qf-bg); color: var(--qf); }
 a.seen-chip:hover { border-color: var(--c); color: var(--ink); }
 button.rel { font-size: 12.5px; color: var(--ink-2); background: none; border: 1px dashed color-mix(in srgb, var(--c) 55%, var(--rule-2)); border-radius: 999px; padding: 4px 11px; cursor: pointer; transition: background-color .2s, color .2s; }
 button.rel:hover { background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--ink); }
@@ -727,7 +728,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <div class="nav-topic" data-hue="shadow">Simplex tableau</div>
     <a href="#or5" data-hue="shadow" data-p="or5"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR5</span><span class="lbl">Prices from the tableau</span></a>
     <div class="nav-group">Encyclopedia</div>
-    <a href="#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">14 distributions</span></a>
+    <a href="#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
     <div class="nav-group">Tools</div>
     <a href="#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
     <a href="#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
@@ -757,12 +758,12 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       <div class="stat" data-hue="mgf"><b data-count="19">19</b><span>problems</span></div>
       <div class="stat" data-hue="est"><b id="stSteps" data-count="0">0</b><span>derivation steps</span></div>
       <div class="stat" data-hue="cont"><b id="stFigs" data-count="0">0</b><span>live figures</span></div>
-      <div class="stat" data-hue="ency"><b id="stDists" data-count="14">14</b><span>distributions</span></div>
+      <div class="stat" data-hue="ency"><b id="stDists" data-count="16">16</b><span>distributions</span></div>
       <div class="stat" data-hue="shadow"><b id="stChecks" data-count="0">0</b><span>checkable answers</span></div>
     </div>
   </div>
   <div class="ridge-wrap">
-    <canvas id="ridgeCv" aria-label="Ridgeline of the 14 distributions in the encyclopedia; select a ridge to open its entry"></canvas>
+    <canvas id="ridgeCv" aria-label="Ridgeline of the 16 distributions in the encyclopedia; select a ridge to open its entry"></canvas>
     <div class="ridge-cap" id="ridgeCap" data-hue="mgf"><span>Every ridge is a distribution from the encyclopedia. <b id="ridgeName">Binomial</b></span><span>Hover to inspect, click to open its entry</span></div>
   </div>
   <div class="hero-head" style="padding-top:0;padding-bottom:26px">
@@ -3231,7 +3232,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       tex: { pf: 'f(y)=\\dfrac{1}{\\sigma\\sqrt{2\\pi}}\\,e^{-(y-\\mu)^2/(2\\sigma^2)}', mean: '\\mu', var: '\\sigma^2', mgf: 'e^{\\mu t+\\sigma^2t^2/2}' },
       story: 'The limit of sums and averages, and the model behind 9.96. Changing μ slides it; changing σ stretches it while the area stays 1.',
       seen: [{ t: '9.96 MLE of σ', k: 'hw', h: '#ex996' }, { t: 'Live figures B4, B5', k: 'hw', h: '#labSig' }],
-      rel: [{ l: 'Sums of uniforms approach it', to: 'sumu', set: { k: 6 } }, { l: 'Binomial with npq large', to: 'binom', set: { n: 60, p: 0.5 } }, { l: 'Poisson with λ large', to: 'pois', set: { lam: 20 } }] },
+      rel: [{ l: 'Sums of uniforms approach it', to: 'sumu', set: { k: 6 } }, { l: 'Binomial with npq large', to: 'binom', set: { n: 60, p: 0.5 } }, { l: 'Poisson with λ large', to: 'pois', set: { lam: 20 } }, { l: 'Exponentiate → Log-normal', to: 'lognorm', set: { mu: 0, sig: 0.4 } }, { l: 'Standardize with unknown σ → Student’s t', to: 'tdist', set: { nu: 5 } }] },
     { id: 'expo', name: 'Exponential', short: 'Exp', sub: 'memoryless waiting time', type: 'Continuous', hue: 'shadow',
       params: [{ k: 'beta', l: 'β (mean)', min: 0.2, max: 5, step: 0.05, v: 1 }],
       dom: P => [0, 12], f: (y, P) => (y < 0 ? 0 : Math.exp(-y / P.beta) / P.beta), mean: P => P.beta, vr: P => P.beta * P.beta,
@@ -3254,7 +3255,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       tex: { pf: 'f(y)=\\dfrac{y^{\\nu/2-1}e^{-y/2}}{2^{\\nu/2}\\,\\Gamma(\\nu/2)},\\quad y\\gt0', mean: '\\nu', var: '2\\nu', mgf: '(1-2t)^{-\\nu/2}' },
       story: 'A gamma with α = ν/2 and β = 2. It is the distribution of a sum of ν squared standard normals, which is how it enters inference about variances.',
       seen: [{ t: 'Wackerly chapter 4 (gamma family)', k: 'chapter' }],
-      rel: [{ l: 'Special case of → Gamma', to: 'gamma', set: { al: 2, be: 2 } }, { l: 'ν = 2 → Exponential(β = 2)', to: 'expo', set: { beta: 2 } }] },
+      rel: [{ l: 'Special case of → Gamma', to: 'gamma', set: { al: 2, be: 2 } }, { l: 'ν = 2 → Exponential(β = 2)', to: 'expo', set: { beta: 2 } }, { l: 'Pairs with Normal → Student’s t', to: 'tdist', set: { nu: 5 } }] },
     { id: 'beta', name: 'Beta', short: 'β', sub: 'shapes on [0, 1]', type: 'Continuous', hue: 'cont',
       params: [{ k: 'al', l: 'α', min: 0.3, max: 8, step: 0.05, v: 2 }, { k: 'be', l: 'β', min: 0.3, max: 8, step: 0.05, v: 5 }], anim: 'al',
       dom: P => [0, 1], f: (y, P) => (y <= 0 || y >= 1 ? 0 : Math.exp((P.al - 1) * Math.log(y) + (P.be - 1) * Math.log(1 - y) - (lgamma(P.al) + lgamma(P.be) - lgamma(P.al + P.be)))),
@@ -3271,7 +3272,25 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       tex: { pf: 'f(y)=\\dfrac{r}{\\theta}\\,y^{r-1}e^{-y^r/\\theta},\\quad y\\gt0', mean: '\\theta^{1/r}\\,\\Gamma(1+1/r)', var: '\\theta^{2/r}\\left[\\Gamma(1+\\tfrac2r)-\\Gamma(1+\\tfrac1r)^2\\right]', mgf: null },
       story: 'The density in exercise 9.82. Raising Y to the power r turns it into an exponential with mean θ, which is exactly why the sufficient statistic is ΣYᵢʳ.',
       seen: [{ t: '9.82 parts (a) to (c)', k: 'hw', h: '#ex982' }, { t: 'Live figures B1 to B3', k: 'hw', h: '#labLik' }],
-      rel: [{ l: 'r = 1 → Exponential(β = θ)', to: 'expo', set: { beta: 2 } }] }
+      rel: [{ l: 'r = 1 → Exponential(β = θ)', to: 'expo', set: { beta: 2 } }] },
+    { id: 'tdist', name: 'Student’s t', short: 't', sub: 'normal with fat tails', type: 'Continuous', hue: 'test',
+      params: [{ k: 'nu', l: 'ν (degrees of freedom)', min: 3, max: 30, step: 1, v: 5 }], anim: 'nu',
+      dom: P => { const sd = Math.sqrt(P.nu / (P.nu - 2)); return [-9 * sd, 9 * sd]; },
+      f: (y, P) => Math.exp(lgamma((P.nu + 1) / 2) - lgamma(P.nu / 2) - 0.5 * Math.log(P.nu * Math.PI) - ((P.nu + 1) / 2) * Math.log(1 + y * y / P.nu)),
+      mean: P => 0, vr: P => P.nu / (P.nu - 2),
+      tex: { pf: 'f(y)=\\dfrac{\\Gamma\\!\\left(\\frac{\\nu+1}{2}\\right)}{\\sqrt{\\nu\\pi}\\,\\Gamma\\!\\left(\\frac\\nu2\\right)}\\left(1+\\dfrac{y^2}{\\nu}\\right)^{-(\\nu+1)/2}', mean: '0', var: '\\dfrac{\\nu}{\\nu-2}\\ (\\nu\\gt2)', mgf: null },
+      story: 'Shaped like the standard normal but with fatter tails — exactly what shows up once you estimate σ from the sample instead of knowing it exactly. As ν → ∞ it converges to the normal; for small ν, extreme values are far more likely than a normal model predicts.',
+      seen: [{ t: 'Natural next step after 9.96: (Ȳ − μ)/(S/√n) ~ tₙ₋₁', k: 'chapter' }, { t: 'Fat-tailed return modeling; t-tests on Sharpe ratios and factor betas', k: 'qf' }],
+      rel: [{ l: 'ν → ∞ → Normal', to: 'norm', set: { mu: 0, sd: 1 } }, { l: 'Built from → Normal and Chi-square', to: 'chisq', set: { nu: 5 } }] },
+    { id: 'lognorm', name: 'Log-normal', short: 'LN', sub: 'exponential of a normal', type: 'Continuous', hue: 'shadow',
+      params: [{ k: 'mu', l: 'μ (log-scale)', min: -1, max: 1, step: 0.05, v: 0 }, { k: 'sig', l: 'σ (log-scale)', min: 0.1, max: 1.5, step: 0.02, v: 0.4 }], anim: 'sig',
+      dom: P => { const m = Math.exp(P.mu + P.sig * P.sig / 2), v = (Math.exp(P.sig * P.sig) - 1) * Math.exp(2 * P.mu + P.sig * P.sig), sd = Math.sqrt(v); return [0, m + 4 * sd + 0.3]; },
+      f: (y, P) => (y <= 0 ? 0 : Math.exp(-((Math.log(y) - P.mu) ** 2) / (2 * P.sig * P.sig)) / (y * P.sig * Math.sqrt(2 * Math.PI))),
+      mean: P => Math.exp(P.mu + P.sig * P.sig / 2), vr: P => (Math.exp(P.sig * P.sig) - 1) * Math.exp(2 * P.mu + P.sig * P.sig),
+      tex: { pf: 'f(y)=\\dfrac{1}{y\\sigma\\sqrt{2\\pi}}\\exp\\!\\left(-\\dfrac{(\\ln y-\\mu)^2}{2\\sigma^2}\\right),\\quad y\\gt0', mean: 'e^{\\mu+\\sigma^2/2}', var: '\\left(e^{\\sigma^2}-1\\right)e^{2\\mu+\\sigma^2}', mgf: null },
+      story: 'If ln(Y) is normal, Y is log-normal: skewed right, never negative. Products of many independent positive factors tend toward this shape — exactly why it, not the normal, is the standard model for a stock price itself (as opposed to its returns).',
+      seen: [{ t: 'Geometric Brownian motion → Black–Scholes option pricing assumes stock prices are log-normal', k: 'qf' }, { t: 'Wackerly chapter 4 (functions of a normal random variable)', k: 'chapter' }],
+      rel: [{ l: 'ln(Y) → Normal', to: 'norm', set: { mu: 0, sd: 1 } }] }
   ];
   const byId = Object.fromEntries(D.map(d => [d.id, d]));
   D.forEach(d => { d.P0 = Object.fromEntries(d.params.map(p => [p.k, p.v])); });
@@ -3339,7 +3358,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     const seen = $('spotSeen'); seen.innerHTML = '';
     cur.seen.forEach(s => {
       const el = document.createElement(s.h ? 'a' : 'span'); el.className = 'seen-chip'; el.dataset.k = s.k; if (s.h) el.href = s.h;
-      el.innerHTML = `<em>${s.k === 'hw' ? 'homework' : s.k === 'm447' ? 'M447' : 'chapter'}</em>${s.t}`; seen.appendChild(el);
+      el.innerHTML = `<em>${s.k === 'hw' ? 'homework' : s.k === 'm447' ? 'M447' : s.k === 'qf' ? 'finance' : 'chapter'}</em>${s.t}`; seen.appendChild(el);
     });
     const rel = $('spotRel'); rel.innerHTML = '';
     cur.rel.forEach(r => { const b = document.createElement('button'); b.className = 'rel'; b.setAttribute('data-hue', byId[r.to].hue); b.textContent = r.l; b.addEventListener('click', () => select(r.to, r.set)); rel.appendChild(b); });
@@ -4016,7 +4035,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
   $('stSteps').dataset.count = document.querySelectorAll('ol.steps > li').length;
   $('stFigs').dataset.count = document.querySelectorAll('figure.lab').length;
   $('stChecks').dataset.count = CHECKS.length;
-  if ($('stDists')) $('stDists').dataset.count = EN ? EN.D.length : 14;
+  if ($('stDists')) $('stDists').dataset.count = EN ? EN.D.length : 16;
   document.querySelectorAll('.stat b[data-count]').forEach((el, i) => {
     const end = +el.dataset.count; el.textContent = end;
     if (reduce) return;
