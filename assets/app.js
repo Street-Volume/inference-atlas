@@ -396,7 +396,7 @@
   /* ---------- animated stat counters (works with any .stat b[data-count] on the page) ---------- */
   if ($('stSteps')) $('stSteps').dataset.count = 263;
   if ($('stFigs')) $('stFigs').dataset.count = 20;
-  if ($('stChecks')) $('stChecks').dataset.count = 49;
+  if ($('stChecks')) $('stChecks').dataset.count = 132;
   if ($('stDists')) $('stDists').dataset.count = 16;
   document.querySelectorAll('.stat b[data-count]').forEach((el, i) => {
     const end = +el.dataset.count; el.textContent = end;
