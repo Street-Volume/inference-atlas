@@ -1,0 +1,233 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>Testing Vocabulary — Inference Atlas</title></head><body data-page="testing-vocab.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="mle-toolkit.html#mle" data-hue="est"><span class="st"><i></i></span><span class="n">λ</span><span class="lbl">MLE toolkit</span></a>
+    <a href="mvue-guide.html#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="#testvocab" data-hue="test"><span class="st"><i></i></span><span class="n">α</span><span class="lbl">Testing vocabulary</span></a>
+    <a href="midterm-guide.html#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="testvocab" data-hue="test">
+  <div class="ex-head"><span class="ex-num">α</span><h2>Hypothesis testing: the core vocabulary</h2></div>
+  <p class="prose">Wackerly, Mendenhall &amp; Scheaffer §10.2. The vocabulary behind <a href="inference.html#ex105">10.5</a>, built from scratch.</p>
+
+  <div class="tools">
+    <span class="tag">The four elements of a test</span>
+    <dl>
+      <dt>1. Null hypothesis H₀</dt><dd>The claim being tested.</dd>
+      <dt>2. Alternative hypothesis Hₐ</dt><dd>What we conclude if we reject H₀.</dd>
+      <dt>3. Test statistic</dt><dd>A function of the sample used to make the decision.</dd>
+      <dt>4. Rejection region (RR)</dt><dd>The values of the test statistic for which H₀ is rejected.</dd>
+    </dl>
+  </div>
+  <p class="prose">In 10.5: \(H_0\!:\theta=0\); \(H_a\!:\theta\gt0\); Test 1 uses \(Y_1\) with RR \(\{Y_1\gt0.95\}\); Test 2 uses \(Y_1+Y_2\) with RR \(\{Y_1+Y_2\gt c\}\). A test is a decision rule fixed <i>before</i> looking at the data. Because \(H_a\) says θ > 0, which shifts the interval \((\theta,\theta+1)\) to the right, large observations are evidence against \(H_0\) — that's why both rejection regions have the form "statistic is large."</p>
+
+  <div class="tablewrap">
+    <table class="fix">
+      <thead><tr><th></th><th>H₀ is actually true</th><th>Hₐ is actually true</th></tr></thead>
+      <tbody>
+        <tr><td><b>Decision: reject H₀</b></td><td><span class="sev hi">Type I error</span> (prob. α)</td><td><span class="sev ok">correct</span> (prob. = power)</td></tr>
+        <tr><td><b>Decision: do not reject H₀</b></td><td><span class="sev ok">correct</span></td><td><span class="sev hi">Type II error</span> (prob. β)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flag"><b>Smoke alarm</b><span>A Type I error is a false alarm (it rings with no fire). A Type II error is a missed fire (no ring when there is a fire). α is the false-alarm rate. Making the alarm more sensitive cuts missed fires but raises false alarms — the two errors trade off.</span></div>
+
+  <div class="answer">
+    <span class="tag">Computing α, in three moves</span>
+    <p>1. <b>Assume H₀ is true.</b> If H₀ names a single value (a <i>simple</i> hypothesis), plug it in. 2. <b>Find the distribution of the test statistic</b> under that value. 3. <b>Find the probability that the statistic lands in the rejection region.</b></p>
+  </div>
+
+  <figure class="lab" id="labAB">
+    <div class="lab-head"><span class="tag">Live figure α1</span><h3>Drag the cutoff, watch α and β trade off</h3>
+      <p>\(Y_1\sim\text{Unif}(\theta,\theta+1)\); reject \(H_0\!:\theta=0\) when \(Y_1\gt c\). Blue is the density under \(H_0\); green is the density under a chosen alternative θ. Red area = α; green area = β at that alternative. Pull the cutoff right and α shrinks but β grows — that trade-off is the whole reason tests get compared at a fixed α.</p></div>
+    <canvas id="cvAB" class="tall" aria-label="Rejection region under the null and a chosen alternative"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="ab_c">Cutoff c <output id="o_abc">0.95</output></label><input type="range" id="ab_c" min="0" max="2" step="0.01" value="0.95"></div>
+      <div class="ctl"><label for="ab_theta">Alternative θ <output id="o_abtheta">0.50</output></label><input type="range" id="ab_theta" min="0.01" max="1.1" step="0.01" value="0.5"></div>
+    </div>
+    <div class="readout" id="r_ab"></div>
+  </figure>
+
+  <div class="part">
+    <div class="part-title"><h3>Why tests are compared at the same α</h3></div>
+    <p class="prose">Any test can be made to catch more true alternatives (smaller β) simply by rejecting more often — but that also raises α. So it's only fair to compare two tests after making their false-alarm rates equal. Then the better test is the one with larger <b>power</b> (smaller β) at the alternatives you care about. 10.5 does the first half of that job: find the \(c\) that puts Test 2 at the same α as Test 1. See <a href="inference.html#labPow">Live figure B8</a> for the second half — comparing the two tests' power curves.</p>
+  </div>
+  <div class="flag"><b>Power</b><span>\(\text{power}(\theta)=P(\text{reject }H_0\mid\theta)\). For θ in \(H_a\), power \(=1-\beta(\theta)\). At the null value, power \(=\alpha\).</span></div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 3) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function frame(ctx, box, xr, yr, opts) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11.5px ' + tok('--f-mono');
+    ctx.lineWidth = 1;
+    (opts.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(opts.xf ? opts.xf(t) : t, X(t), y1 + 6);
+      ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(X(t), y1); ctx.lineTo(X(t), y1 + 4); ctx.stroke();
+    });
+    ctx.strokeStyle = muted;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (opts.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(opts.xl, x1, y1 - 4); }
+    return { X, Y };
+  }
+
+  /* ============ Live figure α1: draggable alpha/beta cutoff ============ */
+  const AB = { c: 0.95, theta1: 0.5 };
+  function renderAB() {
+    const cv = $('cvAB'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const xr = [0, 2.2];
+    const box = { x0: 44, y0: 16, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, xr, [0, 1.25], { xt: [0, 0.5, 1, 1.5, 2], xl: 'y' });
+    const H = 0.85; // visual bar height for each density (both true heights are 1, drawn shorter so they can be told apart)
+    const h0y0 = 0, h0y1 = 1, hay0 = AB.theta1, hay1 = AB.theta1 + 1;
+    // H0 density (full height box)
+    ctx.strokeStyle = tok('--c'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(X(h0y0), Y(0)); ctx.lineTo(X(h0y0), Y(1)); ctx.lineTo(X(h0y1), Y(1)); ctx.lineTo(X(h0y1), Y(0)); ctx.stroke();
+    // alpha shaded region: H0 density where y > c
+    const aLo = Math.max(AB.c, h0y0), aHi = h0y1;
+    if (aHi > aLo) { ctx.fillStyle = tok('--rej'); ctx.globalAlpha = 0.35; ctx.fillRect(X(aLo), Y(1), X(aHi) - X(aLo), Y(0) - Y(1)); ctx.globalAlpha = 1; }
+    // Ha density (dashed, shorter)
+    ctx.strokeStyle = tok('--ok'); ctx.lineWidth = 2; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(X(hay0), Y(H)); ctx.lineTo(X(hay0), Y(H)); ctx.lineTo(X(hay0), Y(H)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(X(hay0), Y(0)); ctx.lineTo(X(hay0), Y(H)); ctx.lineTo(X(hay1), Y(H)); ctx.lineTo(X(hay1), Y(0)); ctx.stroke();
+    ctx.setLineDash([]);
+    // beta shaded region: Ha density where y <= c
+    const bLo = hay0, bHi = Math.min(AB.c, hay1);
+    if (bHi > bLo) { ctx.fillStyle = tok('--ok'); ctx.globalAlpha = 0.3; ctx.fillRect(X(bLo), Y(H), X(bHi) - X(bLo), Y(0) - Y(H)); ctx.globalAlpha = 1; }
+    // cutoff line
+    ctx.strokeStyle = tok('--rej'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(X(AB.c), Y(0)); ctx.lineTo(X(AB.c), Y(1.18)); ctx.stroke();
+    ctx.fillStyle = tok('--rej'); ctx.font = '600 12px ' + tok('--f-mono'); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('c = ' + AB.c.toFixed(2), X(AB.c), Y(1.2));
+    // legend
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = '12px ' + tok('--f-body');
+    ctx.fillStyle = tok('--c'); ctx.fillText('density under H₀ (θ = 0)', box.x0 + 2, box.y0);
+    ctx.fillStyle = tok('--ok'); ctx.fillText('density under θ = ' + AB.theta1.toFixed(2) + ' (dashed, shown shorter)', box.x0 + 2, box.y0 + 16);
+
+    const alpha = Math.max(0, Math.min(1, h0y1 - Math.max(AB.c, h0y0)));
+    const beta = Math.max(0, Math.min(1, Math.min(AB.c, hay1) - hay0));
+    $('r_ab').innerHTML =
+      `<span><span class="k">α</span> <b class="v-hl">${fmt(alpha)}</b></span>` +
+      `<span><span class="k">β at θ=${AB.theta1.toFixed(2)}</span> <b class="v-dv">${fmt(beta)}</b></span>` +
+      `<span><span class="k">power</span> <b>${fmt(1 - beta)}</b></span>`;
+  }
+  if ($('cvAB')) {
+    $('ab_c').addEventListener('input', e => { AB.c = +e.target.value; $('o_abc').textContent = AB.c.toFixed(2); renderAB(); });
+    $('ab_theta').addEventListener('input', e => { AB.theta1 = +e.target.value; $('o_abtheta').textContent = AB.theta1.toFixed(2); renderAB(); });
+    new ResizeObserver(() => renderAB()).observe($('cvAB'));
+    renderAB();
+  }
+})();
+</script>
+</body></html>

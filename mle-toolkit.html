@@ -1,0 +1,319 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>MLE Toolkit — Inference Atlas</title></head><body data-page="mle-toolkit.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="#mle" data-hue="est"><span class="st"><i></i></span><span class="n">λ</span><span class="lbl">MLE toolkit</span></a>
+    <a href="mvue-guide.html#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="testing-vocab.html#testvocab" data-hue="test"><span class="st"><i></i></span><span class="n">α</span><span class="lbl">Testing vocabulary</span></a>
+    <a href="midterm-guide.html#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="mle" data-hue="est">
+  <div class="ex-head"><span class="ex-num">λ</span><h2>The method of maximum likelihood</h2></div>
+  <p class="prose">Wackerly, Mendenhall &amp; Scheaffer §9.7. Suppose the likelihood depends on parameters \(\theta_1,\dots,\theta_k\). Choose as estimates whichever values maximize \(L(y_1,\dots,y_n\mid\theta_1,\dots,\theta_k)\).</p>
+  <div class="flag"><b>The idea</b><span>Imagine trying every possible value of θ one at a time and asking: "if this were the true value, how likely would it be to see exactly the data I saw?" The MLE is the value that wins that contest — the parameter that makes the observed data look least surprising. With numbers plugged in you get the <i>estimate</i>; written with capital \(Y_i\) it's a random variable, the <i>estimator</i>, which is what you study for bias and variance.</span></div>
+
+  <div class="part">
+    <div class="part-title"><h3>Why maximize ln L instead of L</h3></div>
+    <p class="prose">The natural log is strictly increasing — if \(0\lt a\lt b\) then \(\ln a\lt\ln b\) — so whichever θ makes \(L\) largest also makes \(\ln L\) largest. Taking logs doesn't move the peak, it only reshapes the hill. We do it because \(L\) is a <i>product</i> of \(n\) factors, painful to differentiate, while \(\ln L\) is a <i>sum</i>, differentiated term by term.</p>
+  </div>
+  <div class="tools">
+    <span class="tag">Log rules and derivatives used to build and differentiate ln L</span>
+    <dl>
+      <dt>Products and powers</dt><dd>\(\ln(ab)=\ln a+\ln b\); \(\ln(\prod a_i)=\sum\ln a_i\); \(\ln(a^k)=k\ln a\); \(\ln(1/a)=-\ln a\), so \(\ln(\theta^{-n})=-n\ln\theta\); \(\ln(e^x)=x\); \(\ln1=0\).</dd>
+      <dt>Derivatives</dt><dd>\(\frac{d}{d\theta}\ln\theta=\frac1\theta\); \(\frac{d}{d\theta}\theta^k=k\theta^{k-1}\), so \(\frac{d}{d\theta}\theta^{-1}=-\theta^{-2}\); any term without θ (including data terms) has derivative 0.</dd>
+    </dl>
+  </div>
+
+  <div class="answer">
+    <span class="tag">Finding an MLE in seven steps</span>
+    <p>1. <b>Likelihood:</b> \(L(\theta)=\prod f(y_i\mid\theta)\); simplify into a few factors. 2. <b>Log-likelihood:</b> \(\ell(\theta)=\ln L(\theta)\); expand with the log rules. 3. <b>Differentiate</b> term by term. 4. <b>Solve</b> \(\ell'(\theta)=0\) for θ. 5. <b>Second derivative:</b> show \(\ell''(\theta)\lt0\) at that point. 6. <b>Global check:</b> confirm it's the only critical point, or that \(\ell'\) is + to the left and − to the right. 7. <b>Write the estimator</b> with capital \(Y_i\).</p>
+  </div>
+
+  <figure class="lab" id="labMLE">
+    <div class="lab-head"><span class="tag">Live figure λ1</span><h3>Three log-likelihoods, one at a time</h3>
+      <p>Pick a worked mini-example, draw a sample, and watch where the log-likelihood peaks. The uniform case is the interesting one — there's no smooth summit to find by differentiating, only a cliff edge, and the MLE sits right on it.</p></div>
+    <div class="bridge-list" role="tablist" aria-label="Mini-example">
+      <button role="tab" data-ex="expo" aria-pressed="true" data-hue="est">Exponential</button>
+      <button role="tab" data-ex="bern" aria-pressed="false" data-hue="mgf">Bernoulli</button>
+      <button role="tab" data-ex="unif" aria-pressed="false" data-hue="shadow">Uniform(0, θ) — calculus fails</button>
+    </div>
+    <canvas id="cvMLE" class="tall" aria-label="Log-likelihood curve for the selected example"></canvas>
+    <div class="controls">
+      <div class="ctl" id="ctlTheta"><label for="m_theta">True θ <output id="o_mtheta">2.00</output></label><input type="range" id="m_theta" min="0.5" max="4" step="0.05" value="2"></div>
+      <div class="ctl" id="ctlP" hidden><label for="m_p">True p <output id="o_mp">0.40</output></label><input type="range" id="m_p" min="0.05" max="0.95" step="0.01" value="0.4"></div>
+      <div class="ctl"><label for="m_n">Sample size n <output id="o_mn">8</output></label><input type="range" id="m_n" min="2" max="60" step="1" value="8"></div>
+      <div class="btnrow"><button id="m_new" class="primary">New sample</button></div>
+    </div>
+    <div class="readout" id="r_mle"></div>
+  </figure>
+
+  <div class="part">
+    <div class="part-title"><h3>Two parameters: partial derivatives</h3></div>
+    <p class="prose">With two unknowns, say μ and σ, the log-likelihood is a surface over the (μ, σ) plane, like a mountain over a map. At the summit it's flat in every direction — flat in the μ-direction (\(\partial\ell/\partial\mu=0\)) and flat in the σ-direction (\(\partial\ell/\partial\sigma=0\)). Solving both equations together finds the summit. A partial derivative means: differentiate with respect to one variable while treating the other (and all the data) as fixed numbers.</p>
+  </div>
+  <div class="tools">
+    <span class="tag">Second-derivative test, two variables</span>
+    <dl>
+      <dt>At a point where both first partials are 0</dt><dd>Compute \(A=\partial^2\ell/\partial\theta_1^2\), \(B=\partial^2\ell/\partial\theta_1\partial\theta_2\), \(C=\partial^2\ell/\partial\theta_2^2\). If \(A\lt0\) and \(AC-B^2\gt0\), it's a local maximum. If \(AC-B^2\lt0\) it's a saddle; if \(A\gt0\) and \(AC-B^2\gt0\), a minimum.</dd>
+      <dt>Why</dt><dd>\(A\lt0\) says the surface bends down in the \(\theta_1\) direction. \(AC-B^2\gt0\) together with \(A\lt0\) says it bends down in <i>every</i> direction, not just along the two axes — a summit, not a mountain pass that goes down one way and up another.</dd>
+    </dl>
+  </div>
+
+  <div class="flag"><b>Invariance</b><span>If \(\hat\theta\) is the MLE of θ and \(t(\theta)\) is a function of θ, the MLE of \(t(\theta)\) is \(t(\hat\theta)\). Changing how you <i>label</i> the parameter doesn't change which model fits the data best — if \(\sigma^2=4\) is the best-fitting variance, \(\sigma=2\) is the best-fitting standard deviation, since they describe the same normal. See <a href="inference.html#ex996">9.96</a> for this in action.</span></div>
+
+  <div class="part">
+    <div class="part-title"><h3>MLEs depend on the data only through a sufficient statistic</h3></div>
+    <p class="prose">If \(U\) is sufficient, factorization gives \(L(\theta)=g(u,\theta)\,h(y_1,\dots,y_n)\). Maximizing over θ, \(h\) is a fixed positive number with no θ in it, so it never changes where the maximum sits. The maximizing θ is whatever maximizes \(g(u,\theta)\), which depends on the data only through \(u\) — this is why the MLE in <a href="inference.html#ex982">9.82(b)</a> turns out to be a function of the sufficient statistic from 9.82(a). Contrast with the method of moments, whose estimator is <i>not</i> generally a function of the sufficient statistic.</p>
+  </div>
+
+  <div class="flag"><b>MLEs are not always unbiased</b><span>Maximum likelihood looks for the best-fitting parameter, not an estimator that's right on average. Uniform(0, θ): \(\hat\theta=Y_{(n)}\) has \(E(Y_{(n)})=\frac{n}{n+1}\theta\lt\theta\) — the largest observation can never exceed θ, so on average it falls short. Normal: the MLE of \(\sigma^2\) divides by \(n\), so \(E(\hat\sigma^2)=\frac{n-1}{n}\sigma^2\lt\sigma^2\) — see <a href="inference.html#labSigSamp">Live figure B5</a>. In 9.82 the MLE happens to be unbiased, which is why part (c) answers "yes."</span></div>
+</section>
+
+<div class="chapter" data-hue="est">The Weibull family and the power transformation</div>
+<section class="ex" id="weibull-fam" data-hue="est">
+  <div class="ex-head"><span class="ex-num">W</span><h2>W = Yʳ turns any Weibull into a plain exponential</h2></div>
+  <p class="prose">The density in <a href="inference.html#ex982">9.82</a> is \(f(y\mid\theta)=\frac1\theta r y^{r-1}e^{-y^r/\theta}\), \(y\gt0\), with \(r\gt0\) known. Set \(r=1\) and it's the exponential with mean θ; set \(r=2\) and it's the Rayleigh density. One family, one knob \(r\), still only one unknown θ. Everything that works for the Rayleigh (6.34, 9.40, 9.58) works again with 2 replaced by \(r\).</p>
+  <div class="part">
+    <div class="part-title"><h3>W = Yʳ is exponential with mean θ</h3></div>
+    <p class="prose">\(h(y)=y^r\) has \(h'(y)=ry^{r-1}\gt0\) for \(y\gt0\), so \(h\) is increasing and the transformation method (§6.4) applies. Invert \(w=y^r\) to get \(y=w^{1/r}\), so \(\left|\frac{dy}{dw}\right|=\frac1r w^{1/r-1}\). Substituting and multiplying by the Jacobian:</p>
+    \[ f_W(w)=\frac1\theta\cdot r\cdot w^{\frac{r-1}r}e^{-w/\theta}\cdot\frac1r w^{\frac1r-1} \]
+    <p class="prose">The constants cancel (\(r\cdot\frac1r=1\)) and the powers of \(w\) add to zero: \(\frac{r-1}r+\frac1r-1=\frac{r}{r}-1=0\). So \(w^0=1\) and</p>
+    <div class="answer"><span class="tag">Key fact for 9.82(c)</span><p>\[ \class{dv}{f_W(w)=\frac1\theta e^{-w/\theta},\quad w\gt0} \] \(W=Y^r\) is exponential with mean θ — whatever \(r\) is, \(Y^r\) always behaves like a plain exponential with mean θ. Averaging the \(Y_i^r\) is like averaging exponentials.</p></div>
+  </div>
+  <div class="part">
+    <div class="part-title"><h3>E(Yʳ) and V(Yʳ) by hand, without the gamma function</h3></div>
+    <p class="prose">Integration by parts on \(W\)'s exponential density: \(\int_0^\infty w\,e^{-w/\theta}dw=\theta^2\), so \(E(W)=\theta\). And \(\int_0^\infty w^2e^{-w/\theta}dw=2\theta^3\), so \(E(W^2)=2\theta^2\) and \(V(W)=2\theta^2-\theta^2=\theta^2\).</p>
+    <div class="answer"><span class="tag">Moments</span><p>\(\class{dv}{E(Y^r)=\theta}\) and \(\class{dv}{V(Y^r)=\theta^2}\). Gamma-kernel shortcut if you remember it: \(\int_0^\infty w^{\alpha-1}e^{-w/\theta}dw=\Gamma(\alpha)\theta^\alpha\), giving the same two numbers in one line each.</p></div>
+  </div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 3) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function frame(ctx, box, xr, yr, opts) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11.5px ' + tok('--f-mono');
+    ctx.lineWidth = 1;
+    (opts.yt || []).forEach(t => {
+      ctx.strokeStyle = rule; ctx.globalAlpha = 0.6;
+      ctx.beginPath(); ctx.moveTo(x0, Y(t)); ctx.lineTo(x1, Y(t)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(opts.yf ? opts.yf(t) : t, x0 - 6, Y(t));
+    });
+    (opts.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(opts.xf ? opts.xf(t) : t, X(t), y1 + 6);
+      ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(X(t), y1); ctx.lineTo(X(t), y1 + 4); ctx.stroke();
+    });
+    ctx.strokeStyle = muted;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (opts.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(opts.xl, x1, y1 - 4); }
+    if (opts.yl) { ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(opts.yl, x0 + 6, y0); }
+    return { X, Y };
+  }
+  function vline(ctx, X, Y, x, yr, color, dash, label, labelSide) {
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(X(x), Y(yr[0])); ctx.lineTo(X(x), Y(yr[1])); ctx.stroke(); ctx.restore();
+    if (label) {
+      ctx.fillStyle = color; ctx.font = '600 12px ' + tok('--f-mono');
+      ctx.textAlign = labelSide === 'left' ? 'right' : 'left'; ctx.textBaseline = 'top';
+      ctx.fillText(label, X(x) + (labelSide === 'left' ? -5 : 5), Y(yr[1]) + 2);
+    }
+  }
+  function niceTicks(a, b, n) {
+    const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw) || raw;
+    const out = []; for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) out.push(+t.toFixed(10));
+    return out;
+  }
+  const expo = () => -Math.log(1 - Math.random());
+
+  /* ============ Live figure λ1: three log-likelihoods ============ */
+  const M = { ex: 'expo', theta: 2, p: 0.4, n: 8, data: null };
+  function drawData() {
+    if (M.ex === 'expo') { const ys = Array.from({ length: M.n }, () => M.theta * expo()); M.data = { ys, sum: ys.reduce((a, b) => a + b, 0) }; }
+    else if (M.ex === 'bern') { const ys = Array.from({ length: M.n }, () => (Math.random() < M.p ? 1 : 0)); M.data = { ys, t: ys.reduce((a, b) => a + b, 0) }; }
+    else { const ys = Array.from({ length: M.n }, () => M.theta * Math.random()); M.data = { ys, ymax: Math.max(...ys) }; }
+  }
+  function curveFor() {
+    const PTS = 240;
+    if (M.ex === 'expo') {
+      const that = M.data.sum / M.n, xmax = Math.max(3 * M.theta, 2 * that, 0.5);
+      const lmax = -M.n * Math.log(that) - M.n;
+      const xs = [], ys = [];
+      for (let k = 0; k < PTS; k++) { const t = 0.01 * xmax + (k / (PTS - 1)) * 0.99 * xmax; xs.push(t); ys.push(-M.n * Math.log(t) - M.data.sum / t - lmax); }
+      return { xs, ys, xr: [0, xmax], that, true_: M.theta, xl: 'θ' };
+    }
+    if (M.ex === 'bern') {
+      const t = M.data.t, phat = t / M.n;
+      const ll = p => (t > 0 ? t * Math.log(p) : 0) + (M.n - t > 0 ? (M.n - t) * Math.log(1 - p) : 0);
+      const lmax = phat > 0 && phat < 1 ? ll(phat) : (t === 0 ? 0 : ll(1 - 1e-6));
+      const xs = [], ys = [];
+      for (let k = 0; k < PTS; k++) { const p = 0.004 + (k / (PTS - 1)) * 0.992; xs.push(p); ys.push(ll(p) - lmax); }
+      return { xs, ys, xr: [0, 1], that: phat, true_: M.p, xl: 'p' };
+    }
+    // uniform boundary case
+    const that = M.data.ymax, xmax = Math.max(1.6 * M.theta, 1.3 * that);
+    const lmax = -M.n * Math.log(that);
+    const xs = [], ys = [];
+    for (let k = 0; k < PTS; k++) {
+      const t = that + (k / (PTS - 1)) * (xmax - that);
+      xs.push(t); ys.push(-M.n * Math.log(t) - lmax);
+    }
+    return { xs, ys, xr: [0, xmax], that, true_: M.theta, xl: 'θ', cliff: that };
+  }
+  function renderMLE() {
+    const cv = $('cvMLE'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const c = curveFor();
+    const box = { x0: 46, y0: 16, x1: w - 14, y1: h - 30 };
+    const ymin = Math.min(-6, ...c.ys.filter(Number.isFinite));
+    const { X, Y } = frame(ctx, box, c.xr, [ymin, 0.6], { xt: niceTicks(c.xr[0], c.xr[1], 6), yt: niceTicks(ymin, 0, 4), xl: c.xl, yl: 'ℓ(·) − peak' });
+    if (c.cliff != null) {
+      ctx.fillStyle = tok('--rej-bg') || 'rgba(230,80,80,0.12)'; ctx.globalAlpha = 0.5;
+      ctx.fillRect(X(c.xr[0]), Y(0.6), X(c.cliff) - X(c.xr[0]), Y(ymin) - Y(0.6));
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = tok('--muted'); ctx.font = '11px ' + tok('--f-mono'); ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+      ctx.fillText('L(θ) = 0 here — some yᵢ > θ', X(c.xr[0]) + 6, Y(ymin) - 6);
+      ctx.beginPath(); ctx.moveTo(X(c.cliff), Y(0.55)); ctx.lineTo(X(c.cliff), Y(ymin)); ctx.strokeStyle = tok('--rej'); ctx.lineWidth = 2; ctx.setLineDash([]); ctx.stroke();
+    }
+    ctx.beginPath();
+    c.xs.forEach((x, k) => { const yy = Math.max(ymin, c.ys[k]); k ? ctx.lineTo(X(x), Y(yy)) : ctx.moveTo(X(x), Y(yy)); });
+    ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2.2; ctx.stroke();
+    vline(ctx, X, Y, c.true_, [ymin, 0.55], tok('--muted'), [5, 4], 'true', c.that > c.true_ ? 'left' : 'right');
+    vline(ctx, X, Y, c.that, [ymin, 0.55], tok('--dv'), [], 'MLE', c.that > c.true_ ? 'right' : 'left');
+    ctx.beginPath(); ctx.arc(X(c.that), Y(0), 4.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill();
+    const label = M.ex === 'expo' ? 'θ̂ = ȳ' : M.ex === 'bern' ? 'p̂ = t/n' : 'θ̂ = y₍ₙ₎';
+    $('r_mle').innerHTML =
+      `<span><span class="k">${label}</span> <b class="v-dv">${fmt(c.that)}</b></span>` +
+      `<span><span class="k">true value</span> <b>${fmt(c.true_, 2)}</b></span>` +
+      `<span><span class="k">n</span> <b>${M.n}</b></span>` +
+      (M.ex === 'unif' ? `<span class="k">No ℓ′(θ)=0 solves this — the maximum sits on the cliff edge at y₍ₙ₎.</span>` : '');
+  }
+  function newMLE() { drawData(); renderMLE(); }
+  if ($('cvMLE')) {
+    document.querySelectorAll('#labMLE .bridge-list button').forEach(b => b.addEventListener('click', () => {
+      M.ex = b.dataset.ex;
+      document.querySelectorAll('#labMLE .bridge-list button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      $('ctlTheta').hidden = M.ex === 'bern';
+      $('ctlP').hidden = M.ex !== 'bern';
+      newMLE();
+    }));
+    $('m_theta').addEventListener('input', e => { M.theta = +e.target.value; $('o_mtheta').textContent = M.theta.toFixed(2); newMLE(); });
+    $('m_p').addEventListener('input', e => { M.p = +e.target.value; $('o_mp').textContent = M.p.toFixed(2); newMLE(); });
+    $('m_n').addEventListener('input', e => { M.n = +e.target.value; $('o_mn').textContent = M.n; newMLE(); });
+    $('m_new').addEventListener('click', newMLE);
+    new ResizeObserver(() => renderMLE()).observe($('cvMLE'));
+    newMLE();
+  }
+})();
+</script>
+</body></html>
