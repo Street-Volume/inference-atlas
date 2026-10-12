@@ -1,0 +1,255 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<title>Workbench — Inference Atlas</title></head><body data-page="workbench.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability</div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Inference</div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Optimization</div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="workbench" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">✎</span><h2>Answer checker</h2></div>
+  <p class="prose">Work the problem on paper first, then type what you got. Numbers and expressions both work: <code>19/9</code>, <code>2 - sqrt(0.1)</code>, <code>5*sqrt(13)</code>, <code>1 - 1.5*exp(-0.5)</code>. Press Enter to check. Answers within 0.4% (or 0.0001) count, which matches how WebAssign usually rounds. For symbolic answers, the checker asks for a numeric instance instead.</p>
+  <div class="wb-bar">
+    <div class="wb-score"><span><b id="wbScore">0</b> of <b id="wbTotal">0</b> correct</span><div class="meter"><i id="wbMeter"></i></div></div>
+    <div class="btnrow"><button id="wbCheck" class="primary">Check all</button><button id="wbReveal">Reveal all</button><button id="wbClear">Clear</button></div>
+  </div>
+  <div class="checker" id="checker"></div>
+  <h3>Answer key</h3>
+  <div class="tablewrap"><table class="fix key">
+    <thead><tr><th>Problem</th><th>Topic</th><th>WebAssign entry</th></tr></thead>
+    <tbody>
+      <tr><td><a href="probability.html#q1">Q1</a></td><td>Geometric MGF</td><td class="key-ans">pe^t / (1 − qe^t), valid for qe^t &lt; 1</td></tr>
+      <tr><td><a href="probability.html#q2">Q2</a></td><td>Identify from MGF</td><td class="key-ans">(a) Binomial n = 6, p = 0.2 · (b) Geometric p = 0.5 · (c) Poisson λ = 5</td></tr>
+      <tr><td><a href="probability.html#q3">Q3</a></td><td>Moments from MGF</td><td class="key-ans">E(Y) = 19/9 · V(Y) = 26/81 · p(1) = 1/9, p(2) = 2/3, p(3) = 2/9</td></tr>
+      <tr><td><a href="probability.html#q4">Q4</a></td><td>Tchebysheff</td><td class="key-ans">(a) 0.75 · (b) C = 10</td></tr>
+      <tr><td><a href="probability.html#q5">Q5</a></td><td>Coin tosses</td><td class="key-ans">p = 1/8, 3/8, 3/8, 1/8 · μ = 1.5 · σ = 0.866 · 1σ: 0.75 · 2σ: 1</td></tr>
+      <tr><td><a href="probability.html#q6">Q6</a></td><td>Spraying cost</td><td class="key-ans">E(C) = 105.000 · σ_C = 18.028 · (68.94, 141.06)</td></tr>
+      <tr><td><a href="probability.html#q7">Q7</a></td><td>Poisson approximation</td><td class="key-ans">Yes, λ = 0.5 · P(Y ≥ 2) = 0.090</td></tr>
+      <tr><td><a href="probability.html#q8">Q8</a></td><td>Negative binomial</td><td class="key-ans">P(Y &lt; 6) = 1/64 = 0.0156</td></tr>
+      <tr><td><a href="probability.html#q9">Q9</a></td><td>Linear density</td><td class="key-ans">c = 0.5 · F(y) = y²/4 · P(1 ≤ Y ≤ 2) = 0.75</td></tr>
+      <tr><td><a href="probability.html#q10">Q10</a></td><td>Piecewise F</td><td class="key-ans">f = 1/8 on (0,2), y/8 on [2,4) · 0.4727 · 0.7500 · 0.7160</td></tr>
+      <tr><td><a href="probability.html#q11">Q11</a></td><td>Demand density</td><td class="key-ans">F = y²/2 on [0,1], y − 0.5 on (1,1.5] · 0.045 · 0.855</td></tr>
+      <tr><td><a href="inference.html#ex982">9.82</a></td><td>Sufficiency, MLE, MVUE</td><td class="key-ans">U = ΣYᵢʳ · θ̂ = U/n · yes, MVUE</td></tr>
+      <tr><td><a href="inference.html#ex996">9.96</a></td><td>MLE of σ</td><td class="key-ans">σ̂ = √((1/n) Σ(Yᵢ − Ȳ)²)</td></tr>
+      <tr><td><a href="inference.html#ex105">10.5</a></td><td>Matching α</td><td class="key-ans">c = 2 − √0.10 ≈ 1.684</td></tr>
+      <tr><td><a href="operations-research.html#or1">OR1</a></td><td>Shadow prices</td><td class="key-ans">(a) both binding · (b) y₁ = y₂ = 0.5 · (c) 3 units</td></tr>
+      <tr><td><a href="operations-research.html#or2">OR2</a></td><td>Objective ranging</td><td class="key-ans">(a) yes · (b) no · (c) 1 ≤ c₂ ≤ 3 · (d) 2/3 ≤ c₁ ≤ 2</td></tr>
+      <tr><td><a href="operations-research.html#or3">OR3</a></td><td>Shadow prices</td><td class="key-ans">(a) resources 2, 3 binding · (b) y = (0, 0.2, 1.4)</td></tr>
+      <tr><td><a href="operations-research.html#or4">OR4</a></td><td>Objective ranging</td><td class="key-ans">(a) [1/3, 2] · (b) ≥ 2 · (c) [0, 1/3] · (d) c₁ ≥ 0, c₂ ≤ 0, c₁/c₂ ≤ 0</td></tr>
+      <tr><td><a href="operations-research.html#or5">OR5</a></td><td>Tableau prices</td><td class="key-ans">(a) y = (0, 1.5, 0.5) · (b) resource 2 · (c) buy 2 only</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ================= AUDIT ================= -->
+<section class="ex" id="audit" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">✓</span><h2>Audit log</h2></div>
+  <p class="prose">Three source drafts went into this page: two Gemini LaTeX guides and the learning-lab HTML. Every numeric answer in all three was recomputed independently, and all of them check out. These are the problems that remain, one I introduced in an earlier version of this page and have fixed, and notes on traps in the M447 homework.</p>
+  <div class="chips" id="auditChips" role="group" aria-label="Filter audit rows">
+    <button class="chip" data-f="all" data-hue="neutral" aria-pressed="true"><i></i>All</button>
+    <button class="chip" data-f="self" data-hue="test" aria-pressed="false"><i></i>My fixes</button>
+    <button class="chip" data-f="lab" data-hue="cont" aria-pressed="false"><i></i>Learning lab</button>
+    <button class="chip" data-f="a" data-hue="mgf" aria-pressed="false"><i></i>Part A draft</button>
+    <button class="chip" data-f="b" data-hue="est" aria-pressed="false"><i></i>Part B draft</button>
+    <button class="chip" data-f="c" data-hue="shadow" aria-pressed="false"><i></i>Part C notes</button>
+  </div>
+  <div class="tablewrap"><table class="fix" id="auditTable">
+    <thead><tr><th>Source</th><th>Severity</th><th>Issue</th><th>Resolution here</th></tr></thead>
+    <tbody>
+      <tr data-src="self"><td><span class="srcpill" data-hue="test">v1 atlas</span></td><td><span class="sev hi">Wrong claim</span></td><td>The power-curve caption said Test 2 climbs faster for small θ and that Test 1 reaches power 1 first. Both were wrong.</td><td>Corrected: Test 1 is more powerful for θ below 0.184; Test 2 wins above that and reaches power 1 at θ = c/2 ≈ 0.842, before Test 1 at 0.95. Live figures B7 and B8 show it.</td></tr>
+<tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Trap</span></td><td>OR5(c): resource 3’s shadow price of 0.5 only holds for the first half unit (allowable Δ ≤ 0.5).</td><td>A full unit gains 0.25, not 0.5. The answer is still no. Live figure C5 shows the bend.</td></tr>
+      <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Edge case</span></td><td>OR5(c): for resource 2, Δ = 1 is exactly the edge of the allowable range [−3, 1].</td><td>The full 1.5 gain holds for that one unit; a second unit would earn less.</td></tr>
+      <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev md">Trap</span></td><td>OR4(d) asks for a range of c₁/c₂, but c₁/c₂ ≤ 0 also covers c₁ &lt; 0 &lt; c₂, where (0, 5) wins.</td><td>The answer states the sign conditions c₁ ≥ 0, c₂ ≤ 0 along with the ratio.</td></tr>
+      <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev lo">Typo</span></td><td>OR3 lists x₃ ≥ 0, but the problem has only x₁ and x₂.</td><td>Ignored.</td></tr>
+      <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev lo">Undefined</span></td><td>OR4(b) at c₂ = 0 the ratio c₁/c₂ is undefined.</td><td>The whole edge x₁ = 4 is optimal, so (4, 2) stays optimal, tied with (4, 0).</td></tr>
+      <tr data-src="c"><td><span class="srcpill" data-hue="shadow">Part C</span></td><td><span class="sev lo">Edition</span></td><td>The syllabus allows editions other than the 10th.</td><td>Section numbers may differ; match by topic.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev ok">Verified</span></td><td>All 14 problems' numeric answers.</td><td>Match my recomputation exactly.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev md">Overclaim</span></td><td>The 10.5 note says Test 2 has superior power against θ &gt; 0.</td><td>Only true for θ &gt; 0.184. Below that, Test 1 rejects more often.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev md">Loose links</span></td><td>The syllabus matrix pairs Tchebysheff with the Cramér–Rao bound, MGFs with exponential-family sufficiency, and densities with the MLE. I'm also not confident Wackerly covers Cramér–Rao in Section 9.5.</td><td>Concept bridge rebuilt around links you can trace in the actual problems.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev md">Course fit</span></td><td>9.82(c) argued through completeness and Lehmann–Scheffé, citing "Theorem 9.11" and "Example 9.15".</td><td>Rao–Blackwell route as the main argument; numbers left for you to confirm.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev md">Likely wrong</span></td><td>Tabs labelled "3.10 Chebyshev" and "4.1 Continuous RVs".</td><td>Same numbering flag as the Part A reading list (3.11 and 4.2 as far as I know).</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev lo">Check</span></td><td>The bridge says M463 chapter 6 covers sums of random variables. Homework 07 covers chapters 3 and 4.</td><td>Example 6.3 kept as a reference; check whether your M463 syllabus reaches chapter 6.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev lo">Naming</span></td><td>Uses "Chebyshev"; Wackerly writes "Tchebysheff".</td><td>Same theorem. WebAssign may use either spelling.</td></tr>
+      <tr data-src="lab"><td><span class="srcpill" data-hue="cont">Lab</span></td><td><span class="sev lo">Usability</span></td><td>Content split across four tabs and four sub-tabs, so most of it was hidden at any moment.</td><td>One continuous workspace with search, a map, a progress tracker and next/previous navigation.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev hi">Won't compile</span></td><td><code>\hr</code> after the title is not a LaTeX command.</td><td>In LaTeX use <code>\noindent\rule{\linewidth}{0.4pt}</code>.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev hi">Won't compile</span></td><td>Display math written as <code>\\[ … \\]</code>.</td><td>Should be <code>\[ … \]</code>.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev md">Likely wrong</span></td><td>Tchebysheff as Section 3.10, density functions as 4.1.</td><td>Flagged in the Part A reading list.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev md">Unverified</span></td><td>Page ranges and theorem numbers.</td><td>Results named instead of numbered.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev md">Can't verify</span></td><td>Q1 blanks and Q5 dropdown picks depend on the WebAssign screen.</td><td>Kept, flagged, with reasoning so you can match the real options.</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev lo">Missing step</span></td><td>Q3 skips the chain rule; Q10 skips the continuity and area checks.</td><td>Both shown, plus the exact 121/169 in Q10(d).</td></tr>
+      <tr data-src="a"><td><span class="srcpill" data-hue="mgf">Part A</span></td><td><span class="sev lo">Print</span></td><td><code>a4paper</code>, but you print on US Letter.</td><td>Applies only to the LaTeX.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev hi">Won't compile</span></td><td><code>\newtcolorbox</code> uses <code>#1</code> without declaring an argument.</td><td>Needs <code>\newtcolorbox{readbox}[1]{…}</code>.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev hi">Won't compile</span></td><td><code>\\[ … \\]</code> display math and Markdown <code>**MVUE**</code> inside LaTeX.</td><td>Applies only to the LaTeX.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev md">Unverified</span></td><td>Page ranges, "Theorem 9.11", "Definition 9.6".</td><td>Results named; factorization kept as Theorem 9.4.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev md">Course fit</span></td><td>9.82(c) relies on completeness, which Wackerly doesn't develop.</td><td>Rao–Blackwell argument first, completeness as a note.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev md">Missing step</span></td><td>10.5 cites the CDF of the sum without deriving it.</td><td>Derived from unit-square areas, plus a plug-back check of c.</td></tr>
+      <tr data-src="b"><td><span class="srcpill" data-hue="est">Part B</span></td><td><span class="sev lo">Claim</span></td><td>Says a PDF was published to a "Studio panel".</td><td>A Gemini interface feature; ignore.</td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  const { $, go, store, toast, P, PI } = window.Atlas;
+  /* ---------- answer checker ---------- */
+  const CHECKS = [
+    { p: 'q2', l: 'Q2(a) binomial n', a: 6 }, { p: 'q2', l: 'Q2(a) binomial p', a: 0.2 }, { p: 'q2', l: 'Q2(b) geometric p', a: 0.5 }, { p: 'q2', l: 'Q2(c) Poisson λ', a: 5 },
+    { p: 'q3', l: 'Q3(a) E(Y)', a: 19 / 9, ex: '19/9' }, { p: 'q3', l: 'Q3(b) V(Y)', a: 26 / 81, ex: '26/81' },
+    { p: 'q4', l: 'Q4(a) lower bound for P(11 < Y < 19)', a: 0.75 }, { p: 'q4', l: 'Q4(b) C', a: 10 },
+    { p: 'q5', l: 'Q5 μ', a: 1.5 }, { p: 'q5', l: 'Q5 σ', a: Math.sqrt(0.75), ex: '√0.75 = 0.866' }, { p: 'q5', l: 'Q5 fraction within 1σ', a: 0.75 }, { p: 'q5', l: 'Q5 fraction within 2σ', a: 1 },
+    { p: 'q6', l: 'Q6 E(C)', a: 105 }, { p: 'q6', l: 'Q6 σ_C', a: Math.sqrt(325), ex: '5√13 = 18.028' }, { p: 'q6', l: 'Q6 interval, lower end', a: 105 - 2 * Math.sqrt(325), ex: '68.94' }, { p: 'q6', l: 'Q6 interval, upper end', a: 105 + 2 * Math.sqrt(325), ex: '141.06' },
+    { p: 'q7', l: 'Q7 λ', a: 0.5 }, { p: 'q7', l: 'Q7 P(Y ≥ 2)', a: 1 - 1.5 * Math.exp(-0.5), ex: '1 − 1.5e^(−0.5) = 0.0902' },
+    { p: 'q8', l: 'Q8 P(Y < 6)', a: 1 / 64, ex: '1/64 = 0.015625' },
+    { p: 'q9', l: 'Q9 c', a: 0.5 }, { p: 'q9', l: 'Q9 P(1 ≤ Y ≤ 2)', a: 0.75 },
+    { p: 'q10', l: 'Q10(b) P(1.5 ≤ Y ≤ 3.25)', a: 0.47265625, ex: '0.4727' }, { p: 'q10', l: 'Q10(c) P(Y ≥ 2)', a: 0.75 }, { p: 'q10', l: 'Q10(d) P(Y ≥ 1.5 | Y ≤ 3.25)', a: 121 / 169, ex: '121/169 = 0.7160' },
+    { p: 'q11', l: 'Q11(b) P(0 ≤ Y ≤ 0.3)', a: 0.045 }, { p: 'q11', l: 'Q11(c) P(0.3 ≤ Y ≤ 1.4)', a: 0.855 },
+    { p: 'ex982', l: '9.82(b) θ̂ when n = 4 and Σyᵢʳ = 10', a: 2.5 }, { p: 'ex982', l: '9.82(c) E(Yʳ) when θ = 3', a: 3 },
+    { p: 'ex996', l: '9.96 σ̂ for the sample 2, 4, 6', a: Math.sqrt(8 / 3), ex: '√(8/3) = 1.633' },
+    { p: 'ex105', l: '10.5 cutoff c', a: 2 - Math.sqrt(0.1), ex: '2 − √0.1 = 1.6838' }, { p: 'ex105', l: '10.5 α for Test 1', a: 0.05 },
+    { p: 'or1', l: 'OR1(b) shadow price y₁', a: 0.5 }, { p: 'or1', l: 'OR1(b) shadow price y₂', a: 0.5 }, { p: 'or1', l: 'OR1(c) extra units of resource 1', a: 3 },
+    { p: 'or2', l: 'OR2(c) lowest c₂', a: 1 }, { p: 'or2', l: 'OR2(c) highest c₂', a: 3 }, { p: 'or2', l: 'OR2(d) lowest c₁', a: 2 / 3, ex: '2/3' }, { p: 'or2', l: 'OR2(d) highest c₁', a: 2 },
+    { p: 'or3', l: 'OR3(b) y₁', a: 0 }, { p: 'or3', l: 'OR3(b) y₂', a: 0.2, ex: '1/5' }, { p: 'or3', l: 'OR3(b) y₃', a: 1.4, ex: '7/5' },
+    { p: 'or4', l: 'OR4(a) lowest c₁/c₂', a: 1 / 3, ex: '1/3' }, { p: 'or4', l: 'OR4(a) highest c₁/c₂', a: 2 }, { p: 'or4', l: 'OR4(b) lowest c₁/c₂', a: 2 }, { p: 'or4', l: 'OR4(c) highest c₁/c₂', a: 1 / 3, ex: '1/3' },
+    { p: 'or5', l: 'OR5(a) y₂', a: 1.5 }, { p: 'or5', l: 'OR5(a) y₃', a: 0.5 }, { p: 'or5', l: 'OR5 Z* after one more unit of resource 2', a: 4 }, { p: 'or5', l: 'OR5 Z* after one more unit of resource 3', a: 2.75, ex: '2.75 (past the allowable range)' }
+  ];
+  function evalExpr(raw) {
+    const src = String(raw).replace(/√/g, 'sqrt').replace(/[×·]/g, '*').replace(/[−–]/g, '-').replace(/π/g, 'pi').replace(/,/g, '').trim();
+    if (!src) return NaN;
+    let i = 0;
+    const peek = () => { while (src[i] === ' ') i++; return src[i]; };
+    const primary = () => {
+      const c = peek();
+      if (c === '(') { i++; const v = expr(); if (peek() !== ')') throw 0; i++; return v; }
+      if (c !== undefined && /[0-9.]/.test(c)) { const m = src.slice(i).match(/^(\d+\.?\d*|\.\d+)(e[+-]?\d+)?/i); if (!m) throw 0; i += m[0].length; return parseFloat(m[0]); }
+      if (c !== undefined && /[a-z]/i.test(c)) {
+        const m = src.slice(i).match(/^[a-z]+/i); i += m[0].length; const id = m[0].toLowerCase();
+        if (id === 'pi') return Math.PI; if (id === 'e') return Math.E;
+        const fn = { sqrt: Math.sqrt, exp: Math.exp, ln: Math.log, log: Math.log, abs: Math.abs }[id]; if (!fn) throw 0;
+        return fn(unary());
+      }
+      throw 0;
+    };
+    const power = () => { const b = primary(); if (peek() === '^') { i++; return Math.pow(b, unary()); } return b; };
+    const unary = () => { const c = peek(); if (c === '-') { i++; return -unary(); } if (c === '+') { i++; return unary(); } return power(); };
+    const term = () => { let v = unary(); for (;;) { const c = peek(); if (c === '*') { i++; v *= unary(); } else if (c === '/') { i++; v /= unary(); } else return v; } };
+    const expr = () => { let v = term(); for (;;) { const c = peek(); if (c === '+') { i++; v += term(); } else if (c === '-') { i++; v -= term(); } else return v; } };
+    try { const v = expr(); return peek() === undefined ? v : NaN; } catch (e) { return NaN; }
+  }
+  const saved = store.get('atlas2.checks', {});
+  const host = $('checker');
+  CHECKS.forEach((c, k) => {
+    const p = P[PI[c.p]];
+    const card = document.createElement('div'); card.className = 'ck'; card.setAttribute('data-hue', p.hue);
+    card.innerHTML = `<div class="ck-top"><span class="ck-q">${p.n}</span><a class="ck-q" href="${p.page}#${p.id}" style="text-decoration:none">open ↗</a></div>` +
+      `<label class="ck-l" for="ck${k}">${c.l.replace(/^Q\d+|^\d+\.\d+|^OR\d/, '').trim()}</label>` +
+      `<div class="ck-row"><input id="ck${k}" type="text" inputmode="decimal" placeholder="your answer" autocomplete="off" spellcheck="false"><button type="button">Check</button></div><div class="ck-msg" aria-live="polite"></div>`;
+    host.appendChild(card);
+    const inp = card.querySelector('input'), msg = card.querySelector('.ck-msg');
+    c.card = card; c.inp = inp; c.msg = msg;
+    if (saved[k] != null) inp.value = saved[k];
+    const check = (quiet) => {
+      const v = evalExpr(inp.value); saved[k] = inp.value; store.set('atlas2.checks', saved);
+      card.classList.remove('good', 'bad'); void card.offsetWidth;
+      if (!inp.value.trim()) { msg.textContent = ''; c.ok = false; }
+      else if (!Number.isFinite(v)) { card.classList.add('bad'); msg.textContent = 'Couldn’t read that. Use * for multiplication.'; c.ok = false; }
+      else {
+        c.ok = Math.abs(v - c.a) <= Math.max(1e-4, 0.004 * Math.abs(c.a));
+        card.classList.add(c.ok ? 'good' : 'bad');
+        msg.textContent = c.ok ? `✓ Correct${Math.abs(v - c.a) > 1e-9 ? ' (exact ' + (c.ex || +c.a.toFixed(6)) + ')' : ''}` : `✕ Not yet. You entered ${+v.toFixed(6)}`;
+        if (quiet && !c.ok) { card.classList.remove('bad'); void card.offsetWidth; card.classList.add('bad'); }
+      }
+      score();
+    };
+    c.check = check;
+    card.querySelector('button').addEventListener('click', () => check());
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+  function score() {
+    const ok = CHECKS.filter(c => c.ok).length;
+    $('wbScore').textContent = ok; $('wbTotal').textContent = CHECKS.length;
+    $('wbMeter').style.width = (100 * ok / CHECKS.length) + '%';
+  }
+  CHECKS.forEach(c => { if (c.inp.value.trim()) { const v = evalExpr(c.inp.value); c.ok = Number.isFinite(v) && Math.abs(v - c.a) <= Math.max(1e-4, 0.004 * Math.abs(c.a)); if (c.ok) { c.card.classList.add('good'); c.msg.textContent = '✓ Correct'; } } });
+  score();
+  $('wbCheck').addEventListener('click', () => { CHECKS.forEach(c => { if (c.inp.value.trim()) c.check(true); }); const ok = CHECKS.filter(c => c.ok).length; toast(`${ok} of ${CHECKS.length} correct`); });
+  $('wbReveal').addEventListener('click', () => { CHECKS.forEach(c => { if (!c.ok) { c.msg.textContent = 'Answer: ' + (c.ex || +c.a.toFixed(6)); c.card.classList.remove('bad'); } }); });
+  const clearChecks = () => { CHECKS.forEach((c, k) => { c.inp.value = ''; c.ok = false; c.msg.textContent = ''; c.card.classList.remove('good', 'bad'); delete saved[k]; }); store.set('atlas2.checks', saved); score(); };
+  $('wbClear').addEventListener('click', clearChecks);
+
+})();
+</script>
+</body></html>

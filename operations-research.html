@@ -1,0 +1,678 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<title>Operations Research — Inference Atlas</title></head><body data-page="operations-research.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability</div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Inference</div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Optimization</div>
+    <a href="#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-topic" data-hue="shadow">Two-resource model</div>
+    <a href="#or1" data-hue="shadow" data-p="or1"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR1</span><span class="lbl">Resource prices</span></a>
+    <a href="#or2" data-hue="range" data-p="or2"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR2</span><span class="lbl">Tilting the objective</span></a>
+    <div class="nav-topic" data-hue="range">Three-resource model</div>
+    <a href="#or3" data-hue="shadow" data-p="or3"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR3</span><span class="lbl">Slack and prices</span></a>
+    <a href="#or4" data-hue="range" data-p="or4"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR4</span><span class="lbl">Normal fan</span></a>
+    <div class="nav-topic" data-hue="shadow">Simplex tableau</div>
+    <a href="#or5" data-hue="shadow" data-p="or5"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">OR5</span><span class="lbl">Prices from the tableau</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<div class="part-banner" id="partC" data-hue="shadow"><span class="pb-letter">C</span><div><div class="eyebrow">M447 / M577 Homework 7 · Hillier and Lieberman, Section 4.7</div><h2>Operations research: shadow prices and sensitivity</h2><p>Five linear programs. Read off which constraints bind, price each resource by how much one more unit raises the optimum, and find how far the objective can tilt before the optimal corner changes.</p></div></div>
+
+<section class="ex" id="readC" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">00</span><h2>Part C reading list</h2></div>
+  <p class="prose">Textbook: Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. The syllabus allows another edition, and section numbers move between editions, so match by topic.</p>
+  <ol class="reading">
+    <li><div><b>Graphical method for two-variable linear programs</b> (Chapter 3)<br><span class="for">Feasible region, corner points, iso-profit lines. Needed for OR1 to OR4</span></div></li>
+    <li><div><b>Postoptimality analysis: shadow prices and sensitivity analysis</b> (Section 4.7, the homework's own reference)<br><span class="for">Needed for all five problems</span></div></li>
+    <li><div><b>Reading shadow prices from the final simplex tableau</b> (Section 4.7)<br><span class="for">Needed for OR5</span></div></li>
+    <li><div><b>Duality and the economic meaning of shadow prices</b> (the duality chapter)<br><span class="for">Optional depth for OR5. Chapter number varies by edition</span></div></li>
+  </ol>
+  <div class="flag"><b>Verify</b><span>I'm confident Section 4.7 covers shadow prices and sensitivity because the homework says so. I'm not certain of the chapter numbers for duality and the deeper sensitivity treatment in the 10th edition, so I left them out. Check your table of contents.</span></div>
+</section>
+
+<div class="chapter" data-hue="shadow">Problems 1 and 2 · the two-resource model</div>
+<!-- ================= OR1 ================= -->
+<section class="ex" id="or1" data-hue="shadow" data-problem>
+  <div class="ex-head"><span class="ex-num">OR1</span><h2>Binding constraints and the price of a resource</h2><span class="ex-id">HW7 · Problem 1</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=x_1+2x_2\) subject to \(x_1+3x_2\le8\) (resource 1), \(x_1+x_2\le4\) (resource 2), \(x_1,x_2\ge0\). The optimal solution is \((x_1^*,x_2^*)=(2,2)\) with \(Z^*=6\).</p>
+    <p>(a) Is either constraint binding? (b) Use graphical analysis to find the shadow price of each resource. (c) How many additional units of resource 1 would raise the optimal value by 1.5?</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Binding constraint</dt><dd>A constraint that holds with equality at the optimal solution. A nonbinding constraint has slack left over, so a little more of that resource changes nothing: its shadow price is 0.</dd>
+    <dt>Shadow price</dt><dd>\(\class{tb}{y_i^*=\dfrac{\Delta Z^*}{\Delta b_i}}\): the rate at which the optimal value rises per extra unit of resource \(i\), all else fixed. It holds while the same constraints stay binding (the allowable range).</dd>
+    <dt>Graphical method</dt><dd>Shift the resource's constraint line out by one unit, find the new corner where the binding lines cross, and measure the change in \(Z\).</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Shadow prices from a linear program are the marginal value of one more unit of a constrained resource — in portfolio optimization this is literally the marginal utility of one more dollar of risk budget or capital, the number that tells a desk exactly how much performance it's giving up because of a capital constraint.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Plug the optimum into each constraint.</b></p>
+        \[ x_1+3x_2=2+3(2)=8=8,\qquad x_1+x_2=2+2=4=4 \]
+        <p>Both hold with equality, so \(\class{dv}{\text{both constraints are binding}}\).</p></div></li>
+      <li><div><p><b>Keep the right-hand sides as symbols.</b> The optimal corner is where the two binding lines cross, so solve them with \(b_1,b_2\) in place of 8 and 4.</p>
+        \[ x_1+3x_2=b_1,\qquad x_1+x_2=b_2 \]
+        <p>Subtract the second from the first: \(2x_2=b_1-b_2\), so \(x_2=\dfrac{b_1-b_2}{2}\). Then \(x_1=b_2-x_2=\dfrac{3b_2-b_1}{2}\).</p></div></li>
+      <li><div><p><b>Write the optimal value as a function of the resources.</b></p>
+        \[ Z^*=x_1+2x_2=\frac{3b_2-b_1}{2}+(b_1-b_2)=\frac{3b_2-b_1+2b_1-2b_2}{2}=\frac{b_1+b_2}{2} \]</div></li>
+      <li><div><p><b>(b) Read off the shadow prices.</b> <span class="src">Shadow price</span> Each extra unit of either resource adds one half to \(Z^*\).</p>
+        \[ \class{dv}{y_1^*=\tfrac12,\qquad y_2^*=\tfrac12} \]
+        <p class="why">Graphical check: with \(b_1=9\) the corner moves to \((1.5,\,2.5)\) and \(Z=1.5+5=6.5\). With \(b_2=5\) it moves to \((3.5,\,1.5)\) and \(Z=3.5+3=6.5\). Both are \(+0.5\).</p></div></li>
+      <li><div><p><b>Find how far \(b_1\) can move with the same binding pair</b> (keep \(b_2=4\)). Both coordinates of the corner must stay nonnegative.</p>
+        \[ x_1=\frac{12-b_1}{2}\ge0\Rightarrow b_1\le12,\qquad x_2=\frac{b_1-4}{2}\ge0\Rightarrow b_1\ge4 \]
+        <p>So the shadow price \(\tfrac12\) holds for \(4\le b_1\le12\).</p></div></li>
+      <li><div><p><b>(c) Solve for the extra units.</b></p>
+        \[ \Delta Z^*=y_1^*\,\Delta b_1\ \Longrightarrow\ 1.5=\tfrac12\,\Delta b_1\ \Longrightarrow\ \class{dv}{\Delta b_1=3} \]
+        <p>New \(b_1=11\) is inside \([4,12]\), so the shadow price still applies. Check: the corner becomes \((0.5,\,3.5)\) and \(Z=0.5+7=7.5=6+1.5\ \checkmark\)</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Both constraints are binding</td></tr>
+      <tr><td>(b)</td><td>\(y_1^*=\) <b>0.5</b>, \(y_2^*=\) <b>0.5</b></td></tr>
+      <tr><td>(c)</td><td><b>3</b> additional units of resource 1</td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labLP1"><div class="lab-head"><span class="tag">Live figure C1</span><h3>Move a resource, watch the corner and Z* move</h3>
+    <p>Drag \(b_1\) or \(b_2\). The shaded region is everything feasible; the glowing corner is the optimum. The readout measures the shadow price as the slope of \(Z^*\) at the current setting, so you can see it hold at 0.5 across \(4\le b_1\le12\) and then change. "Sweep" slides the iso-profit line across the region until it last touches.</p></div>
+    <canvas id="cvLP1" class="square"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="lp1b1">b₁ (resource 1) <output id="o_lp1b1">8.0</output></label><input type="range" id="lp1b1" min="2" max="14" step="0.1" value="8"></div>
+      <div class="ctl"><label for="lp1b2">b₂ (resource 2) <output id="o_lp1b2">4.0</output></label><input type="range" id="lp1b2" min="1" max="8" step="0.1" value="4"></div>
+      <div class="btnrow"><button id="lp1sweep" class="primary">Sweep the iso-profit line</button><button id="lp1reset">Reset</button></div>
+    </div>
+    <div class="readout" id="r_lp1"></div>
+  </figure>
+</section>
+<!-- ================= OR2 ================= -->
+<section class="ex" id="or2" data-hue="range" data-problem>
+  <div class="ex-head"><span class="ex-num">OR2</span><h2>How far can the objective tilt?</h2><span class="ex-id">HW7 · Problem 2</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Same constraints as OR1. Use sensitivity analysis on the objective coefficients. (a) If \(Z=21x_1+60x_2\), does \((2,2)\) stay optimal? (b) If \(Z=11x_1+10x_2\)? (c) With \(c_1=1\) fixed, what range of \(c_2\) keeps \((2,2)\) optimal? (d) With \(c_2=2\) fixed, what range of \(c_1\)?</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Slope test for a corner</dt><dd>The iso-profit line \(c_1x_1+c_2x_2=Z\) has slope \(\class{tb}{-c_1/c_2}\). A corner stays optimal while that slope stays between the slopes of the two constraint lines that meet there.</dd>
+    <dt>Same test, as a cone</dt><dd>Equivalently, \((c_1,c_2)\) must lie between the normal vectors of the two binding constraints. Live figure C2 draws that cone.</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Asking how far objective coefficients can move before the optimal corner changes is objective-sensitivity analysis — in a mean-variance portfolio, it tells you how wrong your expected-return forecasts can be before the optimizer would have picked a different portfolio, exactly the robustness check real portfolio construction needs.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Slopes of the binding lines at \((2,2)\).</b></p>
+        \[ x_1+3x_2=8\ \Rightarrow\ x_2=\tfrac83-\tfrac13x_1\ (\text{slope }-\tfrac13),\qquad x_1+x_2=4\ \Rightarrow\ \text{slope }-1 \]</div></li>
+      <li><div><p><b>Optimality condition.</b> <span class="src">Slope test</span> With \(c_2\gt0\):</p>
+        \[ -1\le-\frac{c_1}{c_2}\le-\frac13\quad\Longleftrightarrow\quad\class{dv}{\frac13\le\frac{c_1}{c_2}\le1} \]
+        <p class="why">Current objective: \(c_1/c_2=1/2\), inside the range, which is why \((2,2)\) is optimal now.</p></div></li>
+      <li><div><p><b>(a)</b> \(c_1/c_2=21/60=0.35\). Since \(0.333\le0.35\le1\), \(\class{dv}{\text{yes, }(2,2)\text{ stays optimal}}\).</p>
+        <p class="why">Check the corners: \((2,2)\to162\), \((0,\tfrac83)\to160\), \((4,0)\to84\). Close, but \((2,2)\) wins.</p></div></li>
+      <li><div><p><b>(b)</b> \(c_1/c_2=11/10=1.1\gt1\). \(\class{dv}{\text{No.}}\) The new optimum is \((4,0)\): \(Z=44\) beats \((2,2)\)'s 42.</p></div></li>
+      <li><div><p><b>(c)</b> Set \(c_1=1\): \(\tfrac13\le\tfrac1{c_2}\le1\). Taking reciprocals of positive numbers flips the inequalities:</p>
+        \[ \class{dv}{1\le c_2\le3} \]</div></li>
+      <li><div><p><b>(d)</b> Set \(c_2=2\): \(\tfrac13\le\tfrac{c_1}{2}\le1\). Multiply by 2:</p>
+        \[ \class{dv}{\tfrac23\le c_1\le2} \]
+        <p class="why">At an endpoint the iso-profit line lies flat along an edge, so a second corner ties; \((2,2)\) is still optimal, which is why the endpoints are included.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td><b>Yes</b> (ratio 0.35 is in [1/3, 1])</td></tr>
+      <tr><td>(b)</td><td><b>No</b> (ratio 1.1; new optimum (4, 0))</td></tr>
+      <tr><td>(c)</td><td><b>1 ≤ c₂ ≤ 3</b></td></tr>
+      <tr><td>(d)</td><td><b>2/3 ≤ c₁ ≤ 2</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labLP2"><div class="lab-head"><span class="tag">Live figure C2</span><h3>Rotate the objective, watch the corner hold</h3>
+    <p>The arrow is the objective direction \((c_1,c_2)\). The shaded wedge at \((2,2)\) is the optimality cone between the two binding normals. While the arrow stays inside it, \((2,2)\) is optimal; outside, a different corner takes over. The ruler underneath shows the same thing as the ratio \(c_1/c_2\).</p></div>
+    <canvas id="cvLP2" class="square"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="lp2ang">Objective direction <output id="o_lp2ang">63.4°</output></label><input type="range" id="lp2ang" min="0" max="90" step="0.1" value="63.4"></div>
+      <div class="btnrow"><button data-lp2="1,2">Current (1, 2)</button><button data-lp2="21,60">(a) 21, 60</button><button data-lp2="11,10">(b) 11, 10</button></div>
+    </div>
+    <div class="readout" id="r_lp2"></div>
+  </figure>
+</section>
+<div class="chapter" data-hue="range">Problems 3 and 4 · the three-resource model</div>
+<!-- ================= OR3 ================= -->
+<section class="ex" id="or3" data-hue="shadow" data-problem>
+  <div class="ex-head"><span class="ex-num">OR3</span><h2>Three resources, one with slack</h2><span class="ex-id">HW7 · Problem 3</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=3x_1+2x_2\) subject to \(x_1\le4\) (resource 1), \(x_1+3x_2\le15\) (resource 2), \(2x_1+x_2\le10\) (resource 3), \(x_1,x_2\ge0\). The optimal solution is \((3,4)\) with \(Z^*=17\).</p>
+    <p>(a) Which constraints are binding? (b) Use graphical analysis to find the shadow prices.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Nonbinding means a zero price</dt><dd>\(\class{tb}{\text{slack}_i\gt0\ \Rightarrow\ y_i^*=0}\). Small changes to that resource leave the optimal corner where it is.</dd>
+    <dt>Shadow price</dt><dd>\(\class{tb}{y_i^*=\Delta Z^*/\Delta b_i}\) within the allowable range, found by re-solving the binding system with \(b_i\) as a symbol.</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>A resource with slack (shadow price zero) is a constraint that isn't actually binding — recognizing this is how a portfolio manager knows which risk or capital limits are truly constraining the portfolio versus which ones have headroom and don't matter yet.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Plug \((3,4)\) into each constraint.</b></p>
+        \[ x_1=3\lt4\ (\text{slack }1),\qquad x_1+3x_2=3+12=15,\qquad 2x_1+x_2=6+4=10 \]
+        <p>\(\class{dv}{\text{Resources 2 and 3 are binding; resource 1 is not.}}\)</p></div></li>
+      <li><div><p><b>Resource 1.</b> It has one unused unit, so \(\class{dv}{y_1^*=0}\).</p></div></li>
+      <li><div><p><b>Solve the binding pair with symbols.</b></p>
+        \[ x_1+3x_2=b_2,\qquad 2x_1+x_2=b_3 \]
+        <p>From the second, \(x_2=b_3-2x_1\). Substitute: \(x_1+3b_3-6x_1=b_2\), so \(x_1=\dfrac{3b_3-b_2}{5}\) and \(x_2=b_3-2x_1=\dfrac{2b_2-b_3}{5}\).</p></div></li>
+      <li><div><p><b>Optimal value as a function of \(b_2,b_3\).</b></p>
+        \[ Z^*=3x_1+2x_2=\frac{9b_3-3b_2+4b_2-2b_3}{5}=\frac{b_2+7b_3}{5} \]
+        \[ \class{dv}{y_2^*=\tfrac15=0.2,\qquad y_3^*=\tfrac75=1.4} \]</div></li>
+      <li><div><p><b>Graphical check.</b> \(b_2=16\): corner \((2.8,\,4.4)\), \(Z=8.4+8.8=17.2\), up 0.2. \(b_3=11\): corner \((3.6,\,3.8)\), \(Z=10.8+7.6=18.4\), up 1.4, and \(x_1=3.6\le4\) still holds.</p>
+        <p class="why">The statement lists \(x_3\ge0\), but this problem has no \(x_3\). It's a typo; ignore it.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Resources 2 and 3 binding; resource 1 not binding</td></tr>
+      <tr><td>(b)</td><td>\(y_1^*=\) <b>0</b>, \(y_2^*=\) <b>0.2</b>, \(y_3^*=\) <b>1.4</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labLP3"><div class="lab-head"><span class="tag">Live figure C3</span><h3>Three resource levers</h3>
+    <p>Each slider moves one constraint line. Resource 1's line is far from the optimum, so moving it changes nothing until it reaches \(x_1=3\). Resource 3 is the most valuable: every unit moves the corner and adds 1.4.</p></div>
+    <canvas id="cvLP3" class="square"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="lp3b1">b₁ <output id="o_lp3b1">4.0</output></label><input type="range" id="lp3b1" min="1" max="6" step="0.1" value="4"></div>
+      <div class="ctl"><label for="lp3b2">b₂ <output id="o_lp3b2">15.0</output></label><input type="range" id="lp3b2" min="8" max="22" step="0.1" value="15"></div>
+      <div class="ctl"><label for="lp3b3">b₃ <output id="o_lp3b3">10.0</output></label><input type="range" id="lp3b3" min="5" max="14" step="0.1" value="10"></div>
+      <div class="btnrow"><button id="lp3sweep" class="primary">Sweep</button><button id="lp3reset">Reset</button></div>
+    </div>
+    <div class="readout" id="r_lp3"></div>
+  </figure>
+</section>
+<!-- ================= OR4 ================= -->
+<section class="ex" id="or4" data-hue="range" data-problem>
+  <div class="ex-head"><span class="ex-num">OR4</span><h2>Which corner wins for every objective</h2><span class="ex-id">HW7 · Problem 4</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Same constraints as OR3, with objective \(Z=c_1x_1+c_2x_2\), \(c_1,c_2\ge0\). Find the range of \(c_1/c_2\) that keeps each point optimal: (a) \((3,4)\), (b) \((4,2)\), (c) \((0,5)\). (d) If \(c_1,c_2\) may be negative, find the conditions on \(c_1,c_2\) and the range of \(c_1/c_2\) that keep \((4,0)\) optimal.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Slope test at each corner</dt><dd>Corner optimal \(\Leftrightarrow\) \(\class{tb}{-c_1/c_2}\) lies between the slopes of the two lines that meet there.</dd>
+    <dt>Cone test (works for any signs)</dt><dd>Write each constraint as \(a_1x_1+a_2x_2\le b\), so \(x_1\ge0\) becomes \(-x_1\le0\). A corner is optimal \(\Leftrightarrow\) \((c_1,c_2)\) is a nonnegative combination of the normals \((a_1,a_2)\) of the constraints active there.</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Mapping which vertex is optimal across a whole range of objective directions is exactly how an efficient frontier is built: each vertex of the feasible region is optimal for some range of risk-aversion levels, the same way a corner point here is optimal for a range of cost ratios.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>List the corners and the lines meeting at each.</b> Going around the region: \((0,0)\), \((4,0)\), \((4,2)\), \((3,4)\), \((0,5)\).</p>
+        <p>\((4,2)\): \(x_1=4\) (vertical) and \(2x_1+x_2=10\) (slope \(-2\)). \((3,4)\): slope \(-2\) and \(x_1+3x_2=15\) (slope \(-\tfrac13\)). \((0,5)\): slope \(-\tfrac13\) and \(x_1=0\) (vertical).</p></div></li>
+      <li><div><p><b>(a) \((3,4)\).</b> Objective slope between \(-2\) and \(-\tfrac13\):</p>
+        \[ -2\le-\frac{c_1}{c_2}\le-\frac13\ \Longleftrightarrow\ \class{dv}{\frac13\le\frac{c_1}{c_2}\le2} \]
+        <p class="why">The original \(Z=3x_1+2x_2\) has ratio 1.5, inside, consistent with \((3,4)\) being optimal.</p></div></li>
+      <li><div><p><b>(b) \((4,2)\).</b> Slope between vertical and \(-2\), so steeper than \(-2\):</p>
+        \[ -\frac{c_1}{c_2}\le-2\ \Longleftrightarrow\ \class{dv}{\frac{c_1}{c_2}\ge2} \]
+        <p class="why">If \(c_2=0\) the ratio is undefined; then the whole edge \(x_1=4\) is optimal, so \((4,2)\) still is, tied with \((4,0)\).</p></div></li>
+      <li><div><p><b>(c) \((0,5)\).</b> Slope between \(-\tfrac13\) and 0 (with \(c_1\ge0\)):</p>
+        \[ -\frac13\le-\frac{c_1}{c_2}\le0\ \Longleftrightarrow\ \class{dv}{0\le\frac{c_1}{c_2}\le\frac13} \]</div></li>
+      <li><div><p><b>(d) \((4,0)\) with any signs.</b> <span class="src">Cone test</span> Active constraints there: \(x_1\le4\) with normal \((1,0)\), and \(x_2\ge0\), written \(-x_2\le0\), with normal \((0,-1)\).</p>
+        \[ (c_1,c_2)=\lambda(1,0)+\mu(0,-1)=(\lambda,-\mu),\ \lambda,\mu\ge0\ \Longrightarrow\ \class{dv}{c_1\ge0,\ c_2\le0} \]
+        <p>For \(c_2\lt0\) that gives \(\class{dv}{c_1/c_2\le0}\).</p></div></li>
+      <li><div><p><b>Why the ratio alone isn't enough in (d).</b> \(c_1/c_2\le0\) also holds for \(c_1=-1,\ c_2=1\), but then \(Z=-x_1+x_2\) is maximized at \((0,5)\), not \((4,0)\). The signs carry information the ratio throws away.</p>
+        <p class="why">Check with \(c=(1,-1)\): corners give \(0,\ 4,\ 2,\ -1,\ -5\), so \((4,0)\) wins.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td><b>1/3 ≤ c₁/c₂ ≤ 2</b></td></tr>
+      <tr><td>(b)</td><td><b>c₁/c₂ ≥ 2</b></td></tr>
+      <tr><td>(c)</td><td><b>0 ≤ c₁/c₂ ≤ 1/3</b></td></tr>
+      <tr><td>(d)</td><td><b>c₁ ≥ 0 and c₂ ≤ 0</b> (not both 0); for c₂ &lt; 0, <b>c₁/c₂ ≤ 0</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labLP4"><div class="lab-head"><span class="tag">Live figure C4</span><h3>The normal fan: every direction, every winner</h3>
+    <p>Turn the objective all the way around, negative coefficients included. The compass splits every possible direction into sectors, one per corner; the sector the arrow points into names the optimal corner. Parts (a) to (d) are four of those sectors.</p></div>
+    <canvas id="cvLP4" class="square"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="lp4ang">Objective direction <output id="o_lp4ang">33.7°</output></label><input type="range" id="lp4ang" min="-180" max="180" step="0.5" value="33.7"></div>
+      <div class="btnrow"><button data-lp4="3,2">(a) 3, 2</button><button data-lp4="3,1">(b) 3, 1</button><button data-lp4="1,4">(c) 1, 4</button><button data-lp4="1,-1">(d) 1, −1</button></div>
+    </div>
+    <div class="readout" id="r_lp4"></div>
+  </figure>
+</section>
+<div class="chapter" data-hue="shadow">Problem 5 · reading the simplex tableau</div>
+<!-- ================= OR5 ================= -->
+<section class="ex" id="or5" data-hue="shadow" data-problem>
+  <div class="ex-head"><span class="ex-num">OR5</span><h2>Shadow prices from the final tableau</h2><span class="ex-id">HW7 · Problem 5</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Maximize \(Z=2x_1-x_2+x_3\) subject to \(3x_1+x_2+x_3\le6\) (resource 1), \(x_1-x_2+2x_3\le1\) (resource 2), \(x_1+x_2-x_3\le2\) (resource 3), \(x_1,x_2,x_3\ge0\). The final simplex tableau is:</p>
+    <div class="tablewrap tableau-wrap"><table class="tableau" id="tableau">
+      <thead><tr><th>Basic</th><th>Eq</th><th>Z</th><th>x₁</th><th>x₂</th><th>x₃</th><th class="slk">x₄</th><th class="slk">x₅</th><th class="slk">x₆</th><th>RHS</th></tr></thead>
+      <tbody>
+        <tr class="r0"><td>Z</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1.5</td><td class="sp" data-r="1">0</td><td class="sp" data-r="2">1.5</td><td class="sp" data-r="3">0.5</td><td>2.5</td></tr>
+        <tr><td>x₄</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−1</td><td>−2</td><td>1</td></tr>
+        <tr><td>x₁</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0.5</td><td>0</td><td>0.5</td><td>0.5</td><td>1.5</td></tr>
+        <tr><td>x₂</td><td>3</td><td>0</td><td>0</td><td>1</td><td>−1.5</td><td>0</td><td>−0.5</td><td>0.5</td><td>0.5</td></tr>
+      </tbody></table></div>
+    <p>(a) What is the shadow price of each resource? (b) If every capacity could be increased, which resource has priority? (c) Z is profit in millions, and one more unit of any resource costs $1 million. Should you buy one more unit of resource 1? Resource 2? Resource 3?</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Shadow prices in the final tableau</dt><dd>With slack variables \(x_4,x_5,x_6\) added to constraints 1, 2, 3: \(\class{tb}{y_i^*=\text{coefficient of slack }i\text{ in row 0}}\).</dd>
+    <dt>Allowable range for \(b_i\)</dt><dd>The slack columns of the final tableau form \(B^{-1}\). Changing \(b_i\) by \(\Delta\) changes the basic variables to \(\class{tb}{x_B+\Delta\cdot(\text{column of slack }i)}\). The shadow price holds while all of them stay \(\ge0\).</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Reading shadow prices and their allowable ranges straight off the final simplex tableau is how a risk desk gets both the price of relaxing a limit and the range over which that price stays valid — beyond the allowable range the whole optimal portfolio restructures, not just its P&L.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Match slacks to resources.</b> \(x_4\) is the slack of resource 1, \(x_5\) of resource 2, \(x_6\) of resource 3.</p></div></li>
+      <li><div><p><b>(a) Read row 0 under the slack columns.</b> <span class="src">Final tableau rule</span></p>
+        \[ \class{dv}{y_1^*=0,\qquad y_2^*=1.5,\qquad y_3^*=0.5} \]
+        <p class="why">Consistency: \(x_4=1\) is basic, so resource 1 has one unused unit, which is exactly why its price is 0.</p></div></li>
+      <li><div><p><b>Cross-check against the original problem.</b> The tableau's solution is \(x_1=1.5,\ x_2=0.5,\ x_3=0\):</p>
+        \[ Z=2(1.5)-0.5+0=2.5,\qquad 3(1.5)+0.5=5\le6,\qquad 1.5-0.5=1,\qquad 1.5+0.5=2 \]
+        <p>Dual check: \(6y_1^*+1y_2^*+2y_3^*=0+1.5+1=2.5=Z^*\ \checkmark\)</p></div></li>
+      <li><div><p><b>(b) Priority.</b> The largest shadow price wins: \(\class{dv}{\text{resource 2}}\), worth 1.5 per unit, three times resource 3.</p></div></li>
+      <li><div><p><b>Allowable ranges.</b> Current \(x_B=(x_4,x_1,x_2)=(1,\,1.5,\,0.5)\). Slack columns: \(x_5\to(-1,\,0.5,\,-0.5)\), \(x_6\to(-2,\,0.5,\,0.5)\).</p>
+        \[ b_2+\Delta:\ (1-\Delta,\ 1.5+0.5\Delta,\ 0.5-0.5\Delta)\ge0\ \Rightarrow\ -3\le\Delta\le1 \]
+        \[ b_3+\Delta:\ (1-2\Delta,\ 1.5+0.5\Delta,\ 0.5+0.5\Delta)\ge0\ \Rightarrow\ -1\le\Delta\le0.5 \]</div></li>
+      <li><div><p><b>(c) Compare each price with the $1 million cost.</b></p>
+        <p>Resource 1: \(0\lt1\). \(\class{dv}{\text{Don't buy}}\); it already has an unused unit.</p>
+        <p>Resource 2: \(1.5\gt1\), and \(\Delta=1\) is inside \([-3,1]\). \(\class{dv}{\text{Buy}}\): net gain \(1.5-1=0.5\) million. The new optimum is \((2,0,0)\) with \(Z=4\).</p>
+        <p>Resource 3: \(0.5\lt1\). \(\class{dv}{\text{Don't buy}}\). It's worse than it looks: \(\Delta=1\) is past the allowable 0.5, so the real gain is only 0.25 (\(Z\) goes to 2.75), a net loss of 0.75 million.</p>
+        <p class="why">Live figure C5 shows all three. Inside the allowable range \(Z^*\) follows the shadow-price line exactly; past it, the curve bends down.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><div class="tw"><table>
+      <tr><td>(a)</td><td>\(y_1^*=\) <b>0</b>, \(y_2^*=\) <b>1.5</b>, \(y_3^*=\) <b>0.5</b></td></tr>
+      <tr><td>(b)</td><td>Resource <b>2</b></td></tr>
+      <tr><td>(c)</td><td>Resource 1: <b>no</b> · Resource 2: <b>yes</b>, +0.5 million · Resource 3: <b>no</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labTab"><div class="lab-head"><span class="tag">Live figure C5</span><h3>What one more unit is really worth</h3>
+    <p>Pick a resource and drag Δ, the change in its capacity. The curve is the true optimum \(Z^*\), re-solved exactly at every point. The dashed line is the shadow-price prediction. The shaded band is the allowable range, where the two agree. The ochre line is the break-even cost: buying pays off only where the curve is above it.</p></div>
+    <div class="seg" id="tabSeg" role="group" aria-label="Resource">
+      <button data-r="1" aria-pressed="false">Resource 1</button><button data-r="2" aria-pressed="true">Resource 2</button><button data-r="3" aria-pressed="false">Resource 3</button>
+    </div>
+    <canvas id="cvTab" class="tall"></canvas>
+    <div class="basis" id="tabBasis"></div>
+    <div class="controls">
+      <div class="ctl"><label for="tabD">Δ change in capacity <output id="o_tabD">1.00</output></label><input type="range" id="tabD" min="-3" max="3" step="0.05" value="1"></div>
+      <div class="ctl"><label for="tabCost">Cost per unit ($M) <output id="o_tabCost">1.00</output></label><input type="range" id="tabCost" min="0" max="2" step="0.05" value="1"></div>
+    </div>
+    <div class="readout" id="r_tab"></div>
+  </figure>
+</section>
+<div class="part-banner ency-banner" id="partE" data-hue="ency"><span class="pb-letter">∫</span><div><div class="eyebrow">Master encyclopedia · Wackerly chapters 3, 4, 6 · M447 syllabus</div><h2>Every distribution, alive</h2><p>Fourteen distributions: every one that appears in the homework, the rest of the Wackerly chapter 3 and 4 family, and the ones queueing models in M447 are built on. Pick one, drag its parameters, or press play and watch its shape move.</p></div></div>
+
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const cvar = el => getComputedStyle(el).getPropertyValue('--c').trim() || tok('--dv');
+  const f2 = (x, d = 2) => (Number.isFinite(x) ? (+x.toFixed(d)).toString() : '—');
+  const EPS = 1e-7;
+
+  /* ---------- 2-D LP geometry ---------- */
+  const NONNEG = [{ a: [-1, 0], b: 0, nn: true, name: 'x₁ ≥ 0' }, { a: [0, -1], b: 0, nn: true, name: 'x₂ ≥ 0' }];
+  function polygon(cons) {
+    const all = cons.concat(NONNEG), pts = [];
+    for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
+      const [a, b] = all[i].a, [c, d] = all[j].a, det = a * d - b * c; if (Math.abs(det) < 1e-12) continue;
+      const x = (all[i].b * d - b * all[j].b) / det, y = (a * all[j].b - all[i].b * c) / det;
+      if (all.every(k => k.a[0] * x + k.a[1] * y <= k.b + 1e-7) && !pts.some(p => Math.hypot(p[0] - x, p[1] - y) < 1e-6)) pts.push([x, y]);
+    }
+    if (pts.length < 3) return pts;
+    const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length, cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+    return pts.sort((p, q) => Math.atan2(p[1] - cy, p[0] - cx) - Math.atan2(q[1] - cy, q[0] - cx));
+  }
+  const best = (c, poly) => { let bi = 0, bz = -Infinity; poly.forEach((v, i) => { const z = c[0] * v[0] + c[1] * v[1]; if (z > bz + 1e-9) { bz = z; bi = i; } }); return { v: poly[bi], z: bz, i: bi }; };
+  function clipHalf(poly, c, s) { // keep c·x <= s
+    const out = [];
+    for (let i = 0; i < poly.length; i++) {
+      const P = poly[i], Q = poly[(i + 1) % poly.length], fp = c[0] * P[0] + c[1] * P[1] - s, fq = c[0] * Q[0] + c[1] * Q[1] - s;
+      if (fp <= 0) out.push(P);
+      if ((fp < 0 && fq > 0) || (fp > 0 && fq < 0)) { const t = fp / (fp - fq); out.push([P[0] + t * (Q[0] - P[0]), P[1] + t * (Q[1] - P[1])]); }
+    }
+    return out;
+  }
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); return { ctx, w, h };
+  }
+  const label = (ctx, t, x, y, c, a, b, sz) => { ctx.fillStyle = c; ctx.font = `600 ${sz || 11.5}px ` + tok('--f-mono'); ctx.textAlign = a || 'left'; ctx.textBaseline = b || 'top'; ctx.fillText(t, x, y); };
+  function arrow(ctx, x0, y0, x1, y1, col, w) {
+    const a = Math.atan2(y1 - y0, x1 - x0); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w || 2.2;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - 10 * Math.cos(a - 0.4), y1 - 10 * Math.sin(a - 0.4)); ctx.lineTo(x1 - 10 * Math.cos(a + 0.4), y1 - 10 * Math.sin(a + 0.4)); ctx.closePath(); ctx.fill();
+  }
+
+  /* draws region, constraints, optimum; returns mapping */
+  function drawLP(ctx, box, view, cons, c, opts) {
+    const X = x => box.x0 + (x / view[0]) * (box.x1 - box.x0), Y = y => box.y1 - (y / view[1]) * (box.y1 - box.y0);
+    const muted = tok('--muted'), rule = tok('--rule'), hue = opts.hue, t = opts.t || 0;
+    ctx.font = '11px ' + tok('--f-mono'); ctx.lineWidth = 1;
+    for (let k = 0; k <= view[0]; k += view[0] > 10 ? 2 : 1) { ctx.strokeStyle = rule; ctx.beginPath(); ctx.moveTo(X(k), box.y0); ctx.lineTo(X(k), box.y1); ctx.stroke(); ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(k, X(k), box.y1 + 6); }
+    for (let k = 0; k <= view[1]; k += view[1] > 10 ? 2 : 1) { ctx.strokeStyle = rule; ctx.beginPath(); ctx.moveTo(box.x0, Y(k)); ctx.lineTo(box.x1, Y(k)); ctx.stroke(); ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(k, box.x0 - 6, Y(k)); }
+    ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(box.x0, box.y0); ctx.lineTo(box.x0, box.y1); ctx.lineTo(box.x1, box.y1); ctx.stroke();
+    label(ctx, 'x₁', box.x1, box.y1 - 16, muted, 'right'); label(ctx, 'x₂', box.x0 + 6, box.y0, muted);
+    const poly = polygon(cons); if (poly.length < 3) return { X, Y, poly, opt: null };
+    const opt = best(c, poly);
+    ctx.save(); ctx.beginPath(); ctx.rect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.clip();
+    // region
+    const grd = ctx.createLinearGradient(box.x0, box.y1, box.x1, box.y0); grd.addColorStop(0, hue + '40'); grd.addColorStop(1, hue + '10');
+    ctx.beginPath(); poly.forEach((p, i) => i ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1]))); ctx.closePath(); ctx.fillStyle = grd; ctx.fill();
+    ctx.strokeStyle = hue + 'aa'; ctx.lineWidth = 1.5; ctx.stroke();
+    // swept region
+    if (opts.sweep != null) {
+      const cl = clipHalf(poly, c, opts.sweep);
+      if (cl.length > 2) { ctx.beginPath(); cl.forEach((p, i) => i ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1]))); ctx.closePath(); ctx.fillStyle = tok('--dv') + '30'; ctx.fill(); }
+    }
+    // constraint lines
+    const pal = [tok('--tb'), tok('--hl'), tok('--rej')];
+    cons.forEach((k, i) => {
+      const [a1, a2] = k.a, col = pal[i % pal.length];
+      const binding = opt && Math.abs(a1 * opt.v[0] + a2 * opt.v[1] - k.b) < 1e-6;
+      let p0, p1;
+      if (Math.abs(a2) > 1e-12) { p0 = [0, k.b / a2]; p1 = [view[0], (k.b - a1 * view[0]) / a2]; } else { p0 = [k.b / a1, 0]; p1 = [k.b / a1, view[1]]; }
+      ctx.save(); if (binding) { ctx.shadowColor = col; ctx.shadowBlur = 12; }
+      ctx.strokeStyle = col; ctx.lineWidth = binding ? 2.6 : 1.4; ctx.setLineDash(binding ? [] : [6, 5]);
+      ctx.beginPath(); ctx.moveTo(X(p0[0]), Y(p0[1])); ctx.lineTo(X(p1[0]), Y(p1[1])); ctx.stroke(); ctx.restore();
+      // label near where the line enters the top or right edge of the view
+      let lx, ly;
+      if (Math.abs(a2) < 1e-12) { lx = k.b / a1; ly = view[1] * 0.92; }
+      else { const yAt0 = k.b / a2; if (yAt0 <= view[1] * 0.95) { lx = view[0] * 0.02; ly = yAt0; } else { ly = view[1] * 0.93; lx = (k.b - a2 * ly) / a1; } }
+      if (lx >= 0 && lx <= view[0] && ly >= 0 && ly <= view[1]) label(ctx, k.short || ('r' + (i + 1)), X(lx) + 5, Y(ly) - 15, col);
+    });
+    // sweep line
+    if (opts.sweep != null) {
+      const s = opts.sweep, [c1, c2] = c; let q0, q1;
+      if (Math.abs(c2) > 1e-9) { q0 = [0, s / c2]; q1 = [view[0], (s - c1 * view[0]) / c2]; } else { q0 = [s / c1, 0]; q1 = [s / c1, view[1]]; }
+      ctx.save(); ctx.shadowColor = tok('--dv'); ctx.shadowBlur = 16; ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2.6;
+      ctx.beginPath(); ctx.moveTo(X(q0[0]), Y(q0[1])); ctx.lineTo(X(q1[0]), Y(q1[1])); ctx.stroke(); ctx.restore();
+    } else if (opt && opts.iso !== false) {
+      const s = opt.z, [c1, c2] = c; let q0, q1;
+      if (Math.abs(c2) > 1e-9) { q0 = [-1, (s + c1) / c2]; q1 = [view[0] + 1, (s - c1 * (view[0] + 1)) / c2]; } else { q0 = [s / c1, -1]; q1 = [s / c1, view[1] + 1]; }
+      ctx.save(); ctx.setLineDash([3, 5]); ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(X(q0[0]), Y(q0[1])); ctx.lineTo(X(q1[0]), Y(q1[1])); ctx.stroke(); ctx.restore();
+    }
+    // vertices
+    poly.forEach(p => { ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), 3.2, 0, 2 * Math.PI); ctx.fillStyle = tok('--ink'); ctx.globalAlpha = 0.6; ctx.fill(); ctx.globalAlpha = 1; });
+    ctx.restore();
+    if (opt) {
+      const ox = X(opt.v[0]), oy = Y(opt.v[1]), pr = reduce ? 0 : (Math.sin(t * 3) * 0.5 + 0.5);
+      ctx.beginPath(); ctx.arc(ox, oy, 10 + 6 * pr, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv') + '22'; ctx.fill();
+      ctx.save(); ctx.shadowColor = tok('--dv'); ctx.shadowBlur = 18; ctx.beginPath(); ctx.arc(ox, oy, 6.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill(); ctx.restore();
+      const txt = opts.showZ === false ? `(${f2(opt.v[0])}, ${f2(opt.v[1])})` : `(${f2(opt.v[0])}, ${f2(opt.v[1])})  Z* = ${f2(opt.z)}`, right = ox < box.x1 - 150;
+      ctx.font = '600 12px ' + tok('--f-mono'); const tw = ctx.measureText(txt).width;
+      const lx = right ? ox + 14 : ox - 14 - tw, ly = Math.max(box.y0 + 4, oy - 30);
+      ctx.fillStyle = tok('--sheet') + 'dd'; ctx.fillRect(lx - 5, ly - 3, tw + 10, 20); label(ctx, txt, lx, ly, tok('--dv'), 'left', 'top', 12);
+    }
+    return { X, Y, poly, opt };
+  }
+
+  /* ---------- figure runner (animates only when visible) ---------- */
+  const figs = [];
+  function figure(cv, render) {
+    const f = { cv, render, vis: false, raf: 0, t: 0, last: 0 };
+    const loop = now => { f.t += Math.min(0.05, (now - f.last) / 1000); f.last = now; render(f); f.raf = f.vis && !document.hidden && !reduce ? requestAnimationFrame(loop) : 0; };
+    f.kick = () => { if (!f.raf) { f.last = performance.now(); f.raf = requestAnimationFrame(loop); } if (reduce) render(f); };
+    new IntersectionObserver(es => { f.vis = es[0].isIntersecting; if (f.vis) f.kick(); }).observe(cv);
+    new ResizeObserver(() => render(f)).observe(cv);
+    figs.push(f); render(f); return f;
+  }
+  function sweepAnim(state, from, to, f) {
+    if (reduce) { state.sweep = null; f.render(f); return; }
+    const t0 = performance.now(), dur = 1700;
+    const tick = now => { const u = Math.min(1, (now - t0) / dur), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2; state.sweep = from + (to - from) * e; if (u < 1) requestAnimationFrame(tick); else setTimeout(() => { state.sweep = null; }, 600); };
+    requestAnimationFrame(tick); f.kick();
+  }
+  const bindRange = (id, out, d, fn) => { const el = $(id); if (!el) return; el.addEventListener('input', () => { $(out).textContent = (+el.value).toFixed(d); fn(+el.value); }); };
+
+  /* ---------- C1: OR1 with resource sliders ---------- */
+  const S1 = { b: [8, 4], sweep: null };
+  const cons1 = b => [{ a: [1, 3], b: b[0], short: 'x₁ + 3x₂ = b₁' }, { a: [1, 1], b: b[1], short: 'x₁ + x₂ = b₂' }];
+  const Zstar = (cons, c) => { const p = polygon(cons); return p.length ? best(c, p).z : NaN; };
+  if ($('cvLP1')) {
+    const cv = $('cvLP1'), fig = $('labLP1');
+    const F = figure(cv, f => {
+      const { ctx, w, h } = prep(cv), bh = Math.min(h - 40, (w - 70) / 1.5), bw = bh * 1.5, x0 = Math.max(44, (w - bw) / 2), box = { x0, y0: 12, x1: x0 + bw, y1: 12 + bh };
+      const r = drawLP(ctx, box, [9, 6], cons1(S1.b), [1, 2], { hue: cvar(fig), t: f.t, sweep: S1.sweep });
+      if (!r.opt) return;
+      const hd = 0.05, y1 = (Zstar(cons1([S1.b[0] + hd, S1.b[1]]), [1, 2]) - Zstar(cons1([S1.b[0] - hd, S1.b[1]]), [1, 2])) / (2 * hd);
+      const y2 = (Zstar(cons1([S1.b[0], S1.b[1] + hd]), [1, 2]) - Zstar(cons1([S1.b[0], S1.b[1] - hd]), [1, 2])) / (2 * hd);
+      const bind = cons1(S1.b).map((k, i) => Math.abs(k.a[0] * r.opt.v[0] + k.a[1] * r.opt.v[1] - k.b) < 1e-6 ? 'resource ' + (i + 1) : null).filter(Boolean);
+      $('r_lp1').innerHTML = `<span><span class="k">corner</span> <b class="v-dv">(${f2(r.opt.v[0])}, ${f2(r.opt.v[1])})</b></span><span><span class="k">Z*</span> <b class="v-dv">${f2(r.opt.z, 3)}</b> <span class="k">(${r.opt.z >= 6 ? '+' : ''}${f2(r.opt.z - 6, 3)})</span></span>` +
+        `<span><span class="k">binding</span> <b>${bind.join(', ') || 'none'}</b></span><span><span class="k">y₁ here</span> <b class="v-tb">${f2(y1, 3)}</b></span><span><span class="k">y₂ here</span> <b class="v-hl">${f2(y2, 3)}</b></span>`;
+    });
+    bindRange('lp1b1', 'o_lp1b1', 1, v => { S1.b[0] = v; F.kick(); });
+    bindRange('lp1b2', 'o_lp1b2', 1, v => { S1.b[1] = v; F.kick(); });
+    $('lp1sweep').addEventListener('click', () => sweepAnim(S1, 0, Zstar(cons1(S1.b), [1, 2]), F));
+    $('lp1reset').addEventListener('click', () => { S1.b = [8, 4]; $('lp1b1').value = 8; $('lp1b2').value = 4; $('o_lp1b1').textContent = '8.0'; $('o_lp1b2').textContent = '4.0'; F.kick(); });
+  }
+
+  /* ---------- C3: OR3 with three resource sliders ---------- */
+  const S3 = { b: [4, 15, 10], sweep: null };
+  const cons3 = b => [{ a: [1, 0], b: b[0], short: 'x₁ = b₁' }, { a: [1, 3], b: b[1], short: 'x₁ + 3x₂ = b₂' }, { a: [2, 1], b: b[2], short: '2x₁ + x₂ = b₃' }];
+  if ($('cvLP3')) {
+    const cv = $('cvLP3'), fig = $('labLP3');
+    const F = figure(cv, f => {
+      const { ctx, w, h } = prep(cv), size = Math.min(w - 70, h - 40), x0 = Math.max(44, (w - size) / 2), box = { x0, y0: 12, x1: x0 + size, y1: 12 + size };
+      const r = drawLP(ctx, box, [8, 8], cons3(S3.b), [3, 2], { hue: cvar(fig), t: f.t, sweep: S3.sweep });
+      if (!r.opt) return;
+      const hd = 0.05, ys = [0, 1, 2].map(i => { const up = S3.b.slice(), dn = S3.b.slice(); up[i] += hd; dn[i] -= hd; return (Zstar(cons3(up), [3, 2]) - Zstar(cons3(dn), [3, 2])) / (2 * hd); });
+      $('r_lp3').innerHTML = `<span><span class="k">corner</span> <b class="v-dv">(${f2(r.opt.v[0])}, ${f2(r.opt.v[1])})</b></span><span><span class="k">Z*</span> <b class="v-dv">${f2(r.opt.z, 3)}</b></span>` +
+        `<span><span class="k">y₁</span> <b class="v-tb">${f2(ys[0], 3)}</b></span><span><span class="k">y₂</span> <b class="v-hl">${f2(ys[1], 3)}</b></span><span><span class="k">y₃</span> <b class="v-rej">${f2(ys[2], 3)}</b></span>`;
+    });
+    ['1', '2', '3'].forEach((n, i) => bindRange('lp3b' + n, 'o_lp3b' + n, 1, v => { S3.b[i] = v; F.kick(); }));
+    $('lp3sweep').addEventListener('click', () => sweepAnim(S3, 0, Zstar(cons3(S3.b), [3, 2]), F));
+    $('lp3reset').addEventListener('click', () => { S3.b = [4, 15, 10]; ['4', '15', '10'].forEach((v, i) => { $('lp3b' + (i + 1)).value = v; $('o_lp3b' + (i + 1)).textContent = (+v).toFixed(1); }); F.kick(); });
+  }
+
+  /* ---------- C2: OR2 objective rotation with optimality cone ---------- */
+  const S2 = { ang: Math.atan2(2, 1) * 180 / Math.PI };
+  if ($('cvLP2')) {
+    const cv = $('cvLP2'), fig = $('labLP2');
+    const F = figure(cv, f => {
+      const { ctx, w, h } = prep(cv), bh = Math.min(h - 96, (w - 70) / 1.5), size = bh, bw = bh * 1.5, x0 = Math.max(44, (w - bw) / 2), box = { x0, y0: 12, x1: x0 + bw, y1: 12 + bh };
+      const a = S2.ang * Math.PI / 180, c = [Math.cos(a), Math.sin(a)];
+      const r = drawLP(ctx, box, [9, 6], cons1([8, 4]), c, { hue: cvar(fig), t: f.t, showZ: false });
+      const ratio = c[1] > 1e-9 ? c[0] / c[1] : Infinity, inside = ratio >= 1 / 3 - 1e-9 && ratio <= 1 + 1e-9;
+      // cone at (2,2)
+      const vx = r.X(2), vy = r.Y(2), L = size * 0.22, aN1 = Math.atan2(3, 1), aN2 = Math.atan2(1, 1);
+      ctx.beginPath(); ctx.moveTo(vx, vy); ctx.arc(vx, vy, L, -aN1, -aN2, false); ctx.closePath(); ctx.fillStyle = (inside ? tok('--dv') : tok('--rej')) + '2a'; ctx.fill();
+      arrow(ctx, vx, vy, vx + L * Math.cos(aN1), vy - L * Math.sin(aN1), tok('--tb'), 1.6);
+      arrow(ctx, vx, vy, vx + L * Math.cos(aN2), vy - L * Math.sin(aN2), tok('--hl'), 1.6);
+      const ov = r.opt ? [r.X(r.opt.v[0]), r.Y(r.opt.v[1])] : [vx, vy];
+      arrow(ctx, ov[0], ov[1], ov[0] + L * 1.25 * c[0], ov[1] - L * 1.25 * c[1], inside ? tok('--dv') : tok('--rej'), 2.8);
+      label(ctx, '(c₁, c₂)', ov[0] + L * 1.3 * c[0] + 4, ov[1] - L * 1.3 * c[1] - 6, inside ? tok('--dv') : tok('--rej'));
+      // ratio ruler
+      const ry = box.y1 + 46, rx0 = box.x0, rx1 = box.x1, RX = v => rx0 + Math.min(v, 3) / 3 * (rx1 - rx0);
+      ctx.fillStyle = tok('--dv') + '33'; ctx.fillRect(RX(1 / 3), ry - 8, RX(1) - RX(1 / 3), 16);
+      ctx.strokeStyle = tok('--muted'); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(rx0, ry); ctx.lineTo(rx1, ry); ctx.stroke();
+      [[0, '0'], [1 / 3, '1/3'], [1, '1'], [2, '2'], [3, '3+']].forEach(([v, s]) => { ctx.beginPath(); ctx.moveTo(RX(v), ry - 4); ctx.lineTo(RX(v), ry + 4); ctx.stroke(); label(ctx, s, RX(v), ry + 8, tok('--muted'), 'center', 'top', 10.5); });
+      label(ctx, 'c₁ / c₂', rx0, ry - 24, tok('--muted'), 'left', 'top', 10.5);
+      const mx = RX(ratio); ctx.save(); ctx.shadowColor = inside ? tok('--dv') : tok('--rej'); ctx.shadowBlur = 12; ctx.beginPath(); ctx.arc(mx, ry, 6.5, 0, 2 * Math.PI); ctx.fillStyle = inside ? tok('--dv') : tok('--rej'); ctx.fill(); ctx.restore();
+      $('r_lp2').innerHTML = `<span><span class="k">c₁/c₂</span> <b class="${inside ? 'v-dv' : 'v-rej'}">${Number.isFinite(ratio) ? f2(ratio, 3) : '∞'}</b></span><span><span class="k">optimal corner</span> <b>(${r.opt ? f2(r.opt.v[0]) + ', ' + f2(r.opt.v[1]) : '—'})</b></span>` +
+        `<span class="${inside ? 'v-dv' : 'v-rej'}">${inside ? '(2, 2) stays optimal: ratio inside [1/3, 1]' : '(2, 2) is no longer optimal'}</span>`;
+    });
+    const setAng = v => { S2.ang = v; $('lp2ang').value = v; $('o_lp2ang').textContent = v.toFixed(1) + '°'; F.kick(); };
+    bindRange('lp2ang', 'o_lp2ang', 1, v => { S2.ang = v; $('o_lp2ang').textContent = v.toFixed(1) + '°'; F.kick(); });
+    document.querySelectorAll('[data-lp2]').forEach(b => b.addEventListener('click', () => {
+      const [c1, c2] = b.dataset.lp2.split(',').map(Number), target = Math.atan2(c2, c1) * 180 / Math.PI, from = S2.ang;
+      if (reduce) { setAng(target); return; }
+      const t0 = performance.now(); const tick = now => { const u = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - u, 3); setAng(from + (target - from) * e); if (u < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+    }));
+  }
+
+  /* ---------- C4: OR4 normal fan ---------- */
+  const S4 = { ang: Math.atan2(2, 3) * 180 / Math.PI };
+  if ($('cvLP4')) {
+    const cv = $('cvLP4'), fig = $('labLP4');
+    const VC = ['--h-mgf', '--h-cheb', '--h-disc', '--h-cont', '--h-test', '--h-shadow'];
+    const F = figure(cv, f => {
+      const { ctx, w, h } = prep(cv), wide = w >= 600;
+      const size = wide ? Math.min(h - 40, w * 0.56) : Math.min(w - 60, h * 0.58);
+      const box = { x0: 44, y0: 12, x1: 44 + size, y1: 12 + size };
+      const a = S4.ang * Math.PI / 180, c = [Math.cos(a), Math.sin(a)];
+      const r = drawLP(ctx, box, [7, 7], cons3([4, 15, 10]), c, { hue: cvar(fig), t: f.t, showZ: false });
+      const poly = r.poly; if (!r.opt) return;
+      const ov = [r.X(r.opt.v[0]), r.Y(r.opt.v[1])], L = size * 0.2;
+      arrow(ctx, ov[0], ov[1], ov[0] + L * c[0], ov[1] - L * c[1], tok('--dv'), 2.8);
+      // fan
+      const cx = wide ? box.x1 + (w - box.x1) / 2 + 6 : w / 2, cy = wide ? box.y0 + size / 2 : box.y1 + (h - box.y1) / 2 + 6;
+      const R = wide ? Math.min((w - box.x1) / 2 - 26, size / 2 - 20) : Math.min(w / 2 - 30, (h - box.y1) / 2 - 22);
+      const n = poly.length, normals = [];
+      for (let i = 0; i < n; i++) { const P = poly[i], Q = poly[(i + 1) % n]; normals.push(Math.atan2(-(Q[0] - P[0]), Q[1] - P[1])); }
+      for (let i = 0; i < n; i++) {
+        const a0 = normals[(i - 1 + n) % n]; let a1 = normals[i]; while (a1 < a0) a1 += 2 * Math.PI;
+        const on = i === r.opt.i, col = tok(VC[i % VC.length]);
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R * (on ? 1.06 : 1), -a0, -a1, true); ctx.closePath();
+        ctx.fillStyle = col + (on ? 'cc' : '3a'); ctx.fill(); ctx.strokeStyle = tok('--sheet'); ctx.lineWidth = 2; ctx.stroke();
+        const am = (a0 + a1) / 2, lr = R * 0.66, v = poly[i];
+        label(ctx, `(${f2(v[0], 1)}, ${f2(v[1], 1)})`, cx + lr * Math.cos(am), cy - lr * Math.sin(am), on ? tok('--bg') : tok('--ink'), 'center', 'middle', 10.5);
+        // tiny marker on the polygon
+        ctx.beginPath(); ctx.arc(r.X(v[0]), r.Y(v[1]), on ? 0 : 4.2, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(cx, cy, R * 0.28, 0, 2 * Math.PI); ctx.fillStyle = tok('--sheet'); ctx.fill();
+      arrow(ctx, cx, cy, cx + R * 1.12 * c[0], cy - R * 1.12 * c[1], tok('--ink'), 2.4);
+      label(ctx, 'normal fan', cx, cy + R + 10, tok('--muted'), 'center', 'top', 10.5);
+      const ratio = Math.abs(c[1]) > 1e-9 ? c[0] / c[1] : Infinity;
+      $('r_lp4').innerHTML = `<span><span class="k">(c₁, c₂) ∝</span> <b>(${f2(c[0], 3)}, ${f2(c[1], 3)})</b></span><span><span class="k">c₁/c₂</span> <b>${Number.isFinite(ratio) ? f2(ratio, 3) : '∞'}</b></span>` +
+        `<span><span class="k">optimal corner</span> <b class="v-dv">(${f2(r.opt.v[0])}, ${f2(r.opt.v[1])})</b></span><span><span class="k">signs</span> <b>c₁ ${c[0] >= -1e-9 ? '≥' : '<'} 0, c₂ ${c[1] >= -1e-9 ? '≥' : '<'} 0</b></span>`;
+    });
+    const setAng = v => { S4.ang = v; $('lp4ang').value = v; $('o_lp4ang').textContent = v.toFixed(1) + '°'; F.kick(); };
+    bindRange('lp4ang', 'o_lp4ang', 1, v => { S4.ang = v; $('o_lp4ang').textContent = v.toFixed(1) + '°'; F.kick(); });
+    document.querySelectorAll('[data-lp4]').forEach(b => b.addEventListener('click', () => {
+      const [c1, c2] = b.dataset.lp4.split(',').map(Number), target = Math.atan2(c2, c1) * 180 / Math.PI, from = S4.ang;
+      if (reduce) { setAng(target); return; }
+      const t0 = performance.now(); const tick = now => { const u = Math.min(1, (now - t0) / 800), e = 1 - Math.pow(1 - u, 3); setAng(from + (target - from) * e); if (u < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+    }));
+  }
+
+  /* ---------- C5: tableau explorer (exact 3-variable LP) ---------- */
+  const A5 = [[3, 1, 1], [1, -1, 2], [1, 1, -1]], B5 = [6, 1, 2], C5 = [2, -1, 1];
+  function solve3(b) {
+    const planes = A5.map((a, i) => ({ a, b: b[i] })).concat([{ a: [-1, 0, 0], b: 0 }, { a: [0, -1, 0], b: 0 }, { a: [0, 0, -1], b: 0 }]);
+    let bz = -Infinity, bx = null;
+    for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) for (let k = j + 1; k < 6; k++) {
+      const M = [planes[i].a, planes[j].a, planes[k].a], r = [planes[i].b, planes[j].b, planes[k].b];
+      const det = m => m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+      const d = det(M); if (Math.abs(d) < 1e-10) continue;
+      const x = [0, 1, 2].map(col => det(M.map((row, ri) => row.map((v, ci) => (ci === col ? r[ri] : v)))) / d);
+      if (!planes.every(p => p.a[0] * x[0] + p.a[1] * x[1] + p.a[2] * x[2] <= p.b + 1e-7)) continue;
+      const z = C5[0] * x[0] + C5[1] * x[1] + C5[2] * x[2]; if (z > bz) { bz = z; bx = x; }
+    }
+    return bx ? { z: bz, x: bx } : null;
+  }
+  const XB0 = [1, 1.5, 0.5], COL = { 1: [1, 0, 0], 2: [-1, 0.5, -0.5], 3: [-2, 0.5, 0.5] }, YS = { 1: 0, 2: 1.5, 3: 0.5 }, BN = ['x₄', 'x₁', 'x₂'];
+  const range5 = r => { let lo = -Infinity, hi = Infinity; COL[r].forEach((c, i) => { if (c > 0) lo = Math.max(lo, -XB0[i] / c); if (c < 0) hi = Math.min(hi, -XB0[i] / c); }); return [lo, hi]; };
+  const ST = { r: 2, d: 1, cost: 1, curve: null };
+  function computeCurve() { const pts = []; for (let d = -3; d <= 3.0001; d += 0.02) { const b = B5.slice(); b[ST.r - 1] += d; const s = solve3(b); pts.push([d, s ? s.z : null]); } ST.curve = pts; }
+  if ($('cvTab')) {
+    const cv = $('cvTab'), fig = $('labTab');
+    computeCurve();
+    const basis = $('tabBasis');
+    basis.innerHTML = BN.map((n, i) => `<div class="bv"><span class="bn">${n}</span><span class="btrack"><i class="bneg" id="bneg${i}"></i><i class="bpos" id="bpos${i}"></i></span><span class="bval" id="bval${i}"></span></div>`).join('') + '<p class="bnote" id="bnote"></p>';
+    const F = figure(cv, f => {
+      const { ctx, w, h } = prep(cv), box = { x0: 52, y0: 16, x1: w - 16, y1: h - 32 };
+      const zs = ST.curve.filter(p => p[1] != null).map(p => p[1]);
+      const pred = d => 2.5 + YS[ST.r] * d, cost = d => 2.5 + ST.cost * d;
+      let zmin = Math.min(...zs, cost(-3), cost(3), 0), zmax = Math.max(...zs, cost(3)) ; zmin = Math.max(zmin, -4); zmax = Math.min(zmax + 0.6, 9);
+      const X = d => box.x0 + (d + 3) / 6 * (box.x1 - box.x0), Y = z => box.y1 - (z - zmin) / (zmax - zmin) * (box.y1 - box.y0);
+      const muted = tok('--muted'), rule = tok('--rule'), col = cvar(fig);
+      ctx.font = '11px ' + tok('--f-mono');
+      for (let d = -3; d <= 3; d++) { ctx.strokeStyle = rule; ctx.beginPath(); ctx.moveTo(X(d), box.y0); ctx.lineTo(X(d), box.y1); ctx.stroke(); ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(d, X(d), box.y1 + 6); }
+      for (let z = Math.ceil(zmin); z <= zmax; z++) { ctx.strokeStyle = rule; ctx.beginPath(); ctx.moveTo(box.x0, Y(z)); ctx.lineTo(box.x1, Y(z)); ctx.stroke(); ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(z, box.x0 - 6, Y(z)); }
+      label(ctx, 'Δ', box.x1, box.y1 - 16, muted, 'right'); label(ctx, 'Z*', box.x0 + 6, box.y0, muted);
+      ctx.save(); ctx.beginPath(); ctx.rect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.clip();
+      const [lo, hi] = range5(ST.r), L = Math.max(-3, lo), H = Math.min(3, hi);
+      ctx.fillStyle = tok('--hl-bg'); ctx.fillRect(X(L), box.y0, X(H) - X(L), box.y1 - box.y0);
+      label(ctx, 'allowable range', X(L) + 6, box.y0 + 22, tok('--hl'));
+      // cost line
+      ctx.strokeStyle = tok('--tb'); ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(X(-3), Y(cost(-3))); ctx.lineTo(X(3), Y(cost(3))); ctx.stroke();
+      // prediction
+      ctx.save(); ctx.setLineDash([6, 5]); ctx.strokeStyle = tok('--ink'); ctx.globalAlpha = 0.65; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(X(-3), Y(pred(-3))); ctx.lineTo(X(3), Y(pred(3))); ctx.stroke(); ctx.restore();
+      // curve
+      ctx.save(); ctx.shadowColor = col; ctx.shadowBlur = 14; ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.beginPath(); let started = false;
+      ST.curve.forEach(([d, z]) => { if (z == null) { started = false; return; } if (!started) { ctx.moveTo(X(d), Y(z)); started = true; } else ctx.lineTo(X(d), Y(z)); }); ctx.stroke(); ctx.restore();
+      ctx.restore();
+      // marker
+      const b = B5.slice(); b[ST.r - 1] += ST.d; const s = solve3(b);
+      if (s) { const pr = reduce ? 0 : Math.sin(f.t * 3) * 0.5 + 0.5; ctx.beginPath(); ctx.arc(X(ST.d), Y(s.z), 10 + 5 * pr, 0, 2 * Math.PI); ctx.fillStyle = col + '2a'; ctx.fill(); ctx.beginPath(); ctx.arc(X(ST.d), Y(s.z), 6, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); }
+      ctx.strokeStyle = tok('--ink'); ctx.globalAlpha = 0.35; ctx.beginPath(); ctx.moveTo(X(ST.d), box.y0); ctx.lineTo(X(ST.d), box.y1); ctx.stroke(); ctx.globalAlpha = 1;
+      label(ctx, '━ exact Z*', box.x1 - 6, box.y1 - 52, col, 'right'); label(ctx, '╌ shadow-price line', box.x1 - 6, box.y1 - 36, tok('--ink'), 'right'); label(ctx, '━ break-even cost', box.x1 - 6, box.y1 - 20, tok('--tb'), 'right');
+      // basis bars and readout
+      const xb = XB0.map((v, i) => v + ST.d * COL[ST.r][i]), scale = 4;
+      xb.forEach((v, i) => {
+        $('bpos' + i).style.width = (Math.max(0, Math.min(v, scale)) / scale * 50) + '%';
+        $('bneg' + i).style.width = (Math.max(0, Math.min(-v, scale)) / scale * 50) + '%';
+        $('bval' + i).textContent = f2(v, 3); $('bval' + i).classList.toggle('bad', v < -1e-9);
+      });
+      const feas = xb.every(v => v >= -1e-9);
+      $('bnote').textContent = feas ? 'All basic variables are nonnegative, so this basis is still optimal and the shadow price applies exactly.' : 'A basic variable went negative: this basis is no longer feasible, so the shadow price stops predicting Z*.';
+      $('bnote').classList.toggle('bad', !feas);
+      const gain = s ? s.z - 2.5 - ST.cost * ST.d : NaN;
+      $('r_tab').innerHTML = `<span><span class="k">shadow price y${ST.r}*</span> <b class="v-dv">${YS[ST.r]}</b></span><span><span class="k">allowable Δ</span> <b class="v-hl">[${Number.isFinite(lo) ? f2(lo) : '−∞'}, ${Number.isFinite(hi) ? f2(hi) : '∞'}]</b></span>` +
+        `<span><span class="k">exact Z*</span> <b>${s ? f2(s.z, 3) : 'infeasible'}</b></span><span><span class="k">predicted</span> <b>${f2(pred(ST.d), 3)}</b></span>` +
+        `<span><span class="k">net gain after cost</span> <b class="${gain > 1e-9 ? 'v-dv' : 'v-rej'}">${Number.isFinite(gain) ? (gain >= 0 ? '+' : '') + f2(gain, 3) : '—'}</b></span>`;
+      document.querySelectorAll('#tableau td.sp').forEach(td => td.classList.toggle('on', +td.dataset.r === ST.r));
+    });
+    document.querySelectorAll('#tabSeg button').forEach(b => b.addEventListener('click', () => {
+      ST.r = +b.dataset.r; document.querySelectorAll('#tabSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); computeCurve(); F.kick();
+    }));
+    bindRange('tabD', 'o_tabD', 2, v => { ST.d = v; F.kick(); });
+    bindRange('tabCost', 'o_tabCost', 2, v => { ST.cost = v; F.kick(); });
+  }
+
+  const rethemed = () => figs.forEach(f => f.render(f));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', rethemed);
+  new MutationObserver(rethemed).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+
+</script>
+</body></html>

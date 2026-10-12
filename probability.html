@@ -1,0 +1,828 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<title>Probability I — Inference Atlas</title></head><body data-page="probability.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability</div>
+    <a href="#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-topic" data-hue="mgf">Generating functions</div>
+    <a href="#q1" data-hue="mgf" data-p="q1"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q1</span><span class="lbl">Geometric MGF</span></a>
+    <a href="#q2" data-hue="mgf" data-p="q2"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q2</span><span class="lbl">Identify from MGF</span></a>
+    <a href="#q3" data-hue="mgf" data-p="q3"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q3</span><span class="lbl">Moments from MGF</span></a>
+    <div class="nav-topic" data-hue="cheb">Tchebysheff</div>
+    <a href="#q4" data-hue="cheb" data-p="q4"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q4</span><span class="lbl">Bounds from μ, σ²</span></a>
+    <a href="#q5" data-hue="cheb" data-p="q5"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q5</span><span class="lbl">Coin tosses</span></a>
+    <a href="#q6" data-hue="cheb" data-p="q6"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q6</span><span class="lbl">Spraying cost</span></a>
+    <div class="nav-topic" data-hue="disc">Discrete models</div>
+    <a href="#q7" data-hue="disc" data-p="q7"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q7</span><span class="lbl">Poisson approx.</span></a>
+    <a href="#q8" data-hue="disc" data-p="q8"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q8</span><span class="lbl">Negative binomial</span></a>
+    <div class="nav-topic" data-hue="cont">Continuous</div>
+    <a href="#q9" data-hue="cont" data-p="q9"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q9</span><span class="lbl">c, F(y), area</span></a>
+    <a href="#q10" data-hue="cont" data-p="q10"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q10</span><span class="lbl">Piecewise F</span></a>
+    <a href="#q11" data-hue="cont" data-p="q11"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">Q11</span><span class="lbl">Demand density</span></a>
+    <div class="nav-group">Part B · Inference</div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Optimization</div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<div class="part-banner" id="partA" data-hue="mgf"><span class="pb-letter">A</span><div><div class="eyebrow">M463 Homework 07 · Wackerly chapters 3 and 4</div><h2>Probability: generating functions, bounds and densities</h2><p>Eleven questions. MGFs identify distributions and produce moments, Tchebysheff turns a mean and variance into guaranteed bounds, and densities connect areas to the distribution function.</p></div></div>
+<!-- ================= READING ================= -->
+<section class="ex" id="readA" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">00</span><h2>Part A reading list</h2></div>
+  <p class="prose">Sections follow Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. The Gemini version numbered two of these differently; see the flag below.</p>
+  <ol class="reading">
+    <li><div><b>The Poisson distribution</b> and <b>negative binomial distribution</b> (Sections 3.8 and 3.6)<br><span class="for">Needed for Q6, Q7, Q8. Review if these feel shaky.</span></div></li>
+    <li><div><b>Moment-generating functions</b> (Section 3.9), including the table of MGFs for common discrete distributions<br><span class="for">Needed for Q1, Q2, Q3</span></div></li>
+    <li><div><b>Tchebysheff's theorem</b> and the empirical rule<br><span class="for">Needed for Q4, Q5, Q6</span></div></li>
+    <li><div><b>The probability distribution for a continuous random variable</b>: distribution function F, density f = F′, and P(a ≤ Y ≤ b) = F(b) − F(a)<br><span class="for">Needed for Q9, Q10, Q11</span></div></li>
+  </ol>
+  <div class="flag"><b>Verify</b><span>Gemini lists Tchebysheff's theorem as Section 3.10 and density functions as Section 4.1. In my understanding of the 7th edition, Section 3.10 is probability-generating functions, Tchebysheff is Section 3.11, and density functions are in Section 4.2 (4.1 is the chapter introduction). I'm fairly confident but not certain; check your table of contents. The WebAssign IDs like "3.10.212" may follow a different numbering.</span></div>
+</section>
+
+<div class="chapter" data-hue="mgf">Moment-generating functions</div>
+
+<!-- ================= Q1 ================= -->
+<section class="ex" id="q1" data-hue="mgf" data-problem>
+  <div class="ex-head"><span class="ex-num">Q1</span><h2>The geometric MGF</h2><span class="ex-id">WebAssign 3.9.192</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>If \(Y\) has a geometric distribution with probability of success \(p\), show that the moment-generating function of \(Y\) is</p>
+    \[ m(t)=\frac{pe^t}{1-qe^t},\qquad q=1-p,\quad qe^t\lt 1. \]</div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Definition of the MGF (Section 3.9)</dt><dd>\(\class{tb}{m(t)=E\!\left(e^{tY}\right)=\sum_y e^{ty}p(y)}\)</dd>
+    <dt>Geometric probability function (Section 3.5)</dt><dd>\(\class{tb}{p(y)=q^{y-1}p,\quad y=1,2,3,\dots}\) (number of the trial on which the first success occurs)</dd>
+    <dt>Geometric series (calculus)</dt><dd>\(\class{tb}{\sum_{k=0}^\infty r^k=\dfrac{1}{1-r}}\) when \(|r|\lt1\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>MGFs are the real-valued cousin of the characteristic functions used to price options via Fourier methods (Carr–Madan, COS): a closed-form MGF lets you compute risk-neutral moments and apply exponential tilting (an Esscher transform) to change probability measures. The convergence boundary \(qe^t\lt1\) here is the same kind of constraint that limits how far you can tilt a return distribution before the expectation diverges — exactly what bounds admissible risk-neutral measures in incomplete markets.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Proof</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Substitute the geometric p(y) into the definition.</b> <span class="src">MGF definition</span></p>
+        \[ m(t)=E\!\left(e^{tY}\right)=\sum_{y=1}^{\infty}e^{ty}\,q^{y-1}p \]</div></li>
+      <li><div><p><b>Make the exponents match.</b> The \(q\) has exponent \(y-1\), so split \(e^{ty}\) the same way: \(e^{ty}=e^{t}\cdot e^{t(y-1)}=e^t\left(e^t\right)^{y-1}\).</p>
+        \[ m(t)=\sum_{y=1}^{\infty}p\,e^t\left(e^t\right)^{y-1}q^{y-1}=\sum_{y=1}^{\infty}pe^t\left(qe^t\right)^{y-1} \]</div></li>
+      <li><div><p><b>Pull out the constant \(pe^t\)</b> (it does not depend on \(y\)).</p>
+        \[ m(t)=pe^t\sum_{y=1}^{\infty}\left(qe^t\right)^{y-1} \]</div></li>
+      <li><div><p><b>Re-index.</b> Let \(k=y-1\). When \(y=1\), \(k=0\); as \(y\to\infty\), \(k\to\infty\).</p>
+        \[ m(t)=pe^t\sum_{k=0}^{\infty}\left(qe^t\right)^{k} \]</div></li>
+      <li><div><p><b>Sum the geometric series</b> with ratio \(r=qe^t\). It converges only when \(qe^t\lt1\), that is \(t\lt-\ln q\). <span class="src">Geometric series</span></p>
+        \[ m(t)=pe^t\cdot\frac{1}{1-qe^t}=\class{dv}{\frac{pe^t}{1-qe^t}} \]
+        <p class="why">The condition \(qe^t\lt1\) is part of the answer, not decoration. Live figure A1 shows the series blowing up when you push \(t\) past \(-\ln q\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign blanks, in order</span><div class="tw"><table>
+      <tr><td>Blank 1</td><td>\(e^{tY}\)</td></tr>
+      <tr><td>Blank 2</td><td>\(pe^t\left(qe^t\right)^{y-1}\)</td></tr>
+      <tr><td>Blank 3</td><td>\(\dfrac{1}{1-qe^t}\)</td></tr></table></div>
+      <p style="font-size:14.5px;color:var(--muted)">These follow Gemini's reading of the blanks. I can't see the WebAssign screen, so match each blank to the step it belongs to.</p></div>
+  </div>
+  <figure class="lab" id="labGeo"><div class="lab-head"><span class="tag">Live figure A1</span><h3>Partial sums converging to the closed form</h3>
+    <p>Each dot is the sum of the first K terms of \(\sum e^{ty}q^{y-1}p\). The line is \(pe^t/(1-qe^t)\). Slide \(t\) toward the red boundary \(-\ln q\) and the sum needs more and more terms; past it, the sum diverges and the MGF does not exist.</p></div>
+    <canvas id="cv1"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="q1p">p <output id="o1p">0.40</output></label><input type="range" id="q1p" min="0.1" max="0.9" step="0.01" value="0.4"></div>
+      <div class="ctl"><label for="q1t">t <output id="o1t">0.20</output></label><input type="range" id="q1t" min="-1" max="1" step="0.01" value="0.2"></div>
+      <div class="btnrow"><button id="q1go" class="primary">Add terms one by one</button></div>
+    </div>
+    <div class="readout" id="r1"></div>
+  </figure>
+</section>
+
+<!-- ================= Q2 ================= -->
+<section class="ex" id="q2" data-hue="mgf" data-problem>
+  <div class="ex-head"><span class="ex-num">Q2</span><h2>Identify the distribution from its MGF</h2><span class="ex-id">WebAssign 3.9.198</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Find the distribution of the random variable with each MGF: (a) \(m(t)=\left[\tfrac15e^t+\tfrac45\right]^6\), (b) \(m(t)=\dfrac{e^t}{2-e^t}\), (c) \(m(t)=e^{5(e^t-1)}\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Uniqueness (Section 3.9)</dt><dd>If two random variables have the same MGF, they have the same distribution. So matching the form identifies the distribution.</dd>
+    <dt>MGFs from the table of discrete distributions</dt><dd>Binomial \(\class{tb}{(pe^t+q)^n}\), geometric \(\class{tb}{\dfrac{pe^t}{1-qe^t}}\), Poisson \(\class{tb}{e^{\lambda(e^t-1)}}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Matching a given MGF to a known family is the same move used to identify a return-generating process from its characteristic function — e.g. confirming log-returns look Variance-Gamma rather than Merton jump-diffusion by matching functional forms. The Poisson MGF \(e^{\lambda(e^t-1)}\) is literally the jump-arrival process in Merton's jump-diffusion option-pricing model; the binomial form underlies the Cox–Ross–Rubinstein binomial tree.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Matching</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Binomial form.</b> Line up term by term with \((pe^t+q)^n\):</p>
+        \[ \left[\tfrac15e^t+\tfrac45\right]^6\ \leftrightarrow\ \left[pe^t+q\right]^n\quad\Longrightarrow\quad \class{dv}{n=6,\ p=\tfrac15},\ q=\tfrac45 \]
+        <p class="why">Check: \(p+q=\tfrac15+\tfrac45=1\). That has to hold or it isn't binomial.</p></div></li>
+      <li><div><p><b>(b) Get the geometric form.</b> The geometric denominator starts with 1, so divide top and bottom by 2:</p>
+        \[ \frac{e^t}{2-e^t}=\frac{e^t/2}{(2-e^t)/2}=\frac{\tfrac12e^t}{1-\tfrac12e^t}\ \leftrightarrow\ \frac{pe^t}{1-qe^t}\quad\Longrightarrow\quad\class{dv}{p=\tfrac12},\ q=\tfrac12 \]</div></li>
+      <li><div><p><b>(c) Poisson form.</b> Match the exponent directly:</p>
+        \[ e^{5(e^t-1)}\ \leftrightarrow\ e^{\lambda(e^t-1)}\quad\Longrightarrow\quad\class{dv}{\lambda=5} \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a)</td><td>Binomial, \(n=\) <b>6</b>, \(p=\) <b>0.2</b></td></tr>
+      <tr><td>(b)</td><td>Geometric, \(p=\) <b>0.5</b></td></tr>
+      <tr><td>(c)</td><td>Poisson, \(\lambda=\) <b>5</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labShapes"><div class="lab-head"><span class="tag">Live figure A2</span><h3>What each identified distribution looks like</h3>
+    <p>Pick a part. The bars are the probability function you identified, with the mean marked. Seeing the shape helps you sanity-check the parameters.</p></div>
+    <div class="btnrow" role="group" aria-label="Choose part"><button data-q2="a" aria-pressed="true">(a) Binomial(6, 0.2)</button><button data-q2="b">(b) Geometric(0.5)</button><button data-q2="c">(c) Poisson(5)</button></div>
+    <canvas id="cv2"></canvas>
+    <div class="readout" id="r2"></div>
+  </figure>
+</section>
+
+<!-- ================= Q3 ================= -->
+<section class="ex" id="q3" data-hue="mgf" data-problem>
+  <div class="ex-head"><span class="ex-num">Q3</span><h2>Moments and distribution from a finite MGF</h2><span class="ex-id">WebAssign 3.9.200</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Let \(m(t)=\tfrac19e^t+\tfrac69e^{2t}+\tfrac29e^{3t}\). Find (a) \(E(Y)\), (b) \(V(Y)\), (c) the distribution of \(Y\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Moments from the MGF (Section 3.9)</dt><dd>\(\class{tb}{\mu_k'=E\!\left(Y^k\right)=m^{(k)}(0)}\), the \(k\)th derivative evaluated at \(t=0\).</dd>
+    <dt>Variance shortcut (Section 3.3)</dt><dd>\(\class{tb}{V(Y)=E\!\left(Y^2\right)-\left[E(Y)\right]^2}\)</dd>
+    <dt>Chain rule</dt><dd>\(\class{tb}{\dfrac{d}{dt}e^{at}=ae^{at}}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Taking derivatives of an MGF at \(t=0\) to recover mean and variance is exactly how risk-neutral moments (expected return, variance, skew) are extracted from option prices in model-free implied-moment indices like the CBOE SKEW. Portfolio risk engines run the same trick on a portfolio's characteristic function to get moments for a Cornish–Fisher VaR adjustment without ever simulating the full return distribution.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>First derivative,</b> term by term with \(\frac{d}{dt}e^{at}=ae^{at}\):</p>
+        \[ m'(t)=\tfrac19(1)e^{t}+\tfrac69(2)e^{2t}+\tfrac29(3)e^{3t}=\tfrac19e^t+\tfrac{12}{9}e^{2t}+\tfrac69e^{3t} \]</div></li>
+      <li><div><p><b>(a) Evaluate at 0.</b> Every \(e^{a\cdot0}=1\). <span class="src">Moments from MGF</span></p>
+        \[ E(Y)=m'(0)=\frac{1+12+6}{9}=\class{dv}{\frac{19}{9}}\approx2.1111 \]</div></li>
+      <li><div><p><b>Second derivative,</b> differentiate \(m'(t)\) again:</p>
+        \[ m''(t)=\tfrac19(1)e^t+\tfrac{12}{9}(2)e^{2t}+\tfrac69(3)e^{3t}=\tfrac19e^t+\tfrac{24}{9}e^{2t}+\tfrac{18}{9}e^{3t} \]
+        \[ E\!\left(Y^2\right)=m''(0)=\frac{1+24+18}{9}=\frac{43}{9} \]</div></li>
+      <li><div><p><b>(b) Variance.</b> Put both fractions over 81: \(\tfrac{43}{9}=\tfrac{387}{81}\) and \(\left(\tfrac{19}{9}\right)^2=\tfrac{361}{81}\). <span class="src">Variance shortcut</span></p>
+        \[ V(Y)=\frac{387}{81}-\frac{361}{81}=\class{dv}{\frac{26}{81}}\approx0.3210 \]</div></li>
+      <li><div><p><b>(c) Read off the distribution.</b> For a discrete \(Y\), \(m(t)=\sum_y p(y)e^{ty}\). The coefficient of \(e^{yt}\) is \(p(y)\):</p>
+        \[ \class{dv}{p(1)=\tfrac19,\quad p(2)=\tfrac69=\tfrac23,\quad p(3)=\tfrac29} \]
+        <p class="why">Check: \(\tfrac19+\tfrac69+\tfrac29=1\), and \(\sum y\,p(y)=\tfrac19+\tfrac{12}9+\tfrac69=\tfrac{19}9\), which matches (a).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a) E(Y)</td><td><b>19/9</b></td></tr><tr><td>(b) V(Y)</td><td><b>26/81</b></td></tr>
+      <tr><td>(c)</td><td>p(1) = <b>1/9</b>, p(2) = <b>2/3</b>, p(3) = <b>2/9</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labMoments"><div class="lab-head"><span class="tag">Live figure A3</span><h3>The slope of m(t) at t = 0 is the mean</h3>
+    <p>The curve is \(m(t)\). Drag the tangent point. Its slope is \(m'(t_0)\), and only at \(t_0=0\) does that slope equal \(E(Y)=19/9\). The dashed curve is the second-order fit \(1+\mu t+\tfrac12\mu_2't^2\), which uses \(E(Y^2)\).</p></div>
+    <canvas id="cv3"></canvas>
+    <div class="controls"><div class="ctl"><label for="q3t">Tangent point t₀ <output id="o3t">0.30</output></label><input type="range" id="q3t" min="-1" max="0.6" step="0.01" value="0.3"></div>
+      <div class="btnrow"><button id="q3zero" class="primary">Slide to t₀ = 0</button></div></div>
+    <div class="readout" id="r3"></div>
+  </figure>
+</section>
+
+<div class="chapter" data-hue="cheb">Tchebysheff's theorem</div>
+
+<!-- ================= Q4 ================= -->
+<section class="ex" id="q4" data-hue="cheb" data-problem>
+  <div class="ex-head"><span class="ex-num">Q4</span><h2>Bounds from mean and variance alone</h2><span class="ex-id">WebAssign 3.10.212</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>\(Y\) has mean \(\mu=15\) and variance \(\sigma^2=4\). Use Tchebysheff's theorem to find (a) a lower bound for \(P(11\lt Y\lt19)\), (b) the value of \(C\) such that \(P(|Y-15|\ge C)\le0.04\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Tchebysheff's theorem</dt><dd>For any \(k\gt0\): \(\class{tb}{P(|Y-\mu|\lt k\sigma)\ge1-\dfrac1{k^2}}\), equivalently \(\class{tb}{P(|Y-\mu|\ge k\sigma)\le\dfrac1{k^2}}\).</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Chebyshev's inequality gives a distribution-free bound on tail probability — valuable in finance precisely because real return distributions are fat-tailed, so normal-based bounds (as in Black–Scholes-style models) understate true risk. Risk managers use Chebyshev-type bounds as a conservative, model-agnostic backstop on VaR when they don't trust — or can't verify — a parametric return distribution.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Get σ.</b> \(\sigma=\sqrt{4}=2\).</p></div></li>
+      <li><div><p><b>(a) Rewrite the interval as a distance from μ.</b> Subtract 15 throughout:</p>
+        \[ 11\lt Y\lt19\iff -4\lt Y-15\lt4\iff|Y-15|\lt4 \]</div></li>
+      <li><div><p><b>Find k.</b> Set \(k\sigma=4\): \(k(2)=4\Rightarrow k=2\).</p></div></li>
+      <li><div><p><b>Apply the theorem.</b> <span class="src">Tchebysheff</span></p>
+        \[ P(11\lt Y\lt19)\ge1-\frac1{2^2}=1-\frac14=\class{dv}{0.75} \]</div></li>
+      <li><div><p><b>(b) Set the tail bound equal to 0.04 and solve for k.</b></p>
+        \[ \frac1{k^2}=0.04\ \Longrightarrow\ k^2=\frac1{0.04}=25\ \Longrightarrow\ k=5 \]</div></li>
+      <li><div><p><b>Convert k to C.</b> \(C=k\sigma=5(2)=\class{dv}{10}\). So \(P(|Y-15|\ge10)\le\tfrac1{25}=0.04\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table><tr><td>(a)</td><td><b>0.75</b></td></tr><tr><td>(b) C</td><td><b>10</b></td></tr></table></div></div>
+  </div>
+</section>
+
+<!-- ================= Q5 ================= -->
+<section class="ex" id="q5" data-hue="cheb" data-problem>
+  <div class="ex-head"><span class="ex-num">Q5</span><h2>Three coin tosses against the empirical rule</h2><span class="ex-id">WebAssign 3.10.218</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>A balanced coin is tossed three times. \(Y\) is the number of heads. (a) Find the probability distribution of \(Y\). (b) Find \(\mu\) and \(\sigma\). (c) Find the fraction of the distribution within one and within two standard deviations of \(\mu\), and compare with the empirical rule and Tchebysheff's theorem.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Binomial distribution (Section 3.4)</dt><dd>\(\class{tb}{p(y)=\binom ny p^y q^{n-y},\quad \mu=np,\quad \sigma^2=npq}\)</dd>
+    <dt>Empirical rule</dt><dd>For mound-shaped distributions: about 68% within \(\mu\pm\sigma\), about 95% within \(\mu\pm2\sigma\).</dd>
+    <dt>Tchebysheff</dt><dd>At least \(1-1/k^2\): at least 0 within \(1\sigma\), at least 0.75 within \(2\sigma\).</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Comparing the loose Chebyshev bound to the tighter empirical rule mirrors a real risk-management choice: size capital reserves off a Gaussian assumption (tighter, but wrong in the tails) or off a distribution-free Chebyshev bound (looser, but safe under fat tails)? Backtesting a VaR model is essentially asking which of these two guarantees actually held over realized P&L.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Binomial with n = 3, p = 0.5.</b> Every outcome has \(p^yq^{3-y}=(0.5)^3=\tfrac18\), so only the binomial coefficient changes. <span class="src">Binomial p(y)</span></p>
+        \[ p(0)=\tbinom30\tfrac18=\tfrac18,\quad p(1)=\tbinom31\tfrac18=\tfrac38,\quad p(2)=\tbinom32\tfrac18=\tfrac38,\quad p(3)=\tbinom33\tfrac18=\tfrac18 \]</div></li>
+      <li><div><p><b>(b) Mean and standard deviation.</b></p>
+        \[ \mu=np=3(0.5)=\class{dv}{1.5},\qquad\sigma=\sqrt{npq}=\sqrt{3(0.5)(0.5)}=\sqrt{0.75}=\class{dv}{0.866} \]</div></li>
+      <li><div><p><b>(c) One standard deviation.</b></p>
+        \[ \mu\pm\sigma=1.5\pm0.866=(0.634,\ 2.366) \]
+        <p>The integers inside are 1 and 2: \(p(1)+p(2)=\tfrac38+\tfrac38=\class{dv}{0.75}\).</p></div></li>
+      <li><div><p><b>Two standard deviations.</b></p>
+        \[ \mu\pm2\sigma=1.5\pm1.732=(-0.232,\ 3.232) \]
+        <p>All of 0, 1, 2, 3 are inside, so the fraction is \(\class{dv}{1}\).</p></div></li>
+      <li><div><p><b>Compare.</b> Empirical rule predicts about 0.68 and 0.95; actual is 0.75 and 1. Tchebysheff guarantees at least 0 and 0.75; both actual values satisfy it.</p>
+        <div class="flag"><b>Check</b><span>The dropdown answers depend on WebAssign's exact wording, which I can't see. Gemini chose "consistent with the empirical rule" for 1σ and "consistent with the empirical rule and Tchebysheff" for 2σ. That's defensible (0.75 is near 0.68, 1 is near 0.95), but if an option says the empirical rule doesn't strictly apply because three tosses aren't mound-shaped, that one may be what your instructor wants.</span></div></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a)</td><td>p(0) = <b>0.125</b>, p(1) = <b>0.375</b>, p(2) = <b>0.375</b>, p(3) = <b>0.125</b></td></tr>
+      <tr><td>(b)</td><td>μ = <b>1.5</b>, σ = <b>0.866</b></td></tr>
+      <tr><td>(c)</td><td>within 1σ: <b>0.75</b>; within 2σ: <b>1</b></td></tr></table></div></div>
+  </div>
+</section>
+
+<!-- ================= Q6 ================= -->
+<section class="ex" id="q6" data-hue="cheb" data-problem>
+  <div class="ex-head"><span class="ex-num">Q6</span><h2>Spraying cost for diseased trees</h2><span class="ex-id">WebAssign 3.10.222</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>The number of diseased trees per acre, \(Y\), is Poisson with \(\lambda=13\). Spraying costs \(C=5Y+40\) dollars. (a) Find \(E(C)\) and \(\sigma_C\). (b) Find an interval that contains \(C\) with probability at least 0.75.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Poisson mean and variance (Section 3.8)</dt><dd>\(\class{tb}{E(Y)=\lambda,\quad V(Y)=\lambda}\)</dd>
+    <dt>Linear functions (Section 3.3)</dt><dd>\(\class{tb}{E(aY+b)=aE(Y)+b,\quad V(aY+b)=a^2V(Y)}\)</dd>
+    <dt>Tchebysheff</dt><dd>\(1-1/k^2=0.75\) gives \(k=2\).</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>This is the expected-cost decision behind credit provisioning: pay for inspection/treatment now versus bear the expected cost of the bad outcome later, the same structure as expected loss \(=\) PD \(\times\) LGD \(\times\) EAD, or the decision to hedge a position versus carry its expected loss on the book.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Mean of C.</b> <span class="src">Linear functions</span></p>
+        \[ E(C)=5E(Y)+40=5(13)+40=65+40=\class{dv}{105} \]</div></li>
+      <li><div><p><b>Variance and standard deviation of C.</b> The \(+40\) shifts the cost but doesn't spread it, so it drops out of the variance.</p>
+        \[ V(C)=5^2V(Y)=25(13)=325,\qquad\sigma_C=\sqrt{325}=5\sqrt{13}=\class{dv}{18.028} \]</div></li>
+      <li><div><p><b>Find k for probability 0.75.</b></p>
+        \[ 1-\frac1{k^2}=0.75\ \Longrightarrow\ \frac1{k^2}=0.25\ \Longrightarrow\ k^2=4\ \Longrightarrow\ k=2 \]</div></li>
+      <li><div><p><b>Build the interval.</b> \(2\sigma_C=2(18.0278)=36.0555\).</p>
+        \[ 105\pm36.0555=\class{dv}{(68.94,\ 141.06)} \]
+        <p class="why">Live figure A4 shows the actual probability in this interval is about 0.96, much higher than the guaranteed 0.75. Tchebysheff is a worst-case bound.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>E(C)</td><td><b>105.000</b></td></tr><tr><td>σ_C</td><td><b>18.028</b></td></tr><tr><td>Interval</td><td><b>(68.94, 141.06)</b></td></tr></table></div></div>
+  </div>
+
+  <figure class="lab" id="labCheb"><div class="lab-head"><span class="tag">Live figure A4 · covers Q4, Q5, Q6</span><h3>Tchebysheff's bound against the real probability</h3>
+    <p>Pick a distribution and drag \(k\). Blue bars fall inside \(\mu\pm k\sigma\). Compare the actual blue mass with the guarantee \(1-1/k^2\). The "worst case" option uses Q4's \(\mu=15,\sigma=2\) and is built so the bound is exactly attained.</p></div>
+    <div class="controls">
+      <div class="ctl"><label for="q6d">Distribution</label><select id="q6d">
+        <option value="q6">Q6: Poisson(13) trees, cost C = 5Y + 40</option>
+        <option value="q5">Q5: Binomial(3, 0.5) heads</option>
+        <option value="worst">Q4: worst case with μ = 15, σ = 2</option></select></div>
+      <div class="ctl"><label for="q6k">k <output id="o6k">2.00</output></label><input type="range" id="q6k" min="1" max="4" step="0.01" value="2"></div>
+    </div>
+    <canvas id="cv6" class="tall"></canvas>
+    <div class="readout" id="r6"></div>
+  </figure>
+</section>
+
+<div class="chapter" data-hue="disc">Discrete models</div>
+
+<!-- ================= Q7 ================= -->
+<section class="ex" id="q7" data-hue="disc" data-problem>
+  <div class="ex-head"><span class="ex-num">Q7</span><h2>Poisson approximation for a rare disease</h2><span class="ex-id">WebAssign 3.SE.501.XP</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>A disease occurs at a rate of 50 per 100,000 per year. In a random sample of 1,000 children, let \(Y\) be the number with the disease. (a) Can the distribution of \(Y\) be approximated by a Poisson distribution? If so, with what \(\lambda\)? (b) Find \(P(Y\ge2)\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Poisson approximation to the binomial (Section 3.8)</dt><dd>When \(n\) is large and \(p\) is small, \(\text{Binomial}(n,p)\approx\text{Poisson}(\lambda)\) with \(\class{tb}{\lambda=np}\).</dd>
+    <dt>Poisson probability function</dt><dd>\(\class{tb}{p(y)=\dfrac{\lambda^ye^{-\lambda}}{y!}}\)</dd>
+    <dt>Complement rule</dt><dd>\(\class{tb}{P(Y\ge2)=1-P(Y=0)-P(Y=1)}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>The Poisson approximation to a rare binomial event is the standard way quants model rare-but-costly occurrences: operational-risk loss events, defaults scattered through a large retail loan book, or jump arrivals in a jump-diffusion option-pricing model — all cases where \(n\) is huge, \(p\) is tiny, and only \(np\) matters.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Model.</b> Each child independently has the disease with \(p=\tfrac{50}{100{,}000}=0.0005\). So \(Y\sim\text{Binomial}(1000,\ 0.0005)\).</p></div></li>
+      <li><div><p><b>(a) Check the approximation conditions.</b> \(n=1000\) is large and \(p=0.0005\) is small, so yes.</p>
+        \[ \lambda=np=1000(0.0005)=\class{dv}{0.5} \]</div></li>
+      <li><div><p><b>(b) Use the complement.</b> "At least 2" has infinitely many terms; its complement has two.</p>
+        \[ P(Y=0)=\frac{0.5^0e^{-0.5}}{0!}=e^{-0.5}=0.606531 \]
+        \[ P(Y=1)=\frac{0.5^1e^{-0.5}}{1!}=0.5(0.606531)=0.303265 \]</div></li>
+      <li><div><p><b>Subtract.</b></p>
+        \[ P(Y\ge2)=1-(0.606531+0.303265)=1-0.909796=\class{dv}{0.0902} \]
+        <p class="why">Exact binomial answer is 0.09017. The approximation is off by about 0.00004 (Live figure A5).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table><tr><td>(a)</td><td>Yes, Poisson with λ = <b>0.5</b></td></tr><tr><td>(b)</td><td><b>0.090</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labPois"><div class="lab-head"><span class="tag">Live figure A5</span><h3>Binomial and Poisson side by side</h3>
+    <p>Same disease rate, different sample sizes. The binomial bars (solid) and Poisson bars (outline) are nearly identical because \(p\) is tiny. Change \(n\) to see \(\lambda=np\) move.</p></div>
+    <canvas id="cv7"></canvas>
+    <div class="controls"><div class="ctl"><label for="q7n">Sample size n <output id="o7n">1000</output></label><input type="range" id="q7n" min="200" max="10000" step="100" value="1000"></div></div>
+    <div class="readout" id="r7"></div>
+  </figure>
+</section>
+
+<!-- ================= Q8 ================= -->
+<section class="ex" id="q8" data-hue="disc" data-problem>
+  <div class="ex-head"><span class="ex-num">Q8</span><h2>Clearing inventory in fewer than 6 contacts</h2><span class="ex-id">WebAssign 3.SE.254</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>A heavy-equipment supplier makes a sale with probability 0.25 on each customer contact, independently. There are 4 pieces in inventory. Find the probability that the inventory is sold in fewer than 6 contacts.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Negative binomial distribution (Section 3.6)</dt><dd>\(Y\) = trial on which the \(r\)th success occurs: \(\class{tb}{p(y)=\binom{y-1}{r-1}p^rq^{y-r},\quad y=r,r+1,\dots}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>"Number of trials until the \(r\)th success" distributions are exactly how market-microstructure models count re-quotes until a limit order fills, or margin calls until a position is forced to liquidate — the same waiting-time logic used here for clearing inventory in under 6 contacts.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>Why negative binomial.</b> We count contacts until the 4th sale. That's "trials until the \(r\)th success" with \(r=4\), \(p=0.25\), \(q=0.75\).</p></div></li>
+      <li><div><p><b>Which values count.</b> At least 4 contacts are needed to make 4 sales, so "fewer than 6" means \(Y=4\) or \(Y=5\).</p>
+        \[ P(Y\lt6)=p(4)+p(5) \]</div></li>
+      <li><div><p><b>p(4).</b> <span class="src">Negative binomial</span> \((0.25)^4=\tfrac1{256}\).</p>
+        \[ p(4)=\binom33(0.25)^4(0.75)^0=1\cdot\tfrac1{256}\cdot1=\tfrac1{256}=0.00390625 \]</div></li>
+      <li><div><p><b>p(5).</b> \(\binom43=4\).</p>
+        \[ p(5)=\binom43(0.25)^4(0.75)^1=4\cdot\tfrac1{256}\cdot\tfrac34=\tfrac{3}{256}=0.01171875 \]</div></li>
+      <li><div><p><b>Add.</b></p>
+        \[ P(Y\lt6)=\frac1{256}+\frac3{256}=\frac4{256}=\class{dv}{\frac1{64}=0.015625} \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table><tr><td>P(Y &lt; 6)</td><td><b>0.0156</b></td></tr></table></div></div>
+  </div>
+  <figure class="lab" id="labNB"><div class="lab-head"><span class="tag">Live figure A6</span><h3>Simulating the sales calls</h3>
+    <p>Each row of dots is one salesperson working through contacts until the 4th sale (filled dot = sale). The histogram collects how many contacts it took. Only the blue bars, 4 and 5, count as "fewer than 6". Dots on the histogram are the exact negative binomial probabilities.</p></div>
+    <canvas id="cv8a" class="short"></canvas>
+    <canvas id="cv8"></canvas>
+    <div class="btnrow"><button id="q8go" class="primary">Simulate 3,000 inventories</button><button id="q8clr">Clear</button></div>
+    <div class="readout" id="r8"></div>
+  </figure>
+</section>
+
+<div class="chapter" data-hue="cont">Continuous random variables</div>
+
+<!-- ================= Q9 ================= -->
+<section class="ex" id="q9" data-hue="cont" data-problem>
+  <div class="ex-head"><span class="ex-num">Q9</span><h2>Finding c, F(y), and an area two ways</h2><span class="ex-id">WebAssign 4.1.003</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>\(f(y)=cy\) for \(0\le y\le2\), 0 elsewhere. (a) Find \(c\). (b) Find \(F(y)\). (c) Graph \(f\) and \(F\). (d) Use \(F\) to find \(P(1\le Y\le2)\). (e) Use \(f\) and geometry to find the same probability.</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Properties of a density</dt><dd>\(\class{tb}{f(y)\ge0\ \text{and}\ \int_{-\infty}^{\infty}f(y)\,dy=1}\)</dd>
+    <dt>Distribution function</dt><dd>\(\class{tb}{F(y)=\int_{-\infty}^{y}f(t)\,dt}\), and \(\class{tb}{P(a\le Y\le b)=F(b)-F(a)=\int_a^bf(y)\,dy}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Finding the constant that makes a density integrate to 1 is the same constraint quants solve when calibrating a risk-neutral density from option prices: Breeden–Litzenberger differentiates the call-price curve twice with respect to strike to get a density that must itself integrate to 1 and stay nonnegative — a bad calibration shows up exactly as a normalization or positivity violation, same as here.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Total area must be 1.</b> <span class="src">Density property</span></p>
+        \[ \int_0^2cy\,dy=c\left[\frac{y^2}2\right]_0^2=c\left(\frac42-0\right)=2c=1\ \Longrightarrow\ \class{dv}{c=\tfrac12} \]</div></li>
+      <li><div><p><b>(b) Integrate the density up to y,</b> for \(0\le y\le2\). Use a dummy variable \(t\) so it doesn't clash with the upper limit.</p>
+        \[ F(y)=\int_0^y\frac t2\,dt=\left[\frac{t^2}4\right]_0^y=\class{dv}{\frac{y^2}4} \]
+        <p>Below 0 there is no area yet, so \(F(y)=0\). Above 2 all the area is used, so \(F(y)=1\).</p></div></li>
+      <li><div><p><b>(c) Shapes.</b> \(f\) is a straight line from \((0,0)\) to \((2,1)\). \(F\) is a parabola from \((0,0)\) to \((2,1)\), flat at 0 before and flat at 1 after. Pick the WebAssign graph that matches; Live figure A7 draws both.</p></div></li>
+      <li><div><p><b>(d) Using F.</b></p>
+        \[ P(1\le Y\le2)=F(2)-F(1)=\frac44-\frac14=1-0.25=\class{dv}{0.75} \]</div></li>
+      <li><div><p><b>(e) Using geometry.</b> The region under \(f\) from 1 to 2 is a trapezoid with parallel sides \(f(1)=0.5\) and \(f(2)=1\) and width 1.</p>
+        \[ \text{Area}=\frac{0.5+1}2\times1=\class{dv}{0.75} \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a) c</td><td><b>0.5</b></td></tr>
+      <tr><td>(b) F(y)</td><td>0 for y &lt; 0; <b>y^2/4</b> for 0 ≤ y ≤ 2; 1 for y &gt; 2</td></tr>
+      <tr><td>(d), (e)</td><td><b>0.75</b></td></tr></table></div></div>
+  </div>
+</section>
+
+<!-- ================= Q10 ================= -->
+<section class="ex" id="q10" data-hue="cont" data-problem>
+  <div class="ex-head"><span class="ex-num">Q10</span><h2>From a piecewise F back to f</h2><span class="ex-id">WebAssign 4.1.011</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>\(F(y)=0\) for \(y\le0\); \(y/8\) for \(0\lt y\lt2\); \(y^2/16\) for \(2\le y\lt4\); 1 for \(y\ge4\). (a) Find \(f(y)\). (b) \(P(1.5\le Y\le3.25)\). (c) \(P(Y\ge2)\). (d) \(P(Y\ge1.5\mid Y\le3.25)\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Density from distribution function</dt><dd>\(\class{tb}{f(y)=F'(y)}\) wherever the derivative exists</dd>
+    <dt>Interval probability</dt><dd>\(\class{tb}{P(a\le Y\le b)=F(b)-F(a)}\) (for continuous \(Y\), \(\le\) and \(\lt\) give the same answer)</dd>
+    <dt>Conditional probability (Section 2.7)</dt><dd>\(\class{tb}{P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}}\)</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Going from a piecewise \(F\) back to \(f\) by differentiating, piece by piece, is literally how an implied risk-neutral density is read off a fitted implied-volatility smile: differentiate the fitted call-price curve (as a function of strike) twice to get the density across strike bands, exactly the way you recover \(f\) from \(F\) here.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>(a) Differentiate each piece.</b></p>
+        \[ \frac{d}{dy}\left(\frac y8\right)=\frac18,\qquad \frac{d}{dy}\left(\frac{y^2}{16}\right)=\frac{2y}{16}=\frac y8 \]
+        \[ \class{dv}{f(y)=\begin{cases}1/8,&0\lt y\lt2\\ y/8,&2\le y\lt4\\ 0,&\text{elsewhere}\end{cases}} \]
+        <p class="why">Check: area \(=2\cdot\tfrac18+\int_2^4\tfrac y8dy=0.25+\tfrac{16-4}{16}=0.25+0.75=1\). Also \(F\) is continuous at 2: \(2/8=0.25=4/16\).</p></div></li>
+      <li><div><p><b>(b) Pick the right piece for each endpoint.</b> 3.25 is in \([2,4)\); 1.5 is in \((0,2)\).</p>
+        \[ F(3.25)=\frac{3.25^2}{16}=\frac{10.5625}{16}=0.66015625,\qquad F(1.5)=\frac{1.5}8=0.1875 \]
+        \[ P(1.5\le Y\le3.25)=0.66015625-0.1875=\class{dv}{0.4727} \]</div></li>
+      <li><div><p><b>(c) Complement.</b> At \(y=2\), both pieces give 0.25.</p>
+        \[ P(Y\ge2)=1-F(2)=1-0.25=\class{dv}{0.75} \]</div></li>
+      <li><div><p><b>(d) Conditional.</b> The event \(\{Y\ge1.5\}\cap\{Y\le3.25\}\) is \(\{1.5\le Y\le3.25\}\), which is part (b). <span class="src">Conditional probability</span></p>
+        \[ P(Y\ge1.5\mid Y\le3.25)=\frac{P(1.5\le Y\le3.25)}{P(Y\le3.25)}=\frac{0.47265625}{0.66015625}=\class{dv}{0.7160} \]
+        <p class="why">Exact form: multiply top and bottom by 256 to get \(\tfrac{121}{169}\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a) f(y)</td><td><b>1/8</b> on (0, 2); <b>y/8</b> on [2, 4); 0 elsewhere</td></tr>
+      <tr><td>(b)</td><td><b>0.4727</b></td></tr><tr><td>(c)</td><td><b>0.7500</b></td></tr><tr><td>(d)</td><td><b>0.7160</b></td></tr></table></div></div>
+  </div>
+</section>
+
+<!-- ================= Q11 ================= -->
+<section class="ex" id="q11" data-hue="cont" data-problem>
+  <div class="ex-head"><span class="ex-num">Q11</span><h2>A piecewise demand density</h2><span class="ex-id">WebAssign 4.2.506.XP</span></div>
+  <div class="problem"><span class="tag">Problem</span>
+    <p>Demand has density \(f(y)=y\) for \(0\le y\le1\), \(f(y)=1\) for \(1\lt y\le1.5\), 0 elsewhere. (a) Find \(F(y)\). (b) \(P(0\le Y\le0.3)\). (c) \(P(0.3\le Y\le1.4)\).</p></div>
+  <div class="tools"><span class="tag">From the textbook</span><dl>
+    <dt>Distribution function</dt><dd>\(\class{tb}{F(y)=\int_{-\infty}^yf(t)\,dt}\). For a piecewise \(f\), the integral up to a later piece includes all the area from earlier pieces.</dd>
+  </dl></div>
+  <div class="qf"><b>Quant finance</b><span>A piecewise density here is literally a demand curve — the same object a market-maker models to predict order flow or price impact from a large trade, where probability mass is concentrated unevenly across price/quantity bands rather than following one smooth shape.</span></div>
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
+    <ol class="steps">
+      <li><div><p><b>For 0 ≤ y ≤ 1.</b></p>
+        \[ F(y)=\int_0^yt\,dt=\left[\frac{t^2}2\right]_0^y=\class{dv}{\frac{y^2}2} \]</div></li>
+      <li><div><p><b>For 1 &lt; y ≤ 1.5.</b> Carry the full area of the first piece, \(F(1)=\tfrac12\), then add the second piece.</p>
+        \[ F(y)=\int_0^1t\,dt+\int_1^y1\,dt=\frac12+(y-1)=\class{dv}{y-\frac12} \]
+        <p class="why">Check: \(F(1.5)=1.5-0.5=1\), as it must be at the end of the support.</p></div></li>
+      <li><div><p><b>(b)</b> 0.3 is in the first piece.</p>
+        \[ P(0\le Y\le0.3)=F(0.3)-F(0)=\frac{0.3^2}2-0=\frac{0.09}2=\class{dv}{0.045} \]</div></li>
+      <li><div><p><b>(c)</b> 1.4 is in the second piece; 0.3 is in the first.</p>
+        \[ P(0.3\le Y\le1.4)=F(1.4)-F(0.3)=(1.4-0.5)-0.045=0.9-0.045=\class{dv}{0.855} \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">WebAssign entry</span><div class="tw"><table>
+      <tr><td>(a) F(y)</td><td>0 for y &lt; 0; <b>y^2/2</b> for 0 ≤ y ≤ 1; <b>y − 0.5</b> for 1 &lt; y ≤ 1.5; 1 for y &gt; 1.5</td></tr>
+      <tr><td>(b)</td><td><b>0.045</b></td></tr><tr><td>(c)</td><td><b>0.855</b></td></tr></table></div></div>
+  </div>
+
+  <figure class="lab" id="labDens"><div class="lab-head"><span class="tag">Live figure A7 · covers Q9, Q10, Q11</span><h3>Area under f equals the jump in F</h3>
+    <p>Top: the density, with the area between \(a\) and \(b\) shaded. Bottom: the distribution function, with the rise \(F(b)-F(a)\) marked. They are the same number. Each problem opens at the interval it asks about.</p></div>
+    <div class="btnrow" role="group" aria-label="Choose problem"><button data-q9="q9" aria-pressed="true">Q9: f = y/2</button><button data-q9="q10">Q10: piecewise F</button><button data-q9="q11">Q11: demand</button></div>
+    <canvas id="cv9" class="tall"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="q9a">a <output id="o9a">1.00</output></label><input type="range" id="q9a" min="0" max="2" step="0.01" value="1"></div>
+      <div class="ctl"><label for="q9b">b <output id="o9b">2.00</output></label><input type="range" id="q9b" min="0" max="2" step="0.01" value="2"></div>
+    </div>
+    <div class="readout" id="r9"></div>
+  </figure>
+</section>
+
+
+
+
+<div class="part-banner" id="partB" data-hue="test"><span class="pb-letter">B</span><div><div class="eyebrow">Homework 7 · Wackerly chapters 9 and 10</div><h2>Inference: sufficiency, likelihood and testing</h2><p>Three exercises. Factor a likelihood to find what the data say about θ, maximize it to estimate, then size a rejection region so two tests share the same α and compare their power.</p></div></div>
+<!-- ================= READING ORDER ================= -->
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 4) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+
+  /* ---------- helpers ---------- */
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function frame(ctx, box, xr, yr, o) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11.5px ' + tok('--f-mono'); ctx.lineWidth = 1;
+    (o.yt || []).forEach(t => {
+      ctx.strokeStyle = rule; ctx.globalAlpha = 0.6; ctx.beginPath(); ctx.moveTo(x0, Y(t)); ctx.lineTo(x1, Y(t)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(o.yf ? o.yf(t) : String(t), x0 - 6, Y(t));
+    });
+    (o.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(o.xf ? o.xf(t) : String(t), X(t), y1 + 6);
+      ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(X(t), y1); ctx.lineTo(X(t), y1 + 4); ctx.stroke();
+    });
+    ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (o.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(o.xl, x1, y1 - 4); }
+    if (o.yl) { ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(o.yl, x0 + 6, y0); }
+    return { X, Y };
+  }
+  function label(ctx, txt, x, y, color, align, base, bold) {
+    ctx.fillStyle = color; ctx.font = (bold === false ? '' : '600 ') + '12px ' + tok('--f-mono');
+    ctx.textAlign = align || 'left'; ctx.textBaseline = base || 'top'; ctx.fillText(txt, x, y);
+  }
+  function vline(ctx, x, ya, yb, color, dash, wdt) {
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = wdt || 1.5; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(x, ya); ctx.lineTo(x, yb); ctx.stroke(); ctx.restore();
+  }
+  function niceTicks(a, b, n) {
+    const raw = (b - a) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw) || raw;
+    const out = []; for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) out.push(+t.toFixed(10)); return out;
+  }
+  const pfmt = t => (t === 0 ? '0' : (t < 0.1 ? t.toFixed(2) : String(+t.toFixed(2))));
+  function tween(from, to, ms, onStep) {
+    if (reduce || ms <= 0) { onStep(to, 1); return; }
+    const t0 = performance.now();
+    const go = now => { const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3); onStep(from + (to - from) * e, p); if (p < 1) requestAnimationFrame(go); };
+    requestAnimationFrame(go);
+  }
+  const lfact = n => { let s = 0; for (let i = 2; i <= n; i++) s += Math.log(i); return s; };
+  const binom = (n, p, y) => Math.exp(lfact(n) - lfact(y) - lfact(n - y) + y * Math.log(p) + (n - y) * Math.log(1 - p));
+  const pois = (l, y) => Math.exp(-l + y * Math.log(l) - lfact(y));
+  const box = (w, h, l = 46, r = 14, t = 16, b = 30) => ({ x0: l, y0: t, x1: w - r, y1: h - b });
+  function bars(ctx, X, Y, xs, ps, colorFn, widthFrac) {
+    const bw = Math.max(2, (X(1) - X(0)) * (widthFrac || 0.7));
+    xs.forEach((x, k) => { ctx.fillStyle = colorFn(x, k); ctx.fillRect(X(x) - bw / 2, Y(ps[k]), bw, Y(0) - Y(ps[k])); });
+  }
+
+  /* ============ Q1 ============ */
+  const S1 = { p: 0.4, t: 0.2, K: 40 };
+  function render1() {
+    const { ctx, w, h } = prep($('cv1')); const p = S1.p, q = 1 - p, t = S1.t, r = q * Math.exp(t);
+    const bound = -Math.log(q), conv = r < 1, closed = conv ? p * Math.exp(t) / (1 - r) : NaN;
+    const KMAX = 40, partial = []; let s = 0;
+    for (let k = 1; k <= KMAX; k++) { s += Math.exp(t * k) * Math.pow(q, k - 1) * p; partial.push(s); }
+    const shown = partial.slice(0, S1.K);
+    const ymax = conv ? Math.max(closed * 1.25, 1.2) : Math.max(...shown.slice(0, Math.max(1, S1.K)), 2) * 1.1;
+    const b = box(w, h, 50);
+    const { X, Y } = frame(ctx, b, [0, KMAX + 1], [0, ymax], { xt: [1, 10, 20, 30, 40], yt: niceTicks(0, ymax, 4), yf: v => (v >= 100 ? v.toExponential(0) : pfmt(v)), xl: 'terms K', yl: 'partial sum' });
+    if (conv) {
+      vline(ctx, X(0.5), Y(closed), Y(closed), tok('--dv'));
+      ctx.save(); ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(b.x0, Y(closed)); ctx.lineTo(b.x1, Y(closed)); ctx.stroke(); ctx.restore();
+      label(ctx, 'pe^t / (1 − qe^t) = ' + closed.toFixed(4), b.x1, Y(closed) - 4, tok('--dv'), 'right', 'bottom');
+    } else {
+      label(ctx, 'qe^t ≥ 1: series diverges, m(t) does not exist', b.x0 + 10, b.y0 + 18, tok('--rej'));
+    }
+    ctx.fillStyle = tok(conv ? '--hl' : '--rej');
+    shown.forEach((v, k) => { if (v <= ymax) { ctx.beginPath(); ctx.arc(X(k + 1), Y(v), 3.2, 0, 2 * Math.PI); ctx.fill(); } });
+    $('r1').innerHTML = `<span><span class="k">q·e^t</span> <b class="${conv ? 'v-dv' : 'v-rej'}">${fmt(r)}</b></span>` +
+      `<span><span class="k">boundary −ln q</span> <b class="v-rej">${fmt(bound, 3)}</b></span>` +
+      `<span><span class="k">S_K (K = ${S1.K})</span> <b class="v-hl">${fmt(shown[shown.length - 1])}</b></span>` +
+      `<span><span class="k">closed form</span> <b class="v-dv">${conv ? fmt(closed) : 'undefined'}</b></span>`;
+  }
+  $('q1p').addEventListener('input', e => { S1.p = +e.target.value; $('o1p').textContent = S1.p.toFixed(2); render1(); });
+  $('q1t').addEventListener('input', e => { S1.t = +e.target.value; $('o1t').textContent = S1.t.toFixed(2); render1(); });
+  $('q1go').addEventListener('click', () => tween(1, 40, 2200, v => { S1.K = Math.round(v); render1(); }));
+
+  /* ============ Q2 ============ */
+  const Q2 = {
+    a: { xs: [0, 1, 2, 3, 4, 5, 6], pf: y => binom(6, 0.2, y), mean: 1.2, v: 0.96, name: 'Binomial(n = 6, p = 0.2)' },
+    b: { xs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], pf: y => Math.pow(0.5, y), mean: 2, v: 2, name: 'Geometric(p = 0.5)' },
+    c: { xs: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], pf: y => pois(5, y), mean: 5, v: 5, name: 'Poisson(λ = 5)' }
+  };
+  let cur2 = 'a', anim2 = 1;
+  function render2() {
+    const { ctx, w, h } = prep($('cv2')); const d = Q2[cur2], ps = d.xs.map(d.pf), pmax = Math.max(...ps);
+    const xr = [d.xs[0] - 0.7, d.xs[d.xs.length - 1] + 0.7], b = box(w, h);
+    const { X, Y } = frame(ctx, b, xr, [0, pmax * 1.18], { xt: d.xs, yt: niceTicks(0, pmax, 4), yf: pfmt, xl: 'y', yl: 'p(y)' });
+    bars(ctx, X, Y, d.xs, ps.map(p => p * anim2), () => tok('--hl'));
+    vline(ctx, X(d.mean), Y(0), Y(pmax * 1.12), tok('--dv'), [5, 4]);
+    label(ctx, 'mean ' + d.mean, X(d.mean) + 5, Y(pmax * 1.12), tok('--dv'));
+    $('r2').innerHTML = `<span><span class="k">distribution</span> <b>${d.name}</b></span><span><span class="k">E(Y)</span> <b class="v-dv">${d.mean}</b></span><span><span class="k">V(Y)</span> <b class="v-dv">${d.v}</b></span>`;
+  }
+  document.querySelectorAll('[data-q2]').forEach(btn => btn.addEventListener('click', () => {
+    cur2 = btn.dataset.q2; document.querySelectorAll('[data-q2]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    tween(0, 1, 500, v => { anim2 = v; render2(); });
+  }));
+
+  /* ============ Q3 ============ */
+  const m3 = t => (Math.exp(t) + 6 * Math.exp(2 * t) + 2 * Math.exp(3 * t)) / 9;
+  const d3 = t => (Math.exp(t) + 12 * Math.exp(2 * t) + 6 * Math.exp(3 * t)) / 9;
+  let t03 = 0.3;
+  function render3() {
+    const { ctx, w, h } = prep($('cv3')); const xr = [-1, 0.6], ymax = m3(0.6) * 1.05, b = box(w, h);
+    const { X, Y } = frame(ctx, b, xr, [0, ymax], { xt: [-1, -0.5, 0, 0.5], yt: niceTicks(0, ymax, 4), yf: pfmt, xl: 't', yl: 'm(t)' });
+    ctx.save(); ctx.beginPath(); ctx.rect(b.x0, b.y0, b.x1 - b.x0, b.y1 - b.y0); ctx.clip();
+    // quadratic approx
+    ctx.setLineDash([5, 4]); ctx.strokeStyle = tok('--tb'); ctx.lineWidth = 1.6; ctx.beginPath();
+    for (let k = 0; k <= 200; k++) { const t = xr[0] + (k / 200) * (xr[1] - xr[0]), y = 1 + (19 / 9) * t + (43 / 18) * t * t; k ? ctx.lineTo(X(t), Y(y)) : ctx.moveTo(X(t), Y(y)); }
+    ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = tok('--ink'); ctx.lineWidth = 2.2; ctx.beginPath();
+    for (let k = 0; k <= 200; k++) { const t = xr[0] + (k / 200) * (xr[1] - xr[0]); k ? ctx.lineTo(X(t), Y(m3(t))) : ctx.moveTo(X(t), Y(m3(t))); }
+    ctx.stroke();
+    const sl = d3(t03), y0 = m3(t03), atZero = Math.abs(t03) < 0.005;
+    ctx.strokeStyle = tok(atZero ? '--dv' : '--hl'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(X(xr[0]), Y(y0 + sl * (xr[0] - t03))); ctx.lineTo(X(xr[1]), Y(y0 + sl * (xr[1] - t03))); ctx.stroke();
+    ctx.restore();
+    vline(ctx, X(0), b.y0, b.y1, tok('--muted'), [2, 3], 1);
+    ctx.beginPath(); ctx.arc(X(t03), Y(y0), 5, 0, 2 * Math.PI); ctx.fillStyle = tok(atZero ? '--dv' : '--hl'); ctx.fill();
+    label(ctx, 'dashed: 1 + μt + ½μ₂′t²', b.x0 + 10, b.y0 + 4, tok('--tb'), 'left', 'top', false);
+    $('r3').innerHTML = `<span><span class="k">t₀</span> <b>${fmt(t03, 2)}</b></span><span><span class="k">m(t₀)</span> <b>${fmt(y0)}</b></span>` +
+      `<span><span class="k">slope m′(t₀)</span> <b class="${atZero ? 'v-dv' : 'v-hl'}">${fmt(sl)}</b></span><span><span class="k">E(Y) = 19/9</span> <b class="v-dv">2.1111</b></span>` +
+      (atZero ? '<span class="v-dv">At t₀ = 0 the slope equals E(Y).</span>' : '');
+  }
+  $('q3t').addEventListener('input', e => { t03 = +e.target.value; $('o3t').textContent = t03.toFixed(2); render3(); });
+  $('q3zero').addEventListener('click', () => tween(t03, 0, 900, v => { t03 = v; $('q3t').value = v; $('o3t').textContent = v.toFixed(2); render3(); }));
+
+  /* ============ Q4-6 Tchebysheff ============ */
+  let dist6 = 'q6', k6 = 2;
+  function getDist6() {
+    if (dist6 === 'q6') { const xs = []; for (let y = 0; y <= 32; y++) xs.push(y); return { xs, ps: xs.map(y => pois(13, y)), mu: 13, sd: Math.sqrt(13), unit: 'Y (trees)', cost: true }; }
+    if (dist6 === 'q5') { const xs = [0, 1, 2, 3]; return { xs, ps: xs.map(y => binom(3, 0.5, y)), mu: 1.5, sd: Math.sqrt(0.75), unit: 'Y (heads)' }; }
+    const k = Math.max(k6, 1.0001), mu = 15, sd = 2, pe = 1 / (2 * k * k);
+    return { xs: [mu - k * sd, mu, mu + k * sd], ps: [pe, 1 - 2 * pe, pe], mu, sd, unit: 'Y', worst: true };
+  }
+  function render6() {
+    const { ctx, w, h } = prep($('cv6')); const d = getDist6();
+    const half = Math.max(4 * d.sd, (d.xs[d.xs.length - 1] - d.xs[0]) / 2 + 0.6);
+    const xr = dist6 === 'q5' ? [-1.5, 4.5] : (dist6 === 'q6' ? [-0.5, 32.5] : [d.mu - half - 0.6, d.mu + half + 0.6]);
+    const pmax = Math.max(...d.ps), b = box(w, h, 46, 14, 34, 30);
+    const xt = dist6 === 'q6' ? [0, 5, 10, 15, 20, 25, 30] : (dist6 === 'q5' ? [0, 1, 2, 3] : niceTicks(xr[0], xr[1], 6));
+    const { X, Y } = frame(ctx, b, xr, [0, pmax * 1.15], { xt, yt: niceTicks(0, pmax, 4), yf: pfmt, xl: d.unit, yl: 'p(y)' });
+    const lo = d.mu - k6 * d.sd, hi = d.mu + k6 * d.sd;
+    ctx.fillStyle = tok('--hl-bg'); ctx.fillRect(Math.max(b.x0, X(lo)), b.y0, Math.min(b.x1, X(hi)) - Math.max(b.x0, X(lo)), b.y1 - b.y0);
+    const inside = x => Math.abs(x - d.mu) < k6 * d.sd - 1e-9;
+    const bwFrac = dist6 === 'worst' ? 0.18 : 0.72;
+    bars(ctx, X, Y, d.xs, d.ps, x => (inside(x) ? tok('--hl') : tok('--muted')), dist6 === 'worst' ? (0.35 / (X(1) - X(0)) * (X(1) - X(0))) : bwFrac);
+    vline(ctx, X(d.mu), b.y0, b.y1, tok('--dv'), [5, 4]);
+    vline(ctx, X(lo), b.y0, b.y1, tok('--hl'), [], 1.5); vline(ctx, X(hi), b.y0, b.y1, tok('--hl'), [], 1.5);
+    label(ctx, 'μ − kσ', X(lo), b.y0 - 16, tok('--hl'), 'center'); label(ctx, 'μ + kσ', X(hi), b.y0 - 16, tok('--hl'), 'center');
+    const actual = d.xs.reduce((s, x, i) => s + (inside(x) ? d.ps[i] : 0), 0), bound = Math.max(0, 1 - 1 / (k6 * k6));
+    let extra = '';
+    if (d.cost) extra = `<span><span class="k">C interval 5Y+40</span> <b class="v-tb">(${(5 * lo + 40).toFixed(2)}, ${(5 * hi + 40).toFixed(2)})</b></span>`;
+    if (d.worst) extra = `<span class="k">Mass sits exactly at μ ± kσ, which counts as outside, so the bound is attained.</span>`;
+    $('r6').innerHTML = `<span><span class="k">μ ± kσ</span> <b>(${lo.toFixed(3)}, ${hi.toFixed(3)})</b></span>` +
+      `<span><span class="k">actual P(|Y−μ| &lt; kσ)</span> <b class="v-hl">${fmt(actual)}</b></span>` +
+      `<span><span class="k">Tchebysheff ≥ 1 − 1/k²</span> <b class="v-tb">${fmt(bound)}</b></span>` + extra;
+  }
+  $('q6d').addEventListener('change', e => { dist6 = e.target.value; render6(); });
+  $('q6k').addEventListener('input', e => { k6 = +e.target.value; $('o6k').textContent = k6.toFixed(2); render6(); });
+
+  /* ============ Q7 ============ */
+  let n7 = 1000;
+  function render7() {
+    const { ctx, w, h } = prep($('cv7')); const p = 0.0005, lam = n7 * p, ymaxX = Math.max(6, Math.ceil(lam + 4 * Math.sqrt(lam)));
+    const xs = []; for (let y = 0; y <= ymaxX; y++) xs.push(y);
+    const pb = xs.map(y => binom(n7, p, y)), pp = xs.map(y => pois(lam, y)), pmax = Math.max(...pb, ...pp);
+    const b = box(w, h);
+    const { X, Y } = frame(ctx, b, [-0.7, ymaxX + 0.7], [0, pmax * 1.15], { xt: xs.filter(x => ymaxX <= 12 || x % 2 === 0), yt: niceTicks(0, pmax, 4), yf: pfmt, xl: 'y (children with disease)', yl: 'probability' });
+    const bw = (X(1) - X(0)) * 0.36;
+    xs.forEach((x, i) => {
+      ctx.fillStyle = x >= 2 ? tok('--hl') : tok('--muted'); ctx.fillRect(X(x) - bw - 1, Y(pb[i]), bw, Y(0) - Y(pb[i]));
+      ctx.strokeStyle = tok('--tb'); ctx.lineWidth = 1.8; ctx.strokeRect(X(x) + 1, Y(pp[i]), bw, Y(0) - Y(pp[i]));
+    });
+    const lx = b.x1 - 210, ly = b.y0 + 8;
+    ctx.fillStyle = tok('--hl'); ctx.fillRect(lx, ly, 12, 12); label(ctx, 'binomial (blue: y ≥ 2)', lx + 18, ly, tok('--ink'), 'left', 'top', false);
+    ctx.strokeStyle = tok('--tb'); ctx.strokeRect(lx, ly + 20, 12, 12); label(ctx, 'Poisson λ = np', lx + 18, ly + 20, tok('--ink'), 'left', 'top', false);
+    const tb = 1 - pb[0] - pb[1], tp = 1 - pp[0] - pp[1];
+    $('r7').innerHTML = `<span><span class="k">λ = np</span> <b class="v-dv">${fmt(lam, 3)}</b></span>` +
+      `<span><span class="k">P(Y ≥ 2) binomial</span> <b class="v-hl">${fmt(tb, 5)}</b></span>` +
+      `<span><span class="k">P(Y ≥ 2) Poisson</span> <b class="v-tb">${fmt(tp, 5)}</b></span>` +
+      `<span><span class="k">difference</span> <b>${(tp - tb).toExponential(2)}</b></span>`;
+  }
+  $('q7n').addEventListener('input', e => { n7 = +e.target.value; $('o7n').textContent = n7; render7(); });
+
+  /* ============ Q8 ============ */
+  const S8 = { counts: {}, total: 0, last: [], running: false };
+  const nb = y => (y < 4 ? 0 : Math.exp(lfact(y - 1) - lfact(3) - lfact(y - 4)) * Math.pow(0.25, 4) * Math.pow(0.75, y - 4));
+  function oneRun() { const seq = []; let s = 0; while (s < 4) { const hit = Math.random() < 0.25; seq.push(hit); if (hit) s++; } return seq; }
+  function render8() {
+    // sequence strip
+    let { ctx, w, h } = prep($('cv8a'));
+    const rows = S8.last.slice(-4), cell = Math.min(18, (w - 120) / 34);
+    ctx.font = '11.5px ' + tok('--f-mono');
+    if (!rows.length) label(ctx, 'Press Simulate. Each row = one inventory: dots are contacts, filled = sale.', 4, 8, tok('--muted'), 'left', 'top', false);
+    rows.forEach((seq, r) => {
+      const y = 14 + r * 26;
+      seq.slice(0, 34).forEach((hit, i) => {
+        ctx.beginPath(); ctx.arc(10 + i * cell + cell / 2, y + 6, Math.max(3, cell * 0.32), 0, 2 * Math.PI);
+        if (hit) { ctx.fillStyle = tok('--dv'); ctx.fill(); } else { ctx.strokeStyle = tok('--muted'); ctx.lineWidth = 1.2; ctx.stroke(); }
+      });
+      label(ctx, seq.length + ' contacts' + (seq.length < 6 ? ' ✓' : ''), w - 6, y, seq.length < 6 ? tok('--hl') : tok('--muted'), 'right');
+    });
+    // histogram
+    ({ ctx, w, h } = prep($('cv8')));
+    const xs = []; for (let y = 4; y <= 40; y++) xs.push(y);
+    const fr = xs.map(y => (S8.total ? (S8.counts[y] || 0) / S8.total : 0)), ex = xs.map(nb), pmax = Math.max(...ex, ...fr) * 1.1;
+    const b = box(w, h);
+    const { X, Y } = frame(ctx, b, [3.3, 40.7], [0, pmax], { xt: [4, 5, 10, 15, 20, 25, 30, 35, 40], yt: niceTicks(0, pmax, 4), yf: pfmt, xl: 'contacts needed Y', yl: 'proportion' });
+    bars(ctx, X, Y, xs, fr, x => (x < 6 ? tok('--hl') : tok('--muted')), 0.75);
+    ctx.fillStyle = tok('--tb'); xs.forEach((x, i) => { ctx.beginPath(); ctx.arc(X(x), Y(ex[i]), 2.8, 0, 2 * Math.PI); ctx.fill(); });
+    const sim = S8.total ? ((S8.counts[4] || 0) + (S8.counts[5] || 0)) / S8.total : NaN;
+    $('r8').innerHTML = `<span><span class="k">inventories</span> <b>${S8.total}</b></span>` +
+      `<span><span class="k">simulated P(Y &lt; 6)</span> <b class="v-hl">${S8.total ? fmt(sim) : '—'}</b></span>` +
+      `<span><span class="k">exact 1/64</span> <b class="v-dv">0.0156</b></span>` +
+      `<span><span class="k">exact E(Y) = r/p</span> <b class="v-tb">16</b></span>`;
+  }
+  $('q8go').addEventListener('click', () => {
+    if (S8.running) return; S8.counts = {}; S8.total = 0; S8.last = []; S8.running = true;
+    const per = reduce ? 3000 : 25;
+    const step = () => {
+      for (let k = 0; k < per && S8.total < 3000; k++) { const seq = oneRun(); S8.counts[seq.length] = (S8.counts[seq.length] || 0) + 1; S8.total++; if (k === per - 1 || S8.total === 3000) { S8.last.push(seq); if (S8.last.length > 4) S8.last.shift(); } }
+      render8(); if (S8.total < 3000) requestAnimationFrame(step); else S8.running = false;
+    };
+    step();
+  });
+  $('q8clr').addEventListener('click', () => { S8.running = false; S8.counts = {}; S8.total = 0; S8.last = []; render8(); });
+
+  /* ============ Q9-11 density explorer ============ */
+  const D9 = {
+    q9: { lo: 0, hi: 2, xr: [-0.3, 2.3], f: y => (y >= 0 && y <= 2 ? y / 2 : 0), F: y => (y < 0 ? 0 : y > 2 ? 1 : y * y / 4), a: 1, b: 2, fmax: 1, kinks: [0, 2] },
+    q10: { lo: 0, hi: 4, xr: [-0.4, 4.4], f: y => (y > 0 && y < 2 ? 1 / 8 : (y >= 2 && y < 4 ? y / 8 : 0)), F: y => (y <= 0 ? 0 : y < 2 ? y / 8 : y < 4 ? y * y / 16 : 1), a: 1.5, b: 3.25, fmax: 0.5, kinks: [0, 2, 4], cond: true },
+    q11: { lo: 0, hi: 1.5, xr: [-0.2, 1.7], f: y => (y >= 0 && y <= 1 ? y : (y > 1 && y <= 1.5 ? 1 : 0)), F: y => (y < 0 ? 0 : y <= 1 ? y * y / 2 : y <= 1.5 ? y - 0.5 : 1), a: 0.3, b: 1.4, fmax: 1, kinks: [0, 1, 1.5] }
+  };
+  let cur9 = 'q9', A9 = 1, B9 = 2;
+  function curve(ctx, X, Y, fn, xr, kinks, color, wdt) {
+    const pts = []; for (let k = 0; k <= 400; k++) pts.push(xr[0] + (k / 400) * (xr[1] - xr[0]));
+    kinks.forEach(kv => { pts.push(kv - 1e-6, kv + 1e-6); }); pts.sort((a, b) => a - b);
+    ctx.strokeStyle = color; ctx.lineWidth = wdt; ctx.beginPath(); pts.forEach((x, i) => i ? ctx.lineTo(X(x), Y(fn(x))) : ctx.moveTo(X(x), Y(fn(x)))); ctx.stroke();
+  }
+  function render9() {
+    const { ctx, w, h } = prep($('cv9')); const d = D9[cur9];
+    const a = Math.min(A9, B9), bb = Math.max(A9, B9), mid = h * 0.5;
+    const xt = niceTicks(d.xr[0] < 0 ? 0 : d.xr[0], d.xr[1], 6);
+    // f panel
+    const b1 = { x0: 46, y0: 16, x1: w - 14, y1: mid - 22 };
+    const f1 = frame(ctx, b1, d.xr, [0, d.fmax * 1.15], { xt, yt: [0, d.fmax / 2, d.fmax], yf: pfmt, yl: 'f(y)' });
+    ctx.beginPath(); ctx.moveTo(f1.X(a), f1.Y(0));
+    for (let k = 0; k <= 200; k++) { const x = a + (k / 200) * (bb - a); ctx.lineTo(f1.X(x), f1.Y(d.f(x))); }
+    ctx.lineTo(f1.X(bb), f1.Y(0)); ctx.closePath(); ctx.fillStyle = tok('--hl-bg'); ctx.fill();
+    curve(ctx, f1.X, f1.Y, d.f, d.xr, d.kinks, tok('--ink'), 2.2);
+    vline(ctx, f1.X(a), b1.y0, b1.y1, tok('--hl'), [4, 3]); vline(ctx, f1.X(bb), b1.y0, b1.y1, tok('--hl'), [4, 3]);
+    // F panel
+    const b2 = { x0: 46, y0: mid + 4, x1: w - 14, y1: h - 30 };
+    const f2 = frame(ctx, b2, d.xr, [0, 1.12], { xt, yt: [0, 0.5, 1], yf: pfmt, xl: 'y', yl: 'F(y)' });
+    curve(ctx, f2.X, f2.Y, d.F, d.xr, d.kinks, tok('--dv'), 2.2);
+    const Fa = d.F(a), Fb = d.F(bb);
+    ctx.save(); ctx.setLineDash([3, 3]); ctx.strokeStyle = tok('--muted'); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(f2.X(a), f2.Y(0)); ctx.lineTo(f2.X(a), f2.Y(Fa)); ctx.lineTo(f2.X(bb), f2.Y(Fa)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(f2.X(bb), f2.Y(0)); ctx.lineTo(f2.X(bb), f2.Y(Fb)); ctx.stroke(); ctx.restore();
+    ctx.strokeStyle = tok('--hl'); ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(f2.X(bb), f2.Y(Fa)); ctx.lineTo(f2.X(bb), f2.Y(Fb)); ctx.stroke();
+    [[a, Fa], [bb, Fb]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(f2.X(x), f2.Y(y), 4, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill(); });
+    const right = f2.X(bb) < b2.x1 - 90;
+    label(ctx, 'F(b) − F(a)', f2.X(bb) + (right ? 8 : -8), f2.Y((Fa + Fb) / 2), tok('--hl'), right ? 'left' : 'right', 'middle');
+    let html = `<span><span class="k">F(a)</span> <b>${fmt(Fa)}</b></span><span><span class="k">F(b)</span> <b>${fmt(Fb)}</b></span>` +
+      `<span><span class="k">P(a ≤ Y ≤ b)</span> <b class="v-hl">${fmt(Fb - Fa)}</b></span>`;
+    if (d.cond) html += `<span><span class="k">P(Y ≥ a | Y ≤ b)</span> <b class="v-dv">${Fb > 0 ? fmt((Fb - Fa) / Fb) : '—'}</b></span>`;
+    $('r9').innerHTML = html;
+  }
+  function set9(which, animate) {
+    const d = D9[which]; cur9 = which;
+    ['q9a', 'q9b'].forEach(id => { $(id).min = d.lo; $(id).max = d.hi; });
+    const a0 = Math.min(Math.max(A9, d.lo), d.hi), b0 = Math.min(Math.max(B9, d.lo), d.hi);
+    const apply = (a, b) => { A9 = a; B9 = b; $('q9a').value = a; $('q9b').value = b; $('o9a').textContent = a.toFixed(2); $('o9b').textContent = b.toFixed(2); render9(); };
+    if (animate) tween(0, 1, 600, v => apply(a0 + (d.a - a0) * v, b0 + (d.b - b0) * v)); else apply(d.a, d.b);
+  }
+  document.querySelectorAll('[data-q9]').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-q9]').forEach(b => b.setAttribute('aria-pressed', String(b === btn))); set9(btn.dataset.q9, true);
+  }));
+  $('q9a').addEventListener('input', e => { A9 = +e.target.value; $('o9a').textContent = A9.toFixed(2); render9(); });
+  $('q9b').addEventListener('input', e => { B9 = +e.target.value; $('o9b').textContent = B9.toFixed(2); render9(); });
+
+  /* ---------- boot ---------- */
+  set9('q9', false);
+  function renderAll() { render1(); render2(); render3(); render6(); render7(); render8(); render9(); }
+  renderAll();
+  let rt; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(renderAll, 60); });
+  document.querySelectorAll('canvas').forEach(c => ro.observe(c));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+  new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderAll);
+})();
+
+</script>
+</body></html>

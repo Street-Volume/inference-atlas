@@ -1,0 +1,221 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<title>Concept Bridge — Inference Atlas</title></head><body data-page="bridge.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability</div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Inference</div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Optimization</div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Tools</div>
+    <a href="#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="bridge" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">⇄</span><h2>Concept bridge: what Part A hands to Part B</h2></div>
+  <p class="prose">Every tool in the inference problems was built in the probability problems. Pick a link to see the tool on both sides, with jumps to the exact problems where it shows up.</p>
+  <div class="bridge">
+    <div class="bridge-stage"><svg id="bridgeSvg" viewBox="0 0 820 400" role="img" aria-label="Diagram linking five probability topics to four inference topics"></svg></div>
+    <div class="bridge-list" id="bridgeList" role="tablist" aria-label="Links">
+      <button role="tab" data-l="0" data-hue="disc" aria-pressed="true">Probability models → Likelihood</button>
+      <button role="tab" data-l="1" data-hue="mgf" aria-pressed="false">Expectation → Unbiasedness</button>
+      <button role="tab" data-l="2" data-hue="cheb" aria-pressed="false">Tchebysheff → Consistency</button>
+      <button role="tab" data-l="3" data-hue="cont" aria-pressed="false">CDF areas → Type I error</button>
+      <button role="tab" data-l="4" data-hue="cont" aria-pressed="false">Sums of variables → Test statistic</button>
+    </div>
+    <div class="bridge-detail">
+      <div class="bd" data-l="0">
+        <h3>The probability function, read backwards</h3>
+        <div class="bd-cols">
+          <div class="bd-col" data-hue="disc"><span class="tag">In Part A</span><p>You evaluated \(p(y)\) or \(f(y)\) with the parameter known: Poisson(0.5) in Q7, the negative binomial in Q8, \(f(y)=y/2\) in Q9. The parameter was fixed and \(y\) varied.</p><div class="jumps"><a href="probability.html#q7">Q7</a><a href="probability.html#q8">Q8</a><a href="probability.html#q9">Q9</a></div></div>
+          <div class="bd-col" data-hue="est"><span class="tag">In Part B</span><p>Fix the observed data and let the parameter vary. The same product of densities is now the likelihood \(L(\theta)\), and the MLE is where it peaks.</p><div class="jumps"><a href="inference.html#ex982">9.82(b)</a><a href="inference.html#ex996">9.96</a><a href="inference.html#labLik">Live figure B1</a></div></div>
+        </div>
+        <div class="bd-carry"><span class="tag">The tool that carries over</span><p>\(L(\theta)=\prod_{i=1}^n f(y_i\mid\theta)\)</p></div>
+      </div>
+      <div class="bd" data-l="1" hidden>
+        <h3>Expected values decide unbiasedness</h3>
+        <div class="bd-cols">
+          <div class="bd-col" data-hue="mgf"><span class="tag">In Part A</span><p>Expectations are sums or integrals weighted by the probability function. Q3 got \(E(Y)=m'(0)=19/9\); Q6 used \(E(aY+b)=aE(Y)+b\).</p><div class="jumps"><a href="probability.html#q3">Q3</a><a href="probability.html#q6">Q6</a></div></div>
+          <div class="bd-col" data-hue="est"><span class="tag">In Part B</span><p>9.82(c) needs \(E(Y^r)=\theta\), an integral finished with the gamma function, to show \(E(\hat\theta)=\theta\). Unbiased plus a function of the sufficient statistic gives the MVUE.</p><div class="jumps"><a href="inference.html#ex982">9.82(c)</a><a href="inference.html#labSamp">Live figure B2</a></div></div>
+        </div>
+        <div class="bd-carry"><span class="tag">The tool that carries over</span><p>\(E(\hat\theta)=\frac1n\sum_{i=1}^nE(Y_i^r)=\frac1n(n\theta)=\theta\)</p></div>
+      </div>
+      <div class="bd" data-l="2" hidden>
+        <h3>A variance bound becomes a guarantee about estimators</h3>
+        <div class="bd-cols">
+          <div class="bd-col" data-hue="cheb"><span class="tag">In Part A</span><p>From a mean and variance alone, Tchebysheff bounds how likely a variable is to land far from its mean (Q4 to Q6).</p><div class="jumps"><a href="probability.html#q4">Q4</a><a href="probability.html#q6">Q6</a><a href="probability.html#labCheb">Live figure A4</a></div></div>
+          <div class="bd-col" data-hue="est"><span class="tag">In Part B</span><p>Apply it to an estimator. In 9.82, \(Y^r\) is exponential with mean θ, so \(V(\hat\theta)=\theta^2/n\to0\) and the bound forces \(\hat\theta\) toward θ. That property is consistency. It goes past the assigned questions; Wackerly covers it in Section 9.3 as far as I know, so verify the section.</p><div class="jumps"><a href="inference.html#labSamp">Live figure B2</a></div></div>
+        </div>
+        <div class="bd-carry"><span class="tag">The tool that carries over</span><p>\(P(|\hat\theta-\theta|\ge\varepsilon)\le\dfrac{V(\hat\theta)}{\varepsilon^2}=\dfrac{\theta^2}{n\varepsilon^2}\)</p></div>
+      </div>
+      <div class="bd" data-l="3" hidden>
+        <h3>α is an area under a density</h3>
+        <div class="bd-cols">
+          <div class="bd-col" data-hue="cont"><span class="tag">In Part A</span><p>\(P(a\le Y\le b)=F(b)-F(a)\) is an area under \(f\). Q10(c) computed an upper tail as \(1-F(2)\).</p><div class="jumps"><a href="probability.html#q9">Q9</a><a href="probability.html#q10">Q10</a><a href="probability.html#labDens">Live figure A7</a></div></div>
+          <div class="bd-col" data-hue="test"><span class="tag">In Part B</span><p>α is the probability the test statistic lands in the rejection region when \(H_0\) is true: the same upper-tail area, computed under the null density.</p><div class="jumps"><a href="inference.html#ex105">10.5</a><a href="inference.html#labTest">Live figure B6</a></div></div>
+        </div>
+        <div class="bd-carry"><span class="tag">The tool that carries over</span><p>\(\alpha=P(U\gt c\mid H_0)=1-F_U(c)\)</p></div>
+      </div>
+      <div class="bd" data-l="4" hidden>
+        <h3>The distribution of a sum sets the cutoff</h3>
+        <div class="bd-cols">
+          <div class="bd-col" data-hue="cont"><span class="tag">In Part A territory</span><p>The sum of two independent U(0,1) variables has a triangular density (Example 6.3). It isn't one of the Homework 07 questions, but it uses the same CDF-from-area reasoning as Q9 to Q11.</p><div class="jumps"><a href="probability.html#q9">Q9</a><a href="probability.html#q11">Q11</a></div></div>
+          <div class="bd-col" data-hue="test"><span class="tag">In Part B</span><p>Test 2's statistic is exactly that sum, so its null distribution is the triangle, and \(c\) comes from solving its CDF. Live figure B7 shows the same event as a corner of the unit square.</p><div class="jumps"><a href="inference.html#ex105">10.5</a><a href="inference.html#labSquare">Live figure B7</a></div></div>
+        </div>
+        <div class="bd-carry"><span class="tag">The tool that carries over</span><p>\(f_U(u)=u\) on \([0,1]\), \(\ 2-u\) on \((1,2]\), so \(1-F_U(c)=\tfrac12(2-c)^2\) for \(c\in[1,2]\)</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORKBENCH ================= -->
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  const { $, go, tok, reduce } = window.Atlas;
+  /* ---------- concept bridge ---------- */
+  const BL = [
+    { t: 'Probability models', s: 'Q2, Q7, Q8, Q9', hue: 'disc' },
+    { t: 'Expectation and moments', s: 'Q3, Q6', hue: 'mgf' },
+    { t: 'Tchebysheff bounds', s: 'Q4, Q5, Q6', hue: 'cheb' },
+    { t: 'Densities and CDF areas', s: 'Q9, Q10, Q11', hue: 'cont' },
+    { t: 'Sums of random variables', s: 'Example 6.3', hue: 'cont' }
+  ];
+  const BR = [
+    { t: 'Likelihood and the MLE', s: '9.82(b), 9.96', hue: 'est' },
+    { t: 'Unbiasedness and MVUE', s: '9.82(c)', hue: 'est' },
+    { t: 'Consistency', s: 'beyond the homework', hue: 'est' },
+    { t: 'Hypothesis tests', s: '10.5: α, c, power', hue: 'test' }
+  ];
+  const LINKS = [[0, 0], [1, 1], [2, 2], [3, 3], [4, 3]];
+  let selLink = 0, dotT = 0, dotRaf = 0;
+  const svg = $('bridgeSvg'), NS = 'http://www.w3.org/2000/svg';
+  const LX = 24, LW = 236, RX = 560, RW = 236, NH = 52;
+  const ly = i => 52 + i * 68, ry = j => 66 + j * 84;
+  function buildBridge() {
+    svg.innerHTML = '';
+    const mk = (tag, attrs, parent) => { const el = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v)); (parent || svg).appendChild(el); return el; };
+    const defs = mk('defs', {});
+    const hueVar = h => tok('--h-' + h);
+    LINKS.forEach(([l, r], k) => {
+      const g = mk('linearGradient', { id: 'bg' + k, gradientUnits: 'userSpaceOnUse', x1: LX + LW, x2: RX, y1: 0, y2: 0 }, defs);
+      mk('stop', { offset: '0', 'stop-color': hueVar(BL[l].hue) }, g); mk('stop', { offset: '1', 'stop-color': hueVar(BR[r].hue) }, g);
+    });
+    const head = (x, txt) => { const t = mk('text', { x, y: 26, class: 'colhead' }); t.textContent = txt; };
+    head(LX + 4, 'PART A · PROBABILITY'); head(RX + 4, 'PART B · INFERENCE');
+    LINKS.forEach(([l, r], k) => {
+      const y1 = ly(l) + NH / 2, y2 = ry(r) + NH / 2, x1 = LX + LW, x2 = RX, mx = (x1 + x2) / 2;
+      const d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+      mk('path', { d, class: 'lnk', stroke: `url(#bg${k})`, 'data-k': k, id: 'lnk' + k });
+      const hit = mk('path', { d, class: 'hit', 'data-k': k }); hit.addEventListener('click', () => selectLink(k));
+    });
+    const node = (x, y, w, n, side, idx) => {
+      const g = mk('g', { class: 'node', 'data-hue': n.hue, 'data-side': side, 'data-i': idx, transform: `translate(${x},${y})`, tabindex: '0', role: 'button', 'aria-label': n.t });
+      mk('rect', { width: w, height: NH, rx: 12 }, g);
+      mk('circle', { cx: 18, cy: NH / 2, r: 5, fill: hueVar(n.hue) }, g);
+      const t1 = mk('text', { x: 32, y: 22 }, g); t1.textContent = n.t;
+      const t2 = mk('text', { x: 32, y: 39, class: 'sub' }, g); t2.textContent = n.s;
+      const pick = () => selectLink(LINKS.findIndex(([l, r]) => (side === 'L' ? l : r) === idx));
+      g.addEventListener('click', pick); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+    };
+    BL.forEach((n, i) => node(LX, ly(i), LW, n, 'L', i));
+    BR.forEach((n, j) => node(RX, ry(j), RW, n, 'R', j));
+    mk('circle', { id: 'bdot', r: 5, fill: tok('--ink') });
+    paintBridge();
+  }
+  function paintBridge() {
+    const [l, r] = LINKS[selLink];
+    svg.querySelectorAll('.lnk').forEach(p => p.classList.toggle('on', +p.dataset.k === selLink));
+    svg.querySelectorAll('.node').forEach(g => g.classList.toggle('on', (g.dataset.side === 'L' && +g.dataset.i === l) || (g.dataset.side === 'R' && +g.dataset.i === r)));
+  }
+  function selectLink(k, scroll) {
+    if (k < 0) return; selLink = k; dotT = 0; paintBridge();
+    document.querySelectorAll('#bridgeList button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.l === k)));
+    document.querySelectorAll('.bd').forEach(d => { d.hidden = +d.dataset.l !== k; });
+    if (scroll) go('#bridge');
+  }
+  document.querySelectorAll('#bridgeList button').forEach(b => b.addEventListener('click', () => selectLink(+b.dataset.l)));
+  function dotLoop() {
+    const p = $('lnk' + selLink), d = $('bdot');
+    if (p && d) { const L = p.getTotalLength(); dotT = (dotT + 0.008) % 1; const pt = p.getPointAtLength(dotT * L); d.setAttribute('cx', pt.x); d.setAttribute('cy', pt.y); }
+    dotRaf = requestAnimationFrame(dotLoop);
+  }
+  buildBridge(); selectLink(0);
+  if (!reduce) {
+    new IntersectionObserver(es => { if (es[0].isIntersecting) { if (!dotRaf) dotRaf = requestAnimationFrame(dotLoop); } else { cancelAnimationFrame(dotRaf); dotRaf = 0; } }).observe(svg);
+  } else { const d = $('bdot'); if (d) d.setAttribute('r', 0); }
+  const m = location.hash.match(/^#link(\d)$/); if (m) selectLink(+m[1], true);
+})();
+</script>
+</body></html>

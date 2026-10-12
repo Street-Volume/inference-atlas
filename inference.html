@@ -1,0 +1,916 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<title>Mathematical Statistics — Inference Atlas</title></head><body data-page="inference.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability</div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Inference</div>
+    <a href="#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-topic" data-hue="est">Point estimation</div>
+    <a href="#ex982" data-hue="est" data-p="ex982"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">9.82</span><span class="lbl">Sufficiency, MLE, MVUE</span></a>
+    <a href="#ex996" data-hue="est" data-p="ex996"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">9.96</span><span class="lbl">MLE of σ</span></a>
+    <div class="nav-topic" data-hue="test">Hypothesis testing</div>
+    <a href="#ex105" data-hue="test" data-p="ex105"><span class="st"><i></i><svg><use href="#ico-check"/></svg></span><span class="n">10.5</span><span class="lbl">Matching α</span></a>
+    <div class="nav-group">Part C · Optimization</div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<div class="part-banner" id="partB" data-hue="test"><span class="pb-letter">B</span><div><div class="eyebrow">Homework 7 · Wackerly chapters 9 and 10</div><h2>Inference: sufficiency, likelihood and testing</h2><p>Three exercises. Factor a likelihood to find what the data say about θ, maximize it to estimate, then size a rejection region so two tests share the same α and compare their power.</p></div></div>
+<!-- ================= READING ORDER ================= -->
+<section class="ex" id="readB" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">00</span><h2>Part B reading list</h2></div>
+  <p class="prose">Section numbers follow Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. I left out page numbers on purpose: the Gemini guide listed page ranges I can't verify, and they differ between printings.</p>
+  <ol class="reading">
+    <li><div><b>Sufficiency and the factorization theorem</b> (Section 9.4)<br><span class="for">Needed for 9.82(a)</span></div></li>
+    <li><div><b>The method of maximum likelihood</b>, including the invariance property (Section 9.7)<br><span class="for">Needed for 9.82(b) and 9.96</span></div></li>
+    <li><div><b>The Rao–Blackwell theorem and minimum-variance unbiased estimation</b> (Section 9.5)<br><span class="for">Needed for 9.82(c)</span></div></li>
+    <li><div><b>Elements of a statistical test</b>: H₀, Hₐ, rejection region, α and β (Section 10.2)<br><span class="for">Needed for 10.5</span></div></li>
+    <li><div><b>Distribution of the sum of two independent uniforms</b> (Example 6.3, which the exercise's hint points to)<br><span class="for">Needed for 10.5</span></div></li>
+  </ol>
+  <div class="flag"><b>Verify</b><span>I'm confident the factorization theorem is Theorem 9.4 in the 7th edition. I'm not confident about the numbering of the invariance property or the Rao–Blackwell theorem, so this guide names them instead of numbering them. Write the numbers in from your copy.</span></div>
+</section>
+
+<div class="chapter" data-hue="est">Point estimation</div>
+<!-- ================= 9.82 ================= -->
+<section class="ex" id="ex982" data-hue="est" data-problem>
+  <div class="ex-head"><span class="ex-num">9.82</span><h2>Sufficient statistic, MLE and MVUE for a Weibull-type density</h2></div>
+
+  <div class="problem">
+    <span class="tag">Problem</span>
+    <p>Let \(Y_1, \dots, Y_n\) be a random sample from</p>
+    \[ f(y\mid\theta)=\begin{cases}\dfrac{1}{\theta}\,r\,y^{r-1}e^{-y^r/\theta}, & \theta>0,\ y>0,\\[4pt] 0, & \text{elsewhere,}\end{cases} \]
+    <p>where \(r\) is a known positive constant. (a) Find a sufficient statistic for \(\theta\). (b) Find the MLE of \(\theta\). (c) Is the estimator in (b) an MVUE for \(\theta\)?</p>
+  </div>
+
+  <div class="tools">
+    <span class="tag">From the textbook</span>
+    <dl>
+      <dt>Factorization theorem (Section 9.4, Theorem 9.4)</dt>
+      <dd>\(U\) is sufficient for \(\theta\) if and only if \(\class{tb}{L(y_1,\dots,y_n\mid\theta)=g(u,\theta)\cdot h(y_1,\dots,y_n)}\), where \(g\) touches the data only through \(u\) and \(h\) does not involve \(\theta\).</dd>
+      <dt>Maximum likelihood (Section 9.7)</dt>
+      <dd>The MLE is the value of \(\theta\) that maximizes \(L(\theta)\). Because \(\ln\) is increasing, it is the same value that maximizes \(\ln L(\theta)\).</dd>
+      <dt>Rao–Blackwell route to the MVUE (Section 9.5)</dt>
+      <dd>If \(U\) is a sufficient statistic found by factorization and \(h(U)\) is unbiased for \(\theta\), then \(h(U)\) is the MVUE of \(\theta\). (The book states this result for sufficient statistics found this way; completeness is what makes it airtight, see the note in part c.)</dd>
+    </dl>
+  </div>
+
+  <div class="qf"><b>Quant finance</b><span>Weibull-type densities are the standard choice for time-to-default and time-to-prepayment modeling in credit risk. Finding a sufficient statistic and its MLE is exactly how a hazard-rate / default-intensity model gets calibrated from a loan book's historical survival data, and whether that estimator is an MVUE determines how much sampling noise ends up in a regulatory capital estimate.</span></div>
+
+  <!-- part a -->
+  <div class="part walk">
+    <div class="part-title"><h3>Part (a): sufficient statistic</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>Write the likelihood.</b> The \(Y_i\) are independent with the same density, so the joint density is the product of the marginals.</p>
+        \[ L(\theta)=\prod_{i=1}^{n}f(y_i\mid\theta)=\prod_{i=1}^{n}\left[\frac{1}{\theta}\,r\,y_i^{r-1}\exp\!\left(-\frac{y_i^r}{\theta}\right)\right] \]</div></li>
+      <li><div><p><b>Split the product factor by factor.</b> A product of \(n\) identical constants is a power, and a product of exponentials is the exponential of the sum, \(\prod e^{a_i}=e^{\sum a_i}\).</p>
+        \[ \prod_{i=1}^n\frac{1}{\theta}=\theta^{-n},\qquad \prod_{i=1}^n r=r^n,\qquad \prod_{i=1}^n\exp\!\left(-\frac{y_i^r}{\theta}\right)=\exp\!\left(-\frac{1}{\theta}\sum_{i=1}^n y_i^r\right) \]
+        \[ L(\theta)=\theta^{-n}\,r^n\left(\prod_{i=1}^n y_i^{r-1}\right)\exp\!\left(-\frac{1}{\theta}\sum_{i=1}^n y_i^r\right) \]</div></li>
+      <li><div><p><b>Group the pieces that contain θ.</b> Let \(u=\sum_{i=1}^n y_i^r\).</p>
+        \[ L(\theta)=\underbrace{\left[\theta^{-n}e^{-u/\theta}\right]}_{g(u,\theta)}\cdot\underbrace{\left[r^n\prod_{i=1}^n y_i^{r-1}\right]}_{h(y_1,\dots,y_n)} \]</div></li>
+      <li><div><p><b>Check both conditions of the theorem.</b> \(g(u,\theta)\) depends on the data only through \(u\). \(h\) contains only the data and the known constant \(r\), no \(\theta\). Both factors are non-negative.</p>
+        <p class="why">This is why \(r\) has to be known. If \(r\) were a parameter too, \(h\) would contain an unknown and the factorization would be for \(\theta\) only with \(r\) fixed.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer (a)</span><p>By the factorization theorem, \(\class{dv}{U=\sum_{i=1}^n Y_i^r}\) is sufficient for \(\theta\).</p></div>
+  </div>
+
+  <!-- part b -->
+  <div class="part walk">
+    <div class="part-title"><h3>Part (b): maximum likelihood estimator</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>Take logs.</b> Use \(\ln(ab)=\ln a+\ln b\), \(\ln a^k=k\ln a\) and \(\ln e^x=x\), one factor at a time.</p>
+        \[ \ln L(\theta)=\ln r^n+\ln\theta^{-n}+\ln\prod_{i=1}^n y_i^{r-1}+\ln\exp\!\left(-\frac{u}{\theta}\right) \]
+        \[ \ln L(\theta)=n\ln r-n\ln\theta+(r-1)\sum_{i=1}^n\ln y_i-\frac{u}{\theta} \]</div></li>
+      <li><div><p><b>Differentiate with respect to θ.</b> The first and third terms have no θ, so their derivatives are 0. Use \(\frac{d}{d\theta}\ln\theta=\frac1\theta\) and \(\frac{d}{d\theta}\theta^{-1}=-\theta^{-2}\).</p>
+        \[ \frac{d}{d\theta}\ln L(\theta)=0-\frac{n}{\theta}+0-u\left(-\theta^{-2}\right)=-\frac{n}{\theta}+\frac{u}{\theta^2} \]</div></li>
+      <li><div><p><b>Set the derivative to zero and solve.</b></p>
+        \[ -\frac{n}{\hat\theta}+\frac{u}{\hat\theta^{2}}=0\quad\Longrightarrow\quad \frac{u}{\hat\theta^{2}}=\frac{n}{\hat\theta} \]
+        <p>Multiply both sides by \(\hat\theta^{2}\) (allowed because \(\hat\theta>0\)):</p>
+        \[ u=n\hat\theta\quad\Longrightarrow\quad \class{dv}{\hat\theta=\frac{u}{n}=\frac1n\sum_{i=1}^n y_i^r} \]</div></li>
+      <li><div><p><b>Confirm it is a maximum.</b> Differentiate again:</p>
+        \[ \frac{d^2}{d\theta^2}\ln L(\theta)=\frac{n}{\theta^2}-\frac{2u}{\theta^3} \]
+        <p>At \(\theta=\hat\theta\), substitute \(u=n\hat\theta\) from step 3:</p>
+        \[ \frac{n}{\hat\theta^2}-\frac{2n\hat\theta}{\hat\theta^3}=\frac{n}{\hat\theta^2}-\frac{2n}{\hat\theta^2}=-\frac{n}{\hat\theta^2}\lt 0 \]
+        <p class="why">Negative second derivative, and only one critical point on \((0,\infty)\), so \(\hat\theta\) is the global maximum.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer (b)</span><p>\(\class{dv}{\hat\theta=\dfrac1n\sum_{i=1}^n Y_i^r}\). Notice it is a function of the sufficient statistic \(U\) from part (a): \(\hat\theta=U/n\).</p></div>
+  </div>
+
+  <!-- part c -->
+  <div class="part walk">
+    <div class="part-title"><h3>Part (c): is it the MVUE?</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>Use linearity of expectation.</b> <span class="src">Ch. 5, expected value of a linear function</span></p>
+        \[ E(\hat\theta)=E\!\left(\frac1n\sum_{i=1}^n Y_i^r\right)=\frac1n\sum_{i=1}^n E\!\left(Y_i^r\right) \]
+        <p class="why">So everything reduces to finding \(E(Y^r)\) for one observation.</p></div></li>
+      <li><div><p><b>Set up the integral for E(Yʳ).</b> <span class="src">Definition of expected value</span></p>
+        \[ E(Y^r)=\int_0^\infty y^r\cdot\frac{r}{\theta}\,y^{r-1}e^{-y^r/\theta}\,dy \]</div></li>
+      <li><div><p><b>Substitute.</b> Let \(w=y^r/\theta\). Then \(y^r=\theta w\) and \(dw=\frac{r}{\theta}y^{r-1}\,dy\). When \(y=0\), \(w=0\); as \(y\to\infty\), \(w\to\infty\) (since \(r\gt0\)).</p>
+        <p>The integrand groups exactly into these pieces:</p>
+        \[ \underbrace{y^r}_{\theta w}\cdot\underbrace{\frac{r}{\theta}y^{r-1}\,dy}_{dw}\cdot\underbrace{e^{-y^r/\theta}}_{e^{-w}} \]
+        \[ E(Y^r)=\int_0^\infty \theta w\,e^{-w}\,dw=\theta\int_0^\infty w^{2-1}e^{-w}\,dw \]</div></li>
+      <li><div><p><b>Recognize the gamma function.</b> <span class="src">Gamma function, Section 4.6</span></p>
+        \[ \class{tb}{\Gamma(\alpha)=\int_0^\infty w^{\alpha-1}e^{-w}\,dw,\qquad \Gamma(n)=(n-1)!} \]
+        \[ E(Y^r)=\theta\,\Gamma(2)=\theta\cdot1!=\theta \]
+        <p class="why">Shortcut you can cite on an exam: \(W=Y^r\) has density \(\frac1\theta e^{-w/\theta}\), an exponential with mean \(\theta\). Same conclusion.</p></div></li>
+      <li><div><p><b>Conclude unbiasedness.</b></p>
+        \[ E(\hat\theta)=\frac1n\sum_{i=1}^n\theta=\frac1n(n\theta)=\class{dv}{\theta} \]</div></li>
+      <li><div><p><b>Apply the Rao–Blackwell result.</b> \(\hat\theta=U/n\) is a function of the sufficient statistic \(U\) found by factorization in part (a), and it is unbiased. So it is the MVUE.</p>
+        <div class="flag"><b>Note</b><span>The Gemini guide argued through completeness and the Lehmann–Scheffé theorem. That argument is correct (this density is a one-parameter exponential family, so \(U\) is complete), but Wackerly does not develop completeness formally. If your instructor follows the book, write the Rao–Blackwell version above. This is my inference about your course; check your lecture notes.</span></div></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer (c)</span><p>Yes. \(\hat\theta=\frac1n\sum Y_i^r\) is unbiased and is a function of the sufficient statistic \(U=\sum Y_i^r\), so it is the MVUE for \(\theta\).</p></div>
+  </div>
+
+  <figure class="lab" id="labLik">
+    <div class="lab-head"><span class="tag">Live figure B1</span><h3>The likelihood peaks at u/n</h3>
+      <p>Draw a sample, then watch the relative likelihood \(L(\theta)/L(\hat\theta)\). Raise \(n\) and the curve narrows around the true \(\theta\). Change \(r\) and nothing about the curve's location changes, because θ only sees the data through \(u\).</p></div>
+    <canvas id="cvLik" aria-label="Relative likelihood curve for theta"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="a_theta">True θ <output id="o_theta">2.00</output></label><input type="range" id="a_theta" min="0.5" max="4" step="0.05" value="2"></div>
+      <div class="ctl"><label for="a_r">Known r <output id="o_r">1.50</output></label><input type="range" id="a_r" min="0.5" max="3" step="0.1" value="1.5"></div>
+      <div class="ctl"><label for="a_n">Sample size n <output id="o_n">10</output></label><input type="range" id="a_n" min="3" max="200" step="1" value="10"></div>
+      <div class="btnrow"><button id="a_new" class="primary">New sample</button></div>
+    </div>
+    <div class="readout" id="r_lik"></div>
+  </figure>
+
+  <figure class="lab" id="labSamp">
+    <div class="lab-head"><span class="tag">Live figure B2</span><h3>Unbiasedness, one sample at a time</h3>
+      <p>Repeat the experiment 2,000 times with the settings above. Each draw adds one \(\hat\theta\) to the histogram. The running average settles on the true θ, which is what \(E(\hat\theta)=\theta\) means.</p></div>
+    <canvas id="cvSamp" aria-label="Sampling distribution of theta hat"></canvas>
+    <div class="btnrow"><button id="a_run" class="primary">Run 2,000 samples</button><button id="a_clear">Clear</button></div>
+    <div class="readout" id="r_samp"></div>
+  </figure>
+
+  <figure class="lab" id="labScore"><div class="lab-head"><span class="tag">Live figure B3</span><h3>The score equation, crossing zero at u/n</h3>
+    <p>Top: the log-likelihood (relative to its peak). Bottom: its derivative, the score \(S(\theta)=-n/\theta+u/\theta^2\). Where the score is positive the likelihood is still climbing; where it is negative, falling. The MLE sits exactly where it crosses zero. Move the pointer across the plot to probe any θ.</p></div>
+    <canvas id="cvScore" class="tall" aria-label="Log-likelihood and score function for theta"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="sc_n">Sample size n <output id="o_scn">10</output></label><input type="range" id="sc_n" min="2" max="50" step="1" value="10"></div>
+      <div class="ctl"><label for="sc_u">u = Σ yᵢʳ <output id="o_scu">45</output></label><input type="range" id="sc_u" min="5" max="150" step="1" value="45"></div>
+    </div>
+    <div class="readout" id="r_score"></div>
+  </figure>
+
+</section>
+
+<!-- ================= 9.96 ================= -->
+<section class="ex" id="ex996" data-hue="est" data-problem>
+  <div class="ex-head"><span class="ex-num">9.96</span><h2>MLE of σ for a normal sample</h2></div>
+
+  <div class="problem">
+    <span class="tag">Problem</span>
+    <p>\(Y_1,\dots,Y_n\) is a random sample from a normal distribution with mean \(\mu\) and variance \(\sigma^2\), both unknown. Find the MLE of \(\sigma\).</p>
+  </div>
+
+  <div class="tools">
+    <span class="tag">From the textbook</span>
+    <dl>
+      <dt>Normal density (Section 4.5)</dt>
+      <dd>\(\class{tb}{f(y\mid\mu,\sigma)=\dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\dfrac{(y-\mu)^2}{2\sigma^2}\right)}\)</dd>
+      <dt>Invariance property of MLEs (Section 9.7)</dt>
+      <dd>If \(\hat\theta\) is the MLE of \(\theta\), then the MLE of \(t(\theta)\) is \(\class{tb}{t(\hat\theta)}\).</dd>
+      <dt>MLE of σ² for the normal (worked as an example in Section 9.7)</dt>
+      <dd>\(\class{tb}{\hat\mu=\bar Y,\quad \widehat{\sigma^2}=\dfrac1n\sum_{i=1}^n(Y_i-\bar Y)^2}\)</dd>
+    </dl>
+  </div>
+
+  <div class="qf"><b>Quant finance</b><span>This is realized-volatility estimation, full stop — the MLE of \(\sigma\) from a sample of returns is the baseline historical-volatility estimator that feeds option pricing, VaR, and GARCH model calibration. Its statistical properties (bias, efficiency) directly determine how noisy the resulting volatility forecast is.</span></div>
+
+  <div class="part walk">
+    <div class="part-title"><h3>Method 1: invariance (fastest on an exam)</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>Start from the known MLE of σ².</b> <span class="src">Section 9.7 example</span></p>
+        \[ \class{tb}{\widehat{\sigma^2}=\frac1n\sum_{i=1}^n(Y_i-\bar Y)^2} \]</div></li>
+      <li><div><p><b>Write σ as a function of σ².</b> Let \(t(x)=\sqrt{x}\). Since \(\sigma>0\), \(\sigma=t(\sigma^2)=\sqrt{\sigma^2}\).</p></div></li>
+      <li><div><p><b>Apply invariance.</b> <span class="src">Invariance property</span></p>
+        \[ \hat\sigma=t\!\left(\widehat{\sigma^2}\right)=\class{dv}{\sqrt{\frac1n\sum_{i=1}^n(Y_i-\bar Y)^2}} \]</div></li>
+    </ol>
+  </div>
+
+  <div class="part walk">
+    <div class="part-title"><h3>Method 2: derive it directly</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>Likelihood.</b> Product of \(n\) normal densities; combine the constants into powers and the exponentials into one exponent.</p>
+        \[ L(\mu,\sigma)=\prod_{i=1}^n\frac{1}{\sigma\sqrt{2\pi}}e^{-(y_i-\mu)^2/(2\sigma^2)}=(2\pi)^{-n/2}\sigma^{-n}\exp\!\left(-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-\mu)^2\right) \]</div></li>
+      <li><div><p><b>Log-likelihood.</b></p>
+        \[ \ln L(\mu,\sigma)=-\frac n2\ln(2\pi)-n\ln\sigma-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-\mu)^2 \]</div></li>
+      <li><div><p><b>Partial derivative in μ.</b> Chain rule: \(\frac{\partial}{\partial\mu}(y_i-\mu)^2=2(y_i-\mu)(-1)\).</p>
+        \[ \frac{\partial\ln L}{\partial\mu}=-\frac{1}{2\sigma^2}\sum_{i=1}^n 2(y_i-\mu)(-1)=\frac{1}{\sigma^2}\sum_{i=1}^n(y_i-\mu) \]
+        <p>Set to 0 and multiply by \(\sigma^2\):</p>
+        \[ \sum_{i=1}^n y_i-n\hat\mu=0\quad\Longrightarrow\quad\class{dv}{\hat\mu=\bar y} \]</div></li>
+      <li><div><p><b>Partial derivative in σ.</b> Write the last term as \(-\tfrac12\sigma^{-2}\sum(y_i-\mu)^2\); its derivative is \(-\tfrac12(-2)\sigma^{-3}\sum(y_i-\mu)^2\).</p>
+        \[ \frac{\partial\ln L}{\partial\sigma}=-\frac n\sigma+\frac{1}{\sigma^3}\sum_{i=1}^n(y_i-\mu)^2 \]</div></li>
+      <li><div><p><b>Set to 0 with μ̂ = ȳ substituted, and solve.</b></p>
+        \[ -\frac{n}{\hat\sigma}+\frac{1}{\hat\sigma^3}\sum_{i=1}^n(y_i-\bar y)^2=0\quad\Longrightarrow\quad\frac{n}{\hat\sigma}=\frac{1}{\hat\sigma^3}\sum_{i=1}^n(y_i-\bar y)^2 \]
+        <p>Multiply both sides by \(\hat\sigma^3\), divide by \(n\), take the positive root:</p>
+        \[ n\hat\sigma^2=\sum_{i=1}^n(y_i-\bar y)^2\quad\Longrightarrow\quad\class{dv}{\hat\sigma=\sqrt{\frac1n\sum_{i=1}^n(y_i-\bar y)^2}} \]</div></li>
+      <li><div><p><b>Why this is a maximum.</b> Fix \(\mu=\bar y\) and let \(S=\sum(y_i-\bar y)^2\gt0\). As \(\sigma\to0^+\), the term \(-S/(2\sigma^2)\to-\infty\). As \(\sigma\to\infty\), \(-n\ln\sigma\to-\infty\). A function that goes to \(-\infty\) at both ends with one critical point must peak there. Live figure B4 shows exactly this shape.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><p>\(\class{dv}{\hat\sigma=\sqrt{\tfrac1n\sum_{i=1}^n(Y_i-\bar Y)^2}}\). The divisor is \(n\), not \(n-1\).</p></div>
+  </div>
+
+  <figure class="lab" id="labSig">
+    <div class="lab-head"><span class="tag">Live figure B4</span><h3>The log-likelihood in σ, with μ set to ȳ</h3>
+      <p>The curve falls off steeply toward σ = 0 and slowly toward large σ, with one peak at \(\hat\sigma\). The dashed marker is the usual sample standard deviation \(s\), which divides by \(n-1\) and always sits a little to the right.</p></div>
+    <canvas id="cvSig" aria-label="Log-likelihood as a function of sigma"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="b_sigma">True σ <output id="o_sigma">1.50</output></label><input type="range" id="b_sigma" min="0.5" max="3" step="0.05" value="1.5"></div>
+      <div class="ctl"><label for="b_n">Sample size n <output id="o_bn">5</output></label><input type="range" id="b_n" min="2" max="100" step="1" value="5"></div>
+      <div class="btnrow"><button id="b_new" class="primary">New sample</button></div>
+    </div>
+    <div class="readout" id="r_sig"></div>
+  </figure>
+
+  <figure class="lab" id="labSigSamp">
+    <div class="lab-head"><span class="tag">Live figure B5</span><h3>The MLE of σ is biased low</h3>
+      <p>This goes past the question, but it's a common exam trap. Invariance keeps the "maximum likelihood" property, not unbiasedness. With small \(n\), the running mean of \(\hat\sigma\) lands visibly below the true σ. Try n = 2, then n = 50.</p></div>
+    <canvas id="cvSigSamp" aria-label="Sampling distribution of sigma hat"></canvas>
+    <div class="btnrow"><button id="b_run" class="primary">Run 2,000 samples</button><button id="b_clear">Clear</button></div>
+    <div class="readout" id="r_sigsamp"></div>
+  </figure>
+</section>
+
+<div class="chapter" data-hue="test">Hypothesis testing</div>
+<!-- ================= 10.5 ================= -->
+<section class="ex" id="ex105" data-hue="test" data-problem>
+  <div class="ex-head"><span class="ex-num">10.5</span><h2>Matching α for two tests on uniform data</h2></div>
+
+  <div class="problem">
+    <span class="tag">Problem</span>
+    <p>\(Y_1\) and \(Y_2\) are independent and uniform on \((\theta,\theta+1)\). To test \(H_0:\theta=0\) against \(H_a:\theta\gt0\), Test 1 rejects when \(Y_1\gt0.95\) and Test 2 rejects when \(Y_1+Y_2\gt c\). Find \(c\) so that Test 2 has the same α as Test 1. (Hint: Example 6.3 gives the distribution of the sum of two independent uniform(0,1) variables.)</p>
+  </div>
+
+  <div class="tools">
+    <span class="tag">From the textbook</span>
+    <dl>
+      <dt>Type I error probability (Section 10.2)</dt>
+      <dd>\(\class{tb}{\alpha=P(\text{reject }H_0\mid H_0\text{ is true})}\)</dd>
+      <dt>Uniform distribution (Section 4.4)</dt>
+      <dd>If \(Y\sim U(a,b)\), then \(\class{tb}{P(Y\le y)=\dfrac{y-a}{b-a}}\) for \(a\le y\le b\).</dd>
+      <dt>Sum of two independent U(0,1) variables (Example 6.3)</dt>
+      <dd>\(\class{tb}{F_U(u)=\begin{cases}0,&u\lt0\\ u^2/2,&0\le u\le1\\ 1-(2-u)^2/2,&1\lt u\le2\\ 1,&u\gt2\end{cases}}\)</dd>
+    </dl>
+  </div>
+
+  <div class="qf"><b>Quant finance</b><span>Matching the Type-I error rate between two different test statistics is exactly what you do when comparing two VaR-breach backtests (e.g. Kupiec's POF test vs. a conditional-coverage test) or two trading-signal screens — they need to be calibrated to the same false-positive rate before their power can be compared.</span></div>
+
+  <div class="part walk">
+    <div class="part-title"><h3>Solution</h3>
+      <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
+    </div>
+    <ol class="steps">
+      <li><div><p><b>State what H₀ means for the data.</b> α is computed assuming \(H_0\) is true, so set \(\theta=0\): \(Y_1,Y_2\) are independent \(U(0,1)\).</p></div></li>
+      <li><div><p><b>α for Test 1.</b> <span class="src">Uniform CDF</span></p>
+        \[ \alpha_1=P(Y_1\gt0.95\mid\theta=0)=1-P(Y_1\le0.95)=1-\frac{0.95-0}{1-0}=\class{dv}{0.05} \]</div></li>
+      <li><div><p><b>Where the CDF of U = Y₁ + Y₂ comes from.</b> \((Y_1,Y_2)\) is uniform on the unit square, so \(P(U\le u)\) is the area of the square below the line \(y_1+y_2=u\).</p>
+        <p>For \(0\le u\le1\) that region is a triangle with legs \(u\): area \(\tfrac12u\cdot u=u^2/2\).</p>
+        <p>For \(1\lt u\le2\) the region missing is a triangle in the top-right corner with legs \(2-u\): area \(1-\tfrac12(2-u)^2\).</p>
+        <p class="why">This matches Example 6.3. Differentiating gives the triangular density \(f_U(u)=u\) on \([0,1]\) and \(2-u\) on \((1,2]\), drawn in Live figure B6.</p></div></li>
+      <li><div><p><b>Write α for Test 2 and set it equal to α₁.</b></p>
+        \[ \alpha_2=P(U\gt c\mid\theta=0)=1-F_U(c)=0.05\quad\Longrightarrow\quad F_U(c)=0.95 \]</div></li>
+      <li><div><p><b>Decide which piece of the CDF to use.</b> \(F_U(1)=1^2/2=0.50\lt0.95\), so \(c\) must lie in \((1,2]\).</p></div></li>
+      <li><div><p><b>Solve.</b></p>
+        \[ 1-\frac{(2-c)^2}{2}=0.95 \]
+        <p>Subtract 1 from both sides and multiply by −1:</p>
+        \[ \frac{(2-c)^2}{2}=0.05 \]
+        <p>Multiply both sides by 2:</p>
+        \[ (2-c)^2=0.10 \]
+        <p>Take square roots. \(2-c=\pm\sqrt{0.10}\), and we keep the positive root because \(c\lt2\):</p>
+        \[ 2-c=\sqrt{0.10}=0.316228\quad\Longrightarrow\quad \class{dv}{c=2-\sqrt{0.10}\approx1.6838} \]</div></li>
+      <li><div><p><b>Check by plugging back in.</b></p>
+        \[ \alpha_2=\frac{(2-1.683772)^2}{2}=\frac{(0.316228)^2}{2}=\frac{0.100000}{2}=0.05\ \checkmark \]</div></li>
+    </ol>
+    <div class="answer"><span class="tag">Answer</span><p>\(\class{dv}{c=2-\sqrt{0.10}\approx1.684}\). Both tests then have \(\alpha=0.05\).</p></div>
+  </div>
+
+  <figure class="lab" id="labTest">
+    <div class="lab-head"><span class="tag">Live figure B6</span><h3>Slide c until the red areas match</h3>
+      <p>Left: the density of \(Y_1\) under \(H_0\), with Test 1's rejection region. Right: the triangular density of \(Y_1+Y_2\), with Test 2's rejection region beyond \(c\). The shaded area on the right is \((2-c)^2/2\).</p></div>
+    <canvas id="cvTest" class="tall" aria-label="Rejection regions for test 1 and test 2"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="c_c">Cutoff c <output id="o_c">1.40</output></label><input type="range" id="c_c" min="1" max="2" step="0.001" value="1.4"></div>
+      <div class="btnrow"><button id="c_solve" class="primary">Animate to the answer</button></div>
+    </div>
+    <div class="readout" id="r_test"></div>
+  </figure>
+
+  
+  <figure class="lab" id="labSquare"><div class="lab-head"><span class="tag">Live figure B7</span><h3>Both rejection regions on the sample square</h3>
+    <p>Each dot is one pair \((Y_1,Y_2)\), uniform on the square \((\theta,\theta+1)^2\). Test 1 rejects in the ochre strip \(y_1\gt0.95\); Test 2 rejects above the teal line \(y_1+y_2=c\). At θ = 0 both regions cover 5% of the square, which is α. Slide θ up and the square moves into both regions: the fraction of dots rejected is the power.</p></div>
+    <canvas id="cvSquare" class="square" aria-label="Unit square with both tests' rejection regions and simulated sample points"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="sq_theta">True θ <output id="o_sqt">0.00</output></label><input type="range" id="sq_theta" min="0" max="1" step="0.01" value="0"></div>
+      <div class="btnrow"><button id="sq_run" class="primary">Simulate 2,000 pairs</button><button id="sq_clear">Clear</button></div>
+    </div>
+    <div class="readout" id="r_sq"></div>
+  </figure>
+
+  <figure class="lab" id="labPow">
+    <div class="lab-head"><span class="tag">Live figure B8</span><h3>Same α, different power</h3>
+      <p>Beyond the question: once both tests have α = 0.05, which one is better? Power is \(P(\text{reject }H_0)\) as a function of the true θ. Test 1 is slightly more powerful for θ below about 0.18. Above that Test 2 wins, because it uses both observations, and it reaches power 1 at θ = c/2 ≈ 0.842, before Test 1 gets there at θ = 0.95. Drag θ to compare.</p></div>
+    <canvas id="cvPow" aria-label="Power curves for both tests"></canvas>
+    <div class="controls">
+      <div class="ctl"><label for="d_theta">True θ <output id="o_dt">0.20</output></label><input type="range" id="d_theta" min="0" max="1.1" step="0.01" value="0.2"></div>
+    </div>
+    <div class="readout" id="r_pow"></div>
+    <p class="takeaway">Power formulas used: Test 1, \(P(Y_1\gt0.95)=\min(1,\theta+0.05)\). Test 2, \(Y_1+Y_2-2\theta\) has the same triangular law as above, so power \(=1-F_U(c-2\theta)\).</p>
+  </figure>
+</section>
+
+
+
+
+<div class="part-banner" id="partC" data-hue="shadow"><span class="pb-letter">C</span><div><div class="eyebrow">M447 / M577 Homework 7 · Hillier and Lieberman, Section 4.7</div><h2>Operations research: shadow prices and sensitivity</h2><p>Five linear programs. Read off which constraints bind, price each resource by how much one more unit raises the optimum, and find how far the objective can tilt before the optimal corner changes.</p></div></div>
+
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+<script>
+
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 3) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+
+  /* ---------- step-through controls ---------- */
+  document.querySelectorAll('.walk').forEach(box => {
+    const steps = [...box.querySelectorAll('ol.steps > li')];
+    const bar = box.querySelector('.walkbar');
+    const pos = bar.querySelector('.pos');
+    const next = bar.querySelector('[data-a=next]');
+    let i = -1;
+    const render = () => {
+      steps.forEach((s, k) => { s.classList.toggle('dim', i >= 0 && k !== i); s.classList.toggle('cur', k === i); });
+      pos.textContent = i < 0 ? steps.length + ' steps' : 'Step ' + (i + 1) + ' of ' + steps.length;
+      next.textContent = i < 0 ? 'Step through' : (i === steps.length - 1 ? 'Done' : 'Next');
+      if (i >= 0) steps[i].scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    };
+    next.addEventListener('click', () => { i = (i === steps.length - 1) ? -1 : i + 1; render(); });
+    bar.querySelector('[data-a=prev]').addEventListener('click', () => { i = Math.max(-1, i - 1); render(); });
+    bar.querySelector('[data-a=all]').addEventListener('click', () => { i = -1; render(); });
+    render();
+  });
+
+  /* ---------- canvas helpers ---------- */
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1;
+    const w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function frame(ctx, box, xr, yr, opts) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11.5px ' + tok('--f-mono');
+    ctx.lineWidth = 1;
+    // grid + ticks
+    (opts.yt || []).forEach(t => {
+      ctx.strokeStyle = rule; ctx.globalAlpha = 0.6;
+      ctx.beginPath(); ctx.moveTo(x0, Y(t)); ctx.lineTo(x1, Y(t)); ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(opts.yf ? opts.yf(t) : t, x0 - 6, Y(t));
+    });
+    (opts.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(opts.xf ? opts.xf(t) : t, X(t), y1 + 6);
+      ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(X(t), y1); ctx.lineTo(X(t), y1 + 4); ctx.stroke();
+    });
+    ctx.strokeStyle = muted;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (opts.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(opts.xl, x1, y1 - 4); }
+    if (opts.yl) { ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(opts.yl, x0 + 6, y0); }
+    return { X, Y };
+  }
+  function vline(ctx, X, Y, x, yr, color, dash, label, labelSide) {
+    ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(X(x), Y(yr[0])); ctx.lineTo(X(x), Y(yr[1])); ctx.stroke(); ctx.restore();
+    if (label) {
+      ctx.fillStyle = color; ctx.font = '600 12px ' + tok('--f-mono');
+      ctx.textAlign = labelSide === 'left' ? 'right' : 'left'; ctx.textBaseline = 'top';
+      ctx.fillText(label, X(x) + (labelSide === 'left' ? -5 : 5), Y(yr[1]) + 2);
+    }
+  }
+  function niceTicks(a, b, n) {
+    const span = b - a, raw = span / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw) || raw;
+    const out = []; for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) out.push(+t.toFixed(10));
+    return out;
+  }
+  const expo = () => -Math.log(1 - Math.random());
+  const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  function tween(from, to, ms, onStep) {
+    if (reduce || ms <= 0) { onStep(to, 1); return; }
+    const t0 = performance.now();
+    const go = now => { const p = Math.min(1, (now - t0) / ms); const e = 1 - Math.pow(1 - p, 3); onStep(from + (to - from) * e, p); if (p < 1) requestAnimationFrame(go); };
+    requestAnimationFrame(go);
+  }
+
+  /* ============ 9.82: likelihood explorer ============ */
+  const A = { theta: 2, r: 1.5, n: 10, ys: [], u: 0, curve: null, prev: null, mix: 1 };
+  function drawSample() {
+    A.ys = Array.from({ length: A.n }, () => Math.pow(A.theta * expo(), 1 / A.r));
+    A.u = A.ys.reduce((s, y) => s + Math.pow(y, A.r), 0);
+  }
+  const LIK_PTS = 220;
+  function likCurve() {
+    const that = A.u / A.n, xmax = Math.max(3 * A.theta, 2 * that, 1);
+    const xs = [], ys = [];
+    const lmax = -A.n * Math.log(that) - A.n;
+    for (let k = 0; k < LIK_PTS; k++) {
+      const t = 0.005 * xmax + (k / (LIK_PTS - 1)) * 0.995 * xmax;
+      xs.push(t); ys.push(Math.exp(-A.n * Math.log(t) - A.u / t - lmax));
+    }
+    return { xs, ys, xmax, that };
+  }
+  function renderLik() {
+    const cv = $('cvLik'); const { ctx, w, h } = prep(cv);
+    const c = A.curve; if (!c) return;
+    const xmax = c.xmax;
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, xmax], [0, 1.08], { xt: niceTicks(0, xmax, 6), yt: [0, 0.25, 0.5, 0.75, 1], xl: 'θ', yl: 'L(θ) / L(θ̂)' });
+    // interpolate with previous curve
+    const ys = c.ys.map((y, k) => A.prev && A.mix < 1 ? A.prev.ys[k] * (1 - A.mix) + y * A.mix : y);
+    ctx.beginPath(); ctx.moveTo(X(c.xs[0]), Y(0));
+    c.xs.forEach((x, k) => ctx.lineTo(X(x), Y(ys[k])));
+    ctx.lineTo(X(c.xs[c.xs.length - 1]), Y(0)); ctx.closePath();
+    ctx.fillStyle = tok('--dv-bg'); ctx.fill();
+    ctx.beginPath(); c.xs.forEach((x, k) => k ? ctx.lineTo(X(x), Y(ys[k])) : ctx.moveTo(X(x), Y(ys[k])));
+    ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2.2; ctx.stroke();
+    const thatShown = A.prev && A.mix < 1 ? A.prev.that * (1 - A.mix) + c.that * A.mix : c.that;
+    const sideHat = thatShown > A.theta ? 'right' : 'left';
+    vline(ctx, X, Y, A.theta, [0, 1.06], tok('--muted'), [5, 4], 'true θ', sideHat === 'right' ? 'left' : 'right');
+    vline(ctx, X, Y, thatShown, [0, 1.06], tok('--dv'), [], 'θ̂ = u/n', sideHat);
+    ctx.beginPath(); ctx.arc(X(thatShown), Y(1), 4.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill();
+  }
+  function updateLik(animate) {
+    const next = likCurve();
+    if (animate && A.curve && next.xmax === A.curve.xmax) {
+      A.prev = A.curve; A.curve = next; A.mix = 0;
+      tween(0, 1, 450, v => { A.mix = v; renderLik(); });
+    } else { A.prev = null; A.curve = next; A.mix = 1; renderLik(); }
+    $('r_lik').innerHTML =
+      `<span><span class="k">u = Σyᵢʳ</span> <b class="v-hl">${fmt(A.u)}</b></span>` +
+      `<span><span class="k">θ̂ = u/n</span> <b class="v-dv">${fmt(next.that)}</b></span>` +
+      `<span><span class="k">true θ</span> <b>${fmt(A.theta, 2)}</b></span>` +
+      `<span><span class="k">error</span> <b>${fmt(next.that - A.theta)}</b></span>`;
+  }
+  function newLik() { drawSample(); updateLik(true); }
+  $('a_theta').addEventListener('input', e => { A.theta = +e.target.value; $('o_theta').textContent = A.theta.toFixed(2); A.prev = null; newLik(); resetSamp(); });
+  $('a_r').addEventListener('input', e => { A.r = +e.target.value; $('o_r').textContent = A.r.toFixed(2); newLik(); resetSamp(); });
+  $('a_n').addEventListener('input', e => { A.n = +e.target.value; $('o_n').textContent = A.n; newLik(); resetSamp(); });
+  $('a_new').addEventListener('click', newLik);
+
+  /* sampling histogram for theta-hat */
+  const S = { vals: [], running: false, target: 2000 };
+  function oneThetaHat() { let u = 0; for (let i = 0; i < A.n; i++) u += A.theta * expo(); return u / A.n; } // Y^r ~ Exp(mean θ)
+  function renderSamp() {
+    const cv = $('cvSamp'); const { ctx, w, h } = prep(cv);
+    const lo = 0, hi = A.theta * (A.n < 6 ? 3.2 : 2.4), bins = 40, bw = (hi - lo) / bins;
+    const counts = new Array(bins).fill(0);
+    S.vals.forEach(v => { const b = Math.floor((v - lo) / bw); if (b >= 0 && b < bins) counts[b]++; });
+    const cmax = Math.max(5, ...counts);
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [lo, hi], [0, cmax * 1.12], { xt: niceTicks(lo, hi, 6), yt: niceTicks(0, cmax, 4), xl: 'θ̂', yl: 'count' });
+    ctx.fillStyle = tok('--hl'); ctx.globalAlpha = 0.55;
+    counts.forEach((c, b) => { if (c) ctx.fillRect(X(lo + b * bw) + 0.5, Y(c), Math.max(1, X(lo + (b + 1) * bw) - X(lo + b * bw) - 1), Y(0) - Y(c)); });
+    ctx.globalAlpha = 1;
+    vline(ctx, X, Y, A.theta, [0, cmax * 1.1], tok('--muted'), [5, 4], 'true θ', 'right');
+    if (S.vals.length) {
+      const m = S.vals.reduce((a, b) => a + b, 0) / S.vals.length;
+      vline(ctx, X, Y, m, [0, cmax * 1.1], tok('--dv'), [], 'mean of θ̂', m > A.theta ? 'right' : 'left');
+      const sd = Math.sqrt(S.vals.reduce((a, v) => a + (v - m) ** 2, 0) / Math.max(1, S.vals.length - 1));
+      $('r_samp').innerHTML =
+        `<span><span class="k">samples</span> <b>${S.vals.length}</b></span>` +
+        `<span><span class="k">mean θ̂</span> <b class="v-dv">${fmt(m)}</b></span>` +
+        `<span><span class="k">true θ</span> <b>${fmt(A.theta, 2)}</b></span>` +
+        `<span><span class="k">sd θ̂</span> <b>${fmt(sd)}</b></span>` +
+        `<span><span class="k">theory θ/√n</span> <b class="v-hl">${fmt(A.theta / Math.sqrt(A.n))}</b></span>`;
+    } else {
+      $('r_samp').innerHTML = `<span class="k">Press Run to start. Uses θ = ${A.theta.toFixed(2)}, r = ${A.r.toFixed(2)}, n = ${A.n} from figure 1.</span>`;
+    }
+  }
+  function runSamp() {
+    if (S.running) return;
+    S.vals = []; S.running = true;
+    const per = reduce ? S.target : 30;
+    const step = () => { for (let k = 0; k < per && S.vals.length < S.target; k++) S.vals.push(oneThetaHat()); renderSamp(); if (S.vals.length < S.target) requestAnimationFrame(step); else S.running = false; };
+    step();
+  }
+  function resetSamp() { if (!S.running) { S.vals = []; renderSamp(); } }
+  $('a_run').addEventListener('click', runSamp);
+  $('a_clear').addEventListener('click', () => { S.running = false; S.vals = []; renderSamp(); });
+
+  /* ============ 9.96: sigma ============ */
+  const B = { sigma: 1.5, n: 5, mu: 0, ys: [], S: 0, vals: [], running: false };
+  function sampleB() {
+    B.ys = Array.from({ length: B.n }, () => B.mu + B.sigma * gauss());
+    const m = B.ys.reduce((a, b) => a + b, 0) / B.n;
+    B.S = B.ys.reduce((a, y) => a + (y - m) ** 2, 0);
+  }
+  function renderSig() {
+    const cv = $('cvSig'); const { ctx, w, h } = prep(cv);
+    const sh = Math.sqrt(B.S / B.n), s = Math.sqrt(B.S / (B.n - 1));
+    const xmax = Math.max(3 * B.sigma, 2.2 * s), xmin = 0.04 * xmax;
+    const ll = x => -B.n * Math.log(x) - B.S / (2 * x * x);
+    const lmax = ll(sh), floor = -8;
+    const pts = []; for (let k = 0; k <= 260; k++) { const x = xmin + (k / 260) * (xmax - xmin); pts.push([x, Math.max(floor - 1, ll(x) - lmax)]); }
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, xmax], [floor, 0.9], { xt: niceTicks(0, xmax, 6), yt: [-8, -6, -4, -2, 0], xl: 'σ', yl: 'ln L − max' });
+    ctx.save(); ctx.beginPath(); ctx.rect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.clip();
+    ctx.beginPath(); pts.forEach(([x, y], k) => k ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y)));
+    ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2.2; ctx.stroke(); ctx.restore();
+    vline(ctx, X, Y, B.sigma, [floor, 0.85], tok('--muted'), [2, 3], '', '');
+    vline(ctx, X, Y, s, [floor, 0.85], tok('--hl'), [6, 4], 's', 'right');
+    vline(ctx, X, Y, sh, [floor, 0.85], tok('--dv'), [], 'σ̂', 'left');
+    ctx.beginPath(); ctx.arc(X(sh), Y(0), 4.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill();
+    $('r_sig').innerHTML =
+      `<span><span class="k">Σ(yᵢ−ȳ)²</span> <b>${fmt(B.S)}</b></span>` +
+      `<span><span class="k">σ̂ (÷n)</span> <b class="v-dv">${fmt(sh)}</b></span>` +
+      `<span><span class="k">s (÷(n−1))</span> <b class="v-hl">${fmt(s)}</b></span>` +
+      `<span><span class="k">true σ</span> <b>${fmt(B.sigma, 2)}</b> <span class="k">(dotted)</span></span>`;
+  }
+  $('b_sigma').addEventListener('input', e => { B.sigma = +e.target.value; $('o_sigma').textContent = B.sigma.toFixed(2); sampleB(); renderSig(); resetSig(); });
+  $('b_n').addEventListener('input', e => { B.n = +e.target.value; $('o_bn').textContent = B.n; sampleB(); renderSig(); resetSig(); });
+  $('b_new').addEventListener('click', () => { sampleB(); renderSig(); });
+
+  function oneSigHat() { let m = 0; const ys = []; for (let i = 0; i < B.n; i++) { const y = B.sigma * gauss(); ys.push(y); m += y; } m /= B.n; let s2 = 0; ys.forEach(y => s2 += (y - m) ** 2); return Math.sqrt(s2 / B.n); }
+  function renderSigSamp() {
+    const cv = $('cvSigSamp'); const { ctx, w, h } = prep(cv);
+    const hi = B.sigma * 2.4, bins = 40, bw = hi / bins, counts = new Array(bins).fill(0);
+    B.vals.forEach(v => { const b = Math.floor(v / bw); if (b >= 0 && b < bins) counts[b]++; });
+    const cmax = Math.max(5, ...counts);
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, hi], [0, cmax * 1.12], { xt: niceTicks(0, hi, 6), yt: niceTicks(0, cmax, 4), xl: 'σ̂', yl: 'count' });
+    ctx.fillStyle = tok('--hl'); ctx.globalAlpha = 0.55;
+    counts.forEach((c, b) => { if (c) ctx.fillRect(X(b * bw) + 0.5, Y(c), Math.max(1, X((b + 1) * bw) - X(b * bw) - 1), Y(0) - Y(c)); });
+    ctx.globalAlpha = 1;
+    vline(ctx, X, Y, B.sigma, [0, cmax * 1.1], tok('--muted'), [5, 4], 'true σ', 'right');
+    if (B.vals.length) {
+      const m = B.vals.reduce((a, b) => a + b, 0) / B.vals.length;
+      vline(ctx, X, Y, m, [0, cmax * 1.1], tok('--rej'), [], 'mean σ̂', 'left');
+      $('r_sigsamp').innerHTML =
+        `<span><span class="k">samples</span> <b>${B.vals.length}</b></span>` +
+        `<span><span class="k">mean σ̂</span> <b class="v-rej">${fmt(m)}</b></span>` +
+        `<span><span class="k">true σ</span> <b>${fmt(B.sigma, 2)}</b></span>` +
+        `<span><span class="k">bias</span> <b class="v-rej">${fmt(m - B.sigma)}</b> <span class="k">(${fmt(100 * (m - B.sigma) / B.sigma, 1)}%)</span></span>`;
+    } else {
+      $('r_sigsamp').innerHTML = `<span class="k">Press Run to start. Uses σ = ${B.sigma.toFixed(2)}, n = ${B.n} from figure 3.</span>`;
+    }
+  }
+  function resetSig() { if (!B.running) { B.vals = []; renderSigSamp(); } }
+  $('b_run').addEventListener('click', () => {
+    if (B.running) return; B.vals = []; B.running = true;
+    const per = reduce ? 2000 : 30;
+    const step = () => { for (let k = 0; k < per && B.vals.length < 2000; k++) B.vals.push(oneSigHat()); renderSigSamp(); if (B.vals.length < 2000) requestAnimationFrame(step); else B.running = false; };
+    step();
+  });
+  $('b_clear').addEventListener('click', () => { B.running = false; B.vals = []; renderSigSamp(); });
+
+  /* ============ 10.5: tests ============ */
+  const CSTAR = 2 - Math.sqrt(0.1);
+  const C = { c: 1.4 };
+  const FU = u => u < 0 ? 0 : u <= 1 ? u * u / 2 : u <= 2 ? 1 - (2 - u) ** 2 / 2 : 1;
+  function renderTest() {
+    const cv = $('cvTest'); const { ctx, w, h } = prep(cv);
+    const gap = 28, split = w < 520 ? 0.38 : 0.36;
+    const leftW = (w - 40 - gap) * split;
+    const b1 = { x0: 40, y0: 30, x1: 40 + leftW, y1: h - 34 };
+    const b2 = { x0: b1.x1 + gap + 10, y0: 30, x1: w - 12, y1: h - 34 };
+    const rej = tok('--rej'), rejbg = tok('--rej-bg'), ink = tok('--ink'), dv = tok('--dv');
+    // Test 1: uniform density
+    const f1 = frame(ctx, b1, [0, 1.15], [0, 1.25], { xt: [0, 0.5, 0.95], yt: [0, 0.5, 1], xf: t => t === 0.95 ? '.95' : t, yl: 'f(y₁)' });
+    ctx.fillStyle = rejbg; ctx.fillRect(f1.X(0.95), f1.Y(1), f1.X(1) - f1.X(0.95), f1.Y(0) - f1.Y(1));
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(f1.X(0), f1.Y(0)); ctx.lineTo(f1.X(0), f1.Y(1)); ctx.lineTo(f1.X(1), f1.Y(1)); ctx.lineTo(f1.X(1), f1.Y(0)); ctx.stroke();
+    ctx.strokeStyle = rej; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(f1.X(0.95), f1.Y(0)); ctx.lineTo(f1.X(0.95), f1.Y(1)); ctx.stroke();
+    ctx.font = '600 12.5px ' + tok('--f-body'); ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('Test 1: reject if Y₁ > 0.95', b1.x0, b1.y0 - 10);
+    ctx.font = '600 12px ' + tok('--f-mono'); ctx.fillStyle = rej; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+    ctx.fillText('α₁ = 0.050', b1.x1, f1.Y(1) - 6);
+    // Test 2: triangle
+    const f2 = frame(ctx, b2, [0, 2.08], [0, 1.25], { xt: [0, 0.5, 1, 1.5, 2], yt: [0, 0.5, 1], yl: 'f(u)' });
+    const c = C.c, a2 = (2 - c) ** 2 / 2;
+    ctx.beginPath(); ctx.moveTo(f2.X(c), f2.Y(0)); ctx.lineTo(f2.X(c), f2.Y(2 - c)); ctx.lineTo(f2.X(2), f2.Y(0)); ctx.closePath();
+    ctx.fillStyle = rejbg; ctx.fill();
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(f2.X(0), f2.Y(0)); ctx.lineTo(f2.X(1), f2.Y(1)); ctx.lineTo(f2.X(2), f2.Y(0)); ctx.stroke();
+    ctx.strokeStyle = rej; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(f2.X(c), f2.Y(0)); ctx.lineTo(f2.X(c), f2.Y(Math.max(1.1, 2 - c + 0.15))); ctx.stroke();
+    ctx.fillStyle = rej; ctx.font = '600 12px ' + tok('--f-mono'); ctx.textAlign = c > 1.55 ? 'right' : 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('c = ' + c.toFixed(3), f2.X(c) + (c > 1.55 ? -5 : 5), f2.Y(1.2));
+    ctx.font = '600 12.5px ' + tok('--f-body'); ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+    ctx.fillText('Test 2: reject if Y₁ + Y₂ > c', b2.x0, b2.y0 - 10);
+    const matched = Math.abs(c - CSTAR) < 0.0015;
+    ctx.font = '600 12px ' + tok('--f-mono'); ctx.fillStyle = matched ? dv : rej; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+    ctx.fillText('α₂ = ' + a2.toFixed(3) + (matched ? '  ✓ matches' : ''), b2.x1, f2.Y(1) - 6);
+    $('r_test').innerHTML =
+      `<span><span class="k">α₂ = (2−c)²/2</span> <b class="${matched ? 'v-dv' : 'v-rej'}">${fmt(a2, 4)}</b></span>` +
+      `<span><span class="k">target α₁</span> <b>0.0500</b></span>` +
+      `<span><span class="k">F_U(c)</span> <b>${fmt(FU(c), 4)}</b></span>` +
+      `<span><span class="k">answer c</span> <b class="v-dv">${fmt(CSTAR, 4)}</b></span>`;
+  }
+  function setC(v) { C.c = v; $('c_c').value = v; $('o_c').textContent = v.toFixed(3); renderTest(); }
+  $('c_c').addEventListener('input', e => setC(+e.target.value));
+  $('c_solve').addEventListener('click', () => {
+    const start = Math.abs(C.c - CSTAR) < 0.002 ? 1.0 : C.c;
+    if (start === 1.0) setC(1.0);
+    tween(start, CSTAR, 1400, v => setC(v));
+  });
+
+  /* power curves */
+  const D = { theta: 0.2 };
+  const pow1 = t => Math.min(1, Math.max(0, t + 0.05));
+  const pow2 = t => 1 - FU(CSTAR - 2 * t);
+  function renderPow() {
+    const cv = $('cvPow'); const { ctx, w, h } = prep(cv);
+    const box = { x0: 44, y0: 14, x1: w - 14, y1: h - 30 };
+    const { X, Y } = frame(ctx, box, [0, 1.1], [0, 1.08], { xt: [0, 0.2, 0.4, 0.6, 0.8, 1], yt: [0, 0.25, 0.5, 0.75, 1], xl: 'true θ', yl: 'power' });
+    const line = (fn, color, width, dash) => { ctx.save(); ctx.beginPath(); for (let k = 0; k <= 220; k++) { const t = 1.1 * k / 220; const y = fn(t); k ? ctx.lineTo(X(t), Y(y)) : ctx.moveTo(X(t), Y(y)); } ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.stroke(); ctx.restore(); };
+    ctx.save(); ctx.setLineDash([3, 4]); ctx.strokeStyle = tok('--rej'); ctx.beginPath(); ctx.moveTo(X(0), Y(0.05)); ctx.lineTo(X(1.1), Y(0.05)); ctx.stroke(); ctx.restore();
+    ctx.fillStyle = tok('--rej'); ctx.font = '11.5px ' + tok('--f-mono'); ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText('α = 0.05', X(1.1), Y(0.05) - 3);
+    line(pow1, tok('--tb'), 2.2, [7, 4]);
+    line(pow2, tok('--dv'), 2.4);
+    vline(ctx, X, Y, D.theta, [0, 1.05], tok('--muted'), [2, 3], '', '');
+    [[pow1, tok('--tb')], [pow2, tok('--dv')]].forEach(([fn, col]) => { ctx.beginPath(); ctx.arc(X(D.theta), Y(fn(D.theta)), 4.5, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); });
+    // legend
+    ctx.font = '600 12px ' + tok('--f-body'); ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+    const lx = box.x0 + 14, ly = box.y0 + 26;
+    ctx.strokeStyle = tok('--dv'); ctx.lineWidth = 2.4; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx + 22, ly); ctx.stroke();
+    ctx.fillStyle = tok('--ink'); ctx.fillText('Test 2 (Y₁+Y₂ > 1.684)', lx + 28, ly);
+    ctx.strokeStyle = tok('--tb'); ctx.lineWidth = 2.2; ctx.setLineDash([7, 4]); ctx.beginPath(); ctx.moveTo(lx, ly + 18); ctx.lineTo(lx + 22, ly + 18); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillText('Test 1 (Y₁ > 0.95)', lx + 28, ly + 18);
+    const p1 = pow1(D.theta), p2 = pow2(D.theta);
+    $('r_pow').innerHTML =
+      `<span><span class="k">θ</span> <b>${fmt(D.theta, 2)}</b></span>` +
+      `<span><span class="k">power, Test 1</span> <b style="color:var(--tb)">${fmt(p1)}</b></span>` +
+      `<span><span class="k">power, Test 2</span> <b class="v-dv">${fmt(p2)}</b></span>` +
+      `<span><span class="k">better</span> <b>${Math.abs(p1 - p2) < 0.0005 ? 'tie' : (p2 > p1 ? 'Test 2' : 'Test 1')}</b></span>`;
+  }
+  $('d_theta').addEventListener('input', e => { D.theta = +e.target.value; $('o_dt').textContent = D.theta.toFixed(2); renderPow(); });
+
+  /* ---------- boot + redraw on resize/theme ---------- */
+  drawSample(); A.curve = likCurve();
+  sampleB();
+  function renderAll() { renderLik(); updateLik(false); renderSamp(); renderSig(); renderSigSamp(); renderTest(); renderPow(); }
+  renderAll();
+  let rt; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(renderAll, 60); });
+  document.querySelectorAll('canvas').forEach(c => ro.observe(c));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+  new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderAll);
+})();
+
+</script>
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (x, d = 4) => (Number.isFinite(x) ? x.toFixed(d) : '—');
+  function prep(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    return { ctx, w, h };
+  }
+  function niceTicks(a, b, n) {
+    const raw = (b - a) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+    const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw) || raw;
+    const out = []; for (let t = Math.ceil(a / step) * step; t <= b + 1e-9; t += step) out.push(+t.toFixed(10)); return out;
+  }
+  function frame(ctx, box, xr, yr, o) {
+    const { x0, y0, x1, y1 } = box;
+    const X = x => x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0);
+    const Y = y => y1 - (y - yr[0]) / (yr[1] - yr[0]) * (y1 - y0);
+    const muted = tok('--muted'), rule = tok('--rule');
+    ctx.font = '11px ' + tok('--f-mono'); ctx.lineWidth = 1;
+    (o.yt || []).forEach(t => {
+      ctx.strokeStyle = rule; ctx.beginPath(); ctx.moveTo(x0, Y(t)); ctx.lineTo(x1, Y(t)); ctx.stroke();
+      ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText(o.yf ? o.yf(t) : String(t), x0 - 6, Y(t));
+    });
+    (o.xt || []).forEach(t => {
+      ctx.fillStyle = muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillText(o.xf ? o.xf(t) : String(t), X(t), y1 + 6);
+    });
+    ctx.strokeStyle = muted; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    if (o.xl) { ctx.fillStyle = muted; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillText(o.xl, x1, y1 - 4); }
+    if (o.yl) { ctx.fillStyle = muted; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.fillText(o.yl, x0 + 6, y0); }
+    return { X, Y };
+  }
+  const label = (ctx, t, x, y, c, a, b) => { ctx.fillStyle = c; ctx.font = '600 11.5px ' + tok('--f-mono'); ctx.textAlign = a || 'left'; ctx.textBaseline = b || 'top'; ctx.fillText(t, x, y); };
+
+  /* ============ 9.82 score equation ============ */
+  const SC = { n: 10, u: 45, probe: null };
+  function renderScore() {
+    const cv = $('cvScore'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const n = SC.n, u = SC.u, th = u / n, xmax = Math.max(3 * th, 2), xmin = 0.04 * xmax;
+    const ll = t => -n * Math.log(t) - u / t, lmax = ll(th);
+    const S = t => -n / t + u / (t * t);
+    const mid = h * 0.5;
+    const b1 = { x0: 52, y0: 14, x1: w - 14, y1: mid - 18 }, b2 = { x0: 52, y0: mid + 8, x1: w - 14, y1: h - 28 };
+    const xt = niceTicks(0, xmax, 6);
+    const f1 = frame(ctx, b1, [0, xmax], [-12, 1.2], { yt: [-12, -8, -4, 0], yl: 'ln L − max' });
+    const smax = 2.4 * n / th, smin = -0.6 * n / th;
+    const f2 = frame(ctx, b2, [0, xmax], [smin, smax], { xt, yt: [0], yf: () => '0', xl: 'θ', yl: 'score S(θ)' });
+    // score sign shading
+    ctx.fillStyle = tok('--hl-bg'); ctx.fillRect(f2.X(xmin), b2.y0, f2.X(th) - f2.X(xmin), f2.Y(0) - b2.y0);
+    ctx.fillStyle = tok('--rej-bg'); ctx.fillRect(f2.X(th), f2.Y(0), b2.x1 - f2.X(th), b2.y1 - f2.Y(0));
+    label(ctx, 'S > 0: L rising', f2.X(xmin) + 6, b2.y0 + 16, tok('--hl'));
+    label(ctx, 'S < 0: L falling', b2.x1 - 6, b2.y1 - 6, tok('--rej'), 'right', 'bottom');
+    const draw = (f, box, fn, lo, hi, col) => {
+      ctx.save(); ctx.beginPath(); ctx.rect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.clip();
+      ctx.beginPath(); for (let k = 0; k <= 300; k++) { const t = xmin + (k / 300) * (xmax - xmin); const v = Math.max(lo - 1, Math.min(hi + 1, fn(t))); k ? ctx.lineTo(f.X(t), f.Y(v)) : ctx.moveTo(f.X(t), f.Y(v)); }
+      ctx.strokeStyle = col; ctx.lineWidth = 2.3; ctx.stroke(); ctx.restore();
+    };
+    draw(f1, b1, t => ll(t) - lmax, -12, 1.2, tok('--dv'));
+    draw(f2, b2, S, smin, smax, tok('--ink'));
+    // MLE marker through both panels
+    ctx.save(); ctx.strokeStyle = tok('--dv'); ctx.setLineDash([4, 4]); ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(f1.X(th), b1.y0); ctx.lineTo(f1.X(th), b2.y1); ctx.stroke(); ctx.restore();
+    [[f1, 0], [f2, 0]].forEach(([f]) => { ctx.beginPath(); ctx.arc(f.X(th), f === f1 ? f1.Y(0) : f2.Y(0), 4.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--dv'); ctx.fill(); });
+    label(ctx, 'θ̂ = u/n', f1.X(th) + 6, b1.y0 + 2, tok('--dv'));
+    // probe
+    let probeHtml = '';
+    if (SC.probe != null && SC.probe > xmin && SC.probe < xmax) {
+      const t = SC.probe, s = S(t);
+      ctx.save(); ctx.strokeStyle = tok('--hl'); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(f1.X(t), b1.y0); ctx.lineTo(f1.X(t), b2.y1); ctx.stroke(); ctx.restore();
+      const yv = Math.max(-12, ll(t) - lmax); ctx.beginPath(); ctx.arc(f1.X(t), f1.Y(yv), 3.5, 0, 2 * Math.PI); ctx.fillStyle = tok('--hl'); ctx.fill();
+      const sv = Math.max(smin, Math.min(smax, s)); ctx.beginPath(); ctx.arc(f2.X(t), f2.Y(sv), 3.5, 0, 2 * Math.PI); ctx.fill();
+      probeHtml = `<span><span class="k">probe θ</span> <b class="v-hl">${fmt(t, 3)}</b></span><span><span class="k">S(θ)</span> <b class="${s > 0 ? 'v-hl' : 'v-rej'}">${fmt(s, 3)}</b> <span class="k">${s > 0 ? 'rising' : 'falling'}</span></span>`;
+    }
+    $('r_score').innerHTML = `<span><span class="k">θ̂ = u/n</span> <b class="v-dv">${fmt(th, 3)}</b></span>` +
+      `<span><span class="k">S(θ̂)</span> <b>0</b></span>` +
+      `<span><span class="k">second derivative −n/θ̂²</span> <b class="v-rej">${fmt(-n / (th * th), 3)}</b> <span class="k">&lt; 0, a maximum</span></span>` + probeHtml;
+  }
+  if ($('cvScore')) {
+    $('sc_n').addEventListener('input', e => { SC.n = +e.target.value; $('o_scn').textContent = SC.n; renderScore(); });
+    $('sc_u').addEventListener('input', e => { SC.u = +e.target.value; $('o_scu').textContent = SC.u; renderScore(); });
+    const cv = $('cvScore');
+    const probe = e => {
+      const r = cv.getBoundingClientRect(), x = e.clientX - r.left, x0 = 52, x1 = r.width - 14;
+      const th = SC.u / SC.n, xmax = Math.max(3 * th, 2);
+      SC.probe = (x - x0) / (x1 - x0) * xmax; renderScore();
+    };
+    cv.addEventListener('pointermove', probe);
+    cv.addEventListener('pointerdown', probe);
+    cv.addEventListener('pointerleave', () => { SC.probe = null; renderScore(); });
+  }
+
+  /* ============ 10.5 unit square ============ */
+  const C = 2 - Math.sqrt(0.1);
+  const FU = u => u < 0 ? 0 : u <= 1 ? u * u / 2 : u <= 2 ? 1 - (2 - u) ** 2 / 2 : 1;
+  const SQ = { theta: 0, pts: [], running: false };
+  function seed(n) { SQ.pts = []; for (let i = 0; i < n; i++) SQ.pts.push([SQ.theta + Math.random(), SQ.theta + Math.random()]); }
+  function renderSquare() {
+    const cv = $('cvSquare'); if (!cv) return;
+    const { ctx, w, h } = prep(cv);
+    const legendW = w > 560 ? 190 : 0;
+    const size = Math.min(w - legendW - 56, h - 40);
+    const box = { x0: 44, y0: 12, x1: 44 + size, y1: 12 + size };
+    const R = [0, 2.05];
+    const { X, Y } = frame(ctx, box, R, R, { xt: [0, 0.5, 1, 1.5, 2], yt: [0, 0.5, 1, 1.5, 2], xl: 'y₁', yl: 'y₂' });
+    ctx.save(); ctx.beginPath(); ctx.rect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.clip();
+    const tb = tok('--tb'), dv = tok('--dv');
+    // Test 1 region: y1 > 0.95
+    ctx.fillStyle = tb + '22'; ctx.fillRect(X(0.95), Y(R[1]), X(R[1]) - X(0.95), Y(0) - Y(R[1]));
+    // Test 2 region: y1 + y2 > c
+    ctx.beginPath(); ctx.moveTo(X(C), Y(0)); ctx.lineTo(X(R[1]), Y(0)); ctx.lineTo(X(R[1]), Y(R[1])); ctx.lineTo(X(0), Y(R[1])); ctx.lineTo(X(0), Y(C)); ctx.closePath();
+    ctx.fillStyle = dv + '1f'; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = tb; ctx.beginPath(); ctx.moveTo(X(0.95), Y(0)); ctx.lineTo(X(0.95), Y(R[1])); ctx.stroke();
+    ctx.strokeStyle = dv; ctx.beginPath(); ctx.moveTo(X(C), Y(0)); ctx.lineTo(X(0), Y(C)); ctx.stroke();
+    // sample square
+    const t = SQ.theta;
+    ctx.strokeStyle = tok('--ink'); ctx.lineWidth = 1.6; ctx.setLineDash([5, 4]); ctx.strokeRect(X(t), Y(t + 1), X(t + 1) - X(t), Y(t) - Y(t + 1)); ctx.setLineDash([]);
+    // points
+    let n1 = 0, n2 = 0;
+    const cols = { none: tok('--muted'), t1: tb, t2: dv, both: tok('--rej') };
+    SQ.pts.forEach(([a, b]) => {
+      const r1 = a > 0.95, r2 = a + b > C; if (r1) n1++; if (r2) n2++;
+      const k = r1 && r2 ? 'both' : r1 ? 't1' : r2 ? 't2' : 'none';
+      ctx.globalAlpha = k === 'none' ? 0.35 : 0.95; ctx.fillStyle = cols[k];
+      ctx.beginPath(); ctx.arc(X(a), Y(b), k === 'none' ? 1.6 : 2.3, 0, 2 * Math.PI); ctx.fill();
+    });
+    ctx.globalAlpha = 1; ctx.restore();
+    label(ctx, 'y₁ = 0.95', X(0.95) + 4, box.y0 + 4, tb);
+    label(ctx, 'y₁ + y₂ = c', X(0.1), Y(C - 0.1) + 2, dv);
+    // legend
+    if (legendW) {
+      const lx = box.x1 + 22; let ly = box.y0 + 6;
+      [['none', 'not rejected'], ['t1', 'Test 1 only'], ['t2', 'Test 2 only'], ['both', 'both tests']].forEach(([k, txt]) => {
+        ctx.fillStyle = cols[k]; ctx.globalAlpha = k === 'none' ? 0.6 : 1; ctx.beginPath(); ctx.arc(lx + 5, ly + 7, 4, 0, 2 * Math.PI); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.fillStyle = tok('--ink'); ctx.font = '12.5px ' + tok('--f-body'); ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(txt, lx + 16, ly + 7); ly += 22;
+      });
+      ly += 8; ctx.strokeStyle = tok('--ink'); ctx.setLineDash([5, 4]); ctx.strokeRect(lx, ly, 12, 12); ctx.setLineDash([]);
+      ctx.fillStyle = tok('--ink'); ctx.fillText('sample space (θ, θ+1)²', lx + 18, ly + 6);
+    }
+    const p1 = Math.min(1, t + 0.05), p2 = 1 - FU(C - 2 * t), N = SQ.pts.length;
+    $('r_sq').innerHTML = `<span><span class="k">pairs</span> <b>${N}</b></span>` +
+      `<span><span class="k">Test 1 rate</span> <b class="v-tb">${N ? fmt(n1 / N, 3) : '—'}</b> <span class="k">exact ${fmt(p1, 3)}</span></span>` +
+      `<span><span class="k">Test 2 rate</span> <b class="v-dv">${N ? fmt(n2 / N, 3) : '—'}</b> <span class="k">exact ${fmt(p2, 3)}</span></span>` +
+      `<span><span class="k">${t === 0 ? 'this is α' : 'this is power'}</span> <b>${t === 0 ? 'θ = 0' : 'θ = ' + t.toFixed(2)}</b></span>`;
+  }
+  if ($('cvSquare')) {
+    seed(700);
+    $('sq_theta').addEventListener('input', e => { SQ.theta = +e.target.value; $('o_sqt').textContent = SQ.theta.toFixed(2); seed(700); renderSquare(); });
+    $('sq_run').addEventListener('click', () => {
+      if (SQ.running) return; SQ.pts = []; SQ.running = true;
+      const per = reduce ? 2000 : 45;
+      const step = () => { for (let k = 0; k < per && SQ.pts.length < 2000; k++) SQ.pts.push([SQ.theta + Math.random(), SQ.theta + Math.random()]); renderSquare(); if (SQ.pts.length < 2000) requestAnimationFrame(step); else SQ.running = false; };
+      step();
+    });
+    $('sq_clear').addEventListener('click', () => { SQ.running = false; SQ.pts = []; renderSquare(); });
+  }
+
+  function renderAll() { renderScore(); renderSquare(); }
+  renderAll();
+  let rt; const ro = new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(renderAll, 60); });
+  ['cvScore', 'cvSquare'].forEach(id => $(id) && ro.observe($(id)));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+  new MutationObserver(renderAll).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+
+</script>
+</body></html>
