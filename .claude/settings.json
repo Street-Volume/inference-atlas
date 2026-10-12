@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git -C ~/projects/inference-atlas add -A && if ! git -C ~/projects/inference-atlas diff --cached --quiet; then git -C ~/projects/inference-atlas commit -q -m \"Auto-save $(date -u +%Y-%m-%dT%H:%M:%SZ)\" && git -C ~/projects/inference-atlas push -q origin main; fi 2>/dev/null || true",
+            "statusMessage": "Auto-saving to GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
