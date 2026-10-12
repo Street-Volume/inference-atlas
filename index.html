@@ -25,6 +25,7 @@ window.MathJax = {
   --hl: #88A8FF; --hl-bg: rgba(136, 168, 255, 0.16);
   --ok: #57E39C; --bad: #FF7090;
   --flag: #C9A6FF; --flag-bg: #1E1732;
+  --qf: #E8B339; --qf-bg: #241C0C;
   --h-mgf: #B59DFF; --h-cheb: #FFC24D; --h-disc: #5CE38F; --h-cont: #4DC7FF; --h-est: #39E2C9; --h-test: #FF7B9B; --h-neutral: #98A6BE;
   --glass: rgba(8, 11, 18, 0.72);
   --shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), 0 24px 60px -36px rgba(0, 0, 0, 0.95);
@@ -41,7 +42,7 @@ window.MathJax = {
     --grid: rgba(13, 22, 37, 0.04);
     --tb: #9C5600; --tb-bg: #FFF1DB; --dv: #08786A; --dv-bg: #DDF3EE;
     --rej: #C0244A; --rej-bg: rgba(192, 36, 74, 0.13); --hl: #2F4EC4; --hl-bg: rgba(47, 78, 196, 0.11);
-    --ok: #13834A; --bad: #C0244A; --flag: #7040BE; --flag-bg: #F1E9FC;
+    --ok: #13834A; --bad: #C0244A; --flag: #7040BE; --flag-bg: #F1E9FC; --qf: #8A5A00; --qf-bg: #FDF1D6;
     --h-mgf: #6C3DDF; --h-cheb: #B05800; --h-disc: #117F3A; --h-cont: #0366A4; --h-est: #08786A; --h-test: #C1224C; --h-neutral: #5C6A80;
     --glass: rgba(255, 255, 255, 0.78);
     --shadow: 0 1px 0 rgba(13, 22, 37, 0.03), 0 18px 44px -30px rgba(13, 22, 37, 0.4);
@@ -54,7 +55,7 @@ window.MathJax = {
   --grid: rgba(13, 22, 37, 0.04);
   --tb: #9C5600; --tb-bg: #FFF1DB; --dv: #08786A; --dv-bg: #DDF3EE;
   --rej: #C0244A; --rej-bg: rgba(192, 36, 74, 0.13); --hl: #2F4EC4; --hl-bg: rgba(47, 78, 196, 0.11);
-  --ok: #13834A; --bad: #C0244A; --flag: #7040BE; --flag-bg: #F1E9FC;
+  --ok: #13834A; --bad: #C0244A; --flag: #7040BE; --flag-bg: #F1E9FC; --qf: #8A5A00; --qf-bg: #FDF1D6;
   --h-mgf: #6C3DDF; --h-cheb: #B05800; --h-disc: #117F3A; --h-cont: #0366A4; --h-est: #08786A; --h-test: #C1224C; --h-neutral: #5C6A80;
   --glass: rgba(255, 255, 255, 0.78);
   --shadow: 0 1px 0 rgba(13, 22, 37, 0.03), 0 18px 44px -30px rgba(13, 22, 37, 0.4);
@@ -263,6 +264,8 @@ h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.12rem; letter
 .tools dt { font-weight: 600; } .tools dd { margin: 0; }
 .flag { background: var(--flag-bg); border: 1px solid color-mix(in srgb, var(--flag) 28%, transparent); border-radius: 12px; padding: 12px 16px; font-size: 14.5px; display: flex; gap: 12px; align-items: flex-start; }
 .flag b { color: var(--flag); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; padding-top: 2px; }
+.qf { background: var(--qf-bg); border: 1px solid color-mix(in srgb, var(--qf) 32%, transparent); border-radius: 12px; padding: 12px 16px; font-size: 14.5px; display: flex; gap: 12px; align-items: flex-start; }
+.qf b { color: var(--qf); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; padding-top: 2px; }
 
 .part { display: flex; flex-direction: column; gap: 10px; }
 .part-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -837,6 +840,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Geometric probability function (Section 3.5)</dt><dd>\(\class{tb}{p(y)=q^{y-1}p,\quad y=1,2,3,\dots}\) (number of the trial on which the first success occurs)</dd>
     <dt>Geometric series (calculus)</dt><dd>\(\class{tb}{\sum_{k=0}^\infty r^k=\dfrac{1}{1-r}}\) when \(|r|\lt1\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>MGFs are the real-valued cousin of the characteristic functions used to price options via Fourier methods (Carr–Madan, COS): a closed-form MGF lets you compute risk-neutral moments and apply exponential tilting (an Esscher transform) to change probability measures. The convergence boundary \(qe^t\lt1\) here is the same kind of constraint that limits how far you can tilt a return distribution before the expectation diverges — exactly what bounds admissible risk-neutral measures in incomplete markets.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Proof</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -879,6 +883,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Uniqueness (Section 3.9)</dt><dd>If two random variables have the same MGF, they have the same distribution. So matching the form identifies the distribution.</dd>
     <dt>MGFs from the table of discrete distributions</dt><dd>Binomial \(\class{tb}{(pe^t+q)^n}\), geometric \(\class{tb}{\dfrac{pe^t}{1-qe^t}}\), Poisson \(\class{tb}{e^{\lambda(e^t-1)}}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Matching a given MGF to a known family is the same move used to identify a return-generating process from its characteristic function — e.g. confirming log-returns look Variance-Gamma rather than Merton jump-diffusion by matching functional forms. The Poisson MGF \(e^{\lambda(e^t-1)}\) is literally the jump-arrival process in Merton's jump-diffusion option-pricing model; the binomial form underlies the Cox–Ross–Rubinstein binomial tree.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Matching</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -913,6 +918,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Variance shortcut (Section 3.3)</dt><dd>\(\class{tb}{V(Y)=E\!\left(Y^2\right)-\left[E(Y)\right]^2}\)</dd>
     <dt>Chain rule</dt><dd>\(\class{tb}{\dfrac{d}{dt}e^{at}=ae^{at}}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Taking derivatives of an MGF at \(t=0\) to recover mean and variance is exactly how risk-neutral moments (expected return, variance, skew) are extracted from option prices in model-free implied-moment indices like the CBOE SKEW. Portfolio risk engines run the same trick on a portfolio's characteristic function to get moments for a Cornish–Fisher VaR adjustment without ever simulating the full return distribution.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -952,6 +958,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
   <div class="tools"><span class="tag">From the textbook</span><dl>
     <dt>Tchebysheff's theorem</dt><dd>For any \(k\gt0\): \(\class{tb}{P(|Y-\mu|\lt k\sigma)\ge1-\dfrac1{k^2}}\), equivalently \(\class{tb}{P(|Y-\mu|\ge k\sigma)\le\dfrac1{k^2}}\).</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Chebyshev's inequality gives a distribution-free bound on tail probability — valuable in finance precisely because real return distributions are fat-tailed, so normal-based bounds (as in Black–Scholes-style models) understate true risk. Risk managers use Chebyshev-type bounds as a conservative, model-agnostic backstop on VaR when they don't trust — or can't verify — a parametric return distribution.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -979,6 +986,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Empirical rule</dt><dd>For mound-shaped distributions: about 68% within \(\mu\pm\sigma\), about 95% within \(\mu\pm2\sigma\).</dd>
     <dt>Tchebysheff</dt><dd>At least \(1-1/k^2\): at least 0 within \(1\sigma\), at least 0.75 within \(2\sigma\).</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Comparing the loose Chebyshev bound to the tighter empirical rule mirrors a real risk-management choice: size capital reserves off a Gaussian assumption (tighter, but wrong in the tails) or off a distribution-free Chebyshev bound (looser, but safe under fat tails)? Backtesting a VaR model is essentially asking which of these two guarantees actually held over realized P&L.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1012,6 +1020,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Linear functions (Section 3.3)</dt><dd>\(\class{tb}{E(aY+b)=aE(Y)+b,\quad V(aY+b)=a^2V(Y)}\)</dd>
     <dt>Tchebysheff</dt><dd>\(1-1/k^2=0.75\) gives \(k=2\).</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>This is the expected-cost decision behind credit provisioning: pay for inspection/treatment now versus bear the expected cost of the bad outcome later, the same structure as expected loss \(=\) PD \(\times\) LGD \(\times\) EAD, or the decision to hedge a position versus carry its expected loss on the book.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1055,6 +1064,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Poisson probability function</dt><dd>\(\class{tb}{p(y)=\dfrac{\lambda^ye^{-\lambda}}{y!}}\)</dd>
     <dt>Complement rule</dt><dd>\(\class{tb}{P(Y\ge2)=1-P(Y=0)-P(Y=1)}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>The Poisson approximation to a rare binomial event is the standard way quants model rare-but-costly occurrences: operational-risk loss events, defaults scattered through a large retail loan book, or jump arrivals in a jump-diffusion option-pricing model — all cases where \(n\) is huge, \(p\) is tiny, and only \(np\) matters.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1086,6 +1096,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
   <div class="tools"><span class="tag">From the textbook</span><dl>
     <dt>Negative binomial distribution (Section 3.6)</dt><dd>\(Y\) = trial on which the \(r\)th success occurs: \(\class{tb}{p(y)=\binom{y-1}{r-1}p^rq^{y-r},\quad y=r,r+1,\dots}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>"Number of trials until the \(r\)th success" distributions are exactly how market-microstructure models count re-quotes until a limit order fills, or margin calls until a position is forced to liquidate — the same waiting-time logic used here for clearing inventory in under 6 contacts.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1121,6 +1132,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Properties of a density</dt><dd>\(\class{tb}{f(y)\ge0\ \text{and}\ \int_{-\infty}^{\infty}f(y)\,dy=1}\)</dd>
     <dt>Distribution function</dt><dd>\(\class{tb}{F(y)=\int_{-\infty}^{y}f(t)\,dt}\), and \(\class{tb}{P(a\le Y\le b)=F(b)-F(a)=\int_a^bf(y)\,dy}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Finding the constant that makes a density integrate to 1 is the same constraint quants solve when calibrating a risk-neutral density from option prices: Breeden–Litzenberger differentiates the call-price curve twice with respect to strike to get a density that must itself integrate to 1 and stay nonnegative — a bad calibration shows up exactly as a normalization or positivity violation, same as here.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1152,6 +1164,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Interval probability</dt><dd>\(\class{tb}{P(a\le Y\le b)=F(b)-F(a)}\) (for continuous \(Y\), \(\le\) and \(\lt\) give the same answer)</dd>
     <dt>Conditional probability (Section 2.7)</dt><dd>\(\class{tb}{P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}}\)</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Going from a piecewise \(F\) back to \(f\) by differentiating, piece by piece, is literally how an implied risk-neutral density is read off a fitted implied-volatility smile: differentiate the fitted call-price curve (as a function of strike) twice to get the density across strike bands, exactly the way you recover \(f\) from \(F\) here.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1182,6 +1195,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
   <div class="tools"><span class="tag">From the textbook</span><dl>
     <dt>Distribution function</dt><dd>\(\class{tb}{F(y)=\int_{-\infty}^yf(t)\,dt}\). For a piecewise \(f\), the integral up to a later piece includes all the area from earlier pieces.</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>A piecewise density here is literally a demand curve — the same object a market-maker models to predict order flow or price impact from a large trade, where probability mass is concentrated unevenly across price/quantity bands rather than following one smooth shape.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1253,6 +1267,8 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       <dd>If \(U\) is a sufficient statistic found by factorization and \(h(U)\) is unbiased for \(\theta\), then \(h(U)\) is the MVUE of \(\theta\). (The book states this result for sufficient statistics found this way; completeness is what makes it airtight, see the note in part c.)</dd>
     </dl>
   </div>
+
+  <div class="qf"><b>Quant finance</b><span>Weibull-type densities are the standard choice for time-to-default and time-to-prepayment modeling in credit risk. Finding a sufficient statistic and its MLE is exactly how a hazard-rate / default-intensity model gets calibrated from a loan book's historical survival data, and whether that estimator is an MVUE determines how much sampling noise ends up in a regulatory capital estimate.</span></div>
 
   <!-- part a -->
   <div class="part walk">
@@ -1378,6 +1394,8 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     </dl>
   </div>
 
+  <div class="qf"><b>Quant finance</b><span>This is realized-volatility estimation, full stop — the MLE of \(\sigma\) from a sample of returns is the baseline historical-volatility estimator that feeds option pricing, VaR, and GARCH model calibration. Its statistical properties (bias, efficiency) directly determine how noisy the resulting volatility forecast is.</span></div>
+
   <div class="part walk">
     <div class="part-title"><h3>Method 1: invariance (fastest on an exam)</h3>
       <div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div>
@@ -1457,6 +1475,8 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
       <dd>\(\class{tb}{F_U(u)=\begin{cases}0,&u\lt0\\ u^2/2,&0\le u\le1\\ 1-(2-u)^2/2,&1\lt u\le2\\ 1,&u\gt2\end{cases}}\)</dd>
     </dl>
   </div>
+
+  <div class="qf"><b>Quant finance</b><span>Matching the Type-I error rate between two different test statistics is exactly what you do when comparing two VaR-breach backtests (e.g. Kupiec's POF test vs. a conditional-coverage test) or two trading-signal screens — they need to be calibrated to the same false-positive rate before their power can be compared.</span></div>
 
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3>
@@ -1550,6 +1570,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Shadow price</dt><dd>\(\class{tb}{y_i^*=\dfrac{\Delta Z^*}{\Delta b_i}}\): the rate at which the optimal value rises per extra unit of resource \(i\), all else fixed. It holds while the same constraints stay binding (the allowable range).</dd>
     <dt>Graphical method</dt><dd>Shift the resource's constraint line out by one unit, find the new corner where the binding lines cross, and measure the change in \(Z\).</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Shadow prices from a linear program are the marginal value of one more unit of a constrained resource — in portfolio optimization this is literally the marginal utility of one more dollar of risk budget or capital, the number that tells a desk exactly how much performance it's giving up because of a capital constraint.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1596,6 +1617,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Slope test for a corner</dt><dd>The iso-profit line \(c_1x_1+c_2x_2=Z\) has slope \(\class{tb}{-c_1/c_2}\). A corner stays optimal while that slope stays between the slopes of the two constraint lines that meet there.</dd>
     <dt>Same test, as a cone</dt><dd>Equivalently, \((c_1,c_2)\) must lie between the normal vectors of the two binding constraints. Live figure C2 draws that cone.</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Asking how far objective coefficients can move before the optimal corner changes is objective-sensitivity analysis — in a mean-variance portfolio, it tells you how wrong your expected-return forecasts can be before the optimizer would have picked a different portfolio, exactly the robustness check real portfolio construction needs.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1640,6 +1662,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Nonbinding means a zero price</dt><dd>\(\class{tb}{\text{slack}_i\gt0\ \Rightarrow\ y_i^*=0}\). Small changes to that resource leave the optimal corner where it is.</dd>
     <dt>Shadow price</dt><dd>\(\class{tb}{y_i^*=\Delta Z^*/\Delta b_i}\) within the allowable range, found by re-solving the binding system with \(b_i\) as a symbol.</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>A resource with slack (shadow price zero) is a constraint that isn't actually binding — recognizing this is how a portfolio manager knows which risk or capital limits are truly constraining the portfolio versus which ones have headroom and don't matter yet.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1681,6 +1704,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Slope test at each corner</dt><dd>Corner optimal \(\Leftrightarrow\) \(\class{tb}{-c_1/c_2}\) lies between the slopes of the two lines that meet there.</dd>
     <dt>Cone test (works for any signs)</dt><dd>Write each constraint as \(a_1x_1+a_2x_2\le b\), so \(x_1\ge0\) becomes \(-x_1\le0\). A corner is optimal \(\Leftrightarrow\) \((c_1,c_2)\) is a nonnegative combination of the normals \((a_1,a_2)\) of the constraints active there.</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Mapping which vertex is optimal across a whole range of objective directions is exactly how an efficient frontier is built: each vertex of the feasible region is optimal for some range of risk-aversion levels, the same way a corner point here is optimal for a range of cost ratios.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -1735,6 +1759,7 @@ button.gcard:hover { transform: translateY(-3px); border-color: color-mix(in srg
     <dt>Shadow prices in the final tableau</dt><dd>With slack variables \(x_4,x_5,x_6\) added to constraints 1, 2, 3: \(\class{tb}{y_i^*=\text{coefficient of slack }i\text{ in row 0}}\).</dd>
     <dt>Allowable range for \(b_i\)</dt><dd>The slack columns of the final tableau form \(B^{-1}\). Changing \(b_i\) by \(\Delta\) changes the basic variables to \(\class{tb}{x_B+\Delta\cdot(\text{column of slack }i)}\). The shadow price holds while all of them stay \(\ge0\).</dd>
   </dl></div>
+  <div class="qf"><b>Quant finance</b><span>Reading shadow prices and their allowable ranges straight off the final simplex tableau is how a risk desk gets both the price of relaxing a limit and the range over which that price stays valid — beyond the allowable range the whole optimal portfolio restructures, not just its P&L.</span></div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
