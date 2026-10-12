@@ -146,7 +146,7 @@
   const targets = navLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
   const names = {
     top: ['Overview', 'Start here'], map: ['Overview', 'Problem map'], readA: ['Part A', 'Reading list'], readB: ['Part B', 'Reading list'],
-    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Tools', 'Concept bridge'], workbench: ['Tools', 'Answer checker'], audit: ['Tools', 'Audit log']
+    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
   };
   let current = null, currentProblem = null;
   function updateCtx() {
