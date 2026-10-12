@@ -60,6 +60,8 @@ window.MathJax = {
     <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
     <div class="nav-group">Study Tools</div>
     <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
     <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
     <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
   </nav>
@@ -93,7 +95,19 @@ window.MathJax = {
     <dt>Shadow price</dt><dd>\(\class{tb}{y_i^*=\dfrac{\Delta Z^*}{\Delta b_i}}\): the rate at which the optimal value rises per extra unit of resource \(i\), all else fixed. It holds while the same constraints stay binding (the allowable range).</dd>
     <dt>Graphical method</dt><dd>Shift the resource's constraint line out by one unit, find the new corner where the binding lines cross, and measure the change in \(Z\).</dd>
   </dl></div>
-  <div class="qf"><b>Quant finance</b><span>Shadow prices from a linear program are the marginal value of one more unit of a constrained resource — in portfolio optimization this is literally the marginal utility of one more dollar of risk budget or capital, the number that tells a desk exactly how much performance it's giving up because of a capital constraint.</span></div>
+  <div class="qf">
+    <div class="qf-head">
+      <span class="qf-badge">⚡ Portfolio Management &amp; Risk Desks: The Cost of Capital Limits</span>
+      <span class="qf-tag">Dual Shadow Prices &amp; Factor Budgets</span>
+    </div>
+    <div class="qf-body">
+      In institutional asset management, shadow prices (\(y_i^* = \partial Z^* / \partial b_i\)) are the marginal utility of one additional unit of a constrained resource. When optimizing a portfolio subject to leverage caps, maximum drawdown limits, and tracking error constraints, the dual shadow prices reveal the exact basis points of alpha forfeited per dollar of regulatory restriction. If a sector constraint has a shadow price of 0.45, loosening that sector limit by $10M adds $4.5M to expected fund performance.
+    </div>
+    <div class="qf-interview">
+      <b>Wall Street Quant Interview (AQR / Millennium / Bridgewater):</b> "Suppose you run an alpha optimization with a strict beta-neutral constraint (\(\beta = 0\)) and a maximum gross leverage limit of \(3.0\times\). How do you use the optimization's dual variables to decide whether to pay a prime broker for higher leverage?"<br>
+      <i>Desk Takeaway:</i> The dual variable (shadow price) on the gross leverage constraint represents the marginal Sharpe ratio or return gained from a 1.0 unit increase in leverage. If the shadow price is 180 bps (1.80% annualized excess return) and the prime broker charges 45 bps in borrowing spread to expand the facility, the desk immediately buys the extra capacity because the marginal benefit exceeds the marginal financing cost by 135 bps.
+    </div>
+  </div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">

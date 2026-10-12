@@ -1,0 +1,8 @@
+{
+  "name": "Inference Atlas",
+  "description": "Interactive study guide and workspace for probability, mathematical statistics, and operations research.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

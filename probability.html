@@ -67,6 +67,8 @@ window.MathJax = {
     <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
     <div class="nav-group">Study Tools</div>
     <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
     <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
     <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
   </nav>
@@ -101,7 +103,19 @@ window.MathJax = {
     <dt>Geometric probability function (Section 3.5)</dt><dd>\(\class{tb}{p(y)=q^{y-1}p,\quad y=1,2,3,\dots}\) (number of the trial on which the first success occurs)</dd>
     <dt>Geometric series (calculus)</dt><dd>\(\class{tb}{\sum_{k=0}^\infty r^k=\dfrac{1}{1-r}}\) when \(|r|\lt1\)</dd>
   </dl></div>
-  <div class="qf"><b>Quant finance</b><span>MGFs are the real-valued cousin of the characteristic functions used to price options via Fourier methods (Carr–Madan, COS): a closed-form MGF lets you compute risk-neutral moments and apply exponential tilting (an Esscher transform) to change probability measures. The convergence boundary \(qe^t\lt1\) here is the same kind of constraint that limits how far you can tilt a return distribution before the expectation diverges — exactly what bounds admissible risk-neutral measures in incomplete markets.</span></div>
+  <div class="qf">
+    <div class="qf-head">
+      <span class="qf-badge">⚡ Quant Trading Desk: Esscher Transforms &amp; Option Pricing</span>
+      <span class="qf-tag">Derivatives &amp; Volatility Trading</span>
+    </div>
+    <div class="qf-body">
+      MGFs are the real-valued foundation of the characteristic functions used to price exotic options and calculate Greeks via Fourier transform methods (Carr–Madan, COS method). A closed-form MGF allows instant computation of risk-neutral moments and exponential tilting (the <b>Esscher transform</b>) to shift between physical \(\mathbb{P}\) and risk-neutral \(\mathbb{Q}\) pricing measures. The geometric convergence condition \(qe^t \lt 1\) is mathematically identical to the martingality condition that prevents arbitrage in jump models.
+    </div>
+    <div class="qf-interview">
+      <b>Wall Street Quant Interview (Jane Street / Jump Trading):</b> "Why do we require the moment generating function \(m(t)\) to be defined in an open neighborhood around \(t = 0\)? What happens to asset price tails if the MGF does not exist for \(t > 0\)?"<br>
+      <i>Desk Takeaway:</i> If \(m(t)\) exists in an open interval around 0, all moments exist and tail probabilities decay exponentially fast. If the MGF fails to exist for any \(t > 0\) (e.g. Student's \(t\) or Pareto return distributions), the asset exhibits <b>heavy/fat tails</b>, meaning extreme market drawdowns occur exponentially more frequently than Gaussian models predict.
+    </div>
+  </div>
   <div class="part walk">
     <div class="part-title"><h3>Proof</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -219,7 +233,19 @@ window.MathJax = {
   <div class="tools"><span class="tag">From the textbook</span><dl>
     <dt>Tchebysheff's theorem</dt><dd>For any \(k\gt0\): \(\class{tb}{P(|Y-\mu|\lt k\sigma)\ge1-\dfrac1{k^2}}\), equivalently \(\class{tb}{P(|Y-\mu|\ge k\sigma)\le\dfrac1{k^2}}\).</dd>
   </dl></div>
-  <div class="qf"><b>Quant finance</b><span>Chebyshev's inequality gives a distribution-free bound on tail probability — valuable in finance precisely because real return distributions are fat-tailed, so normal-based bounds (as in Black–Scholes-style models) understate true risk. Risk managers use Chebyshev-type bounds as a conservative, model-agnostic backstop on VaR when they don't trust — or can't verify — a parametric return distribution.</span></div>
+  <div class="qf">
+    <div class="qf-head">
+      <span class="qf-badge">⚡ Risk Management Desk: Model-Free Worst-Case VaR</span>
+      <span class="qf-tag">Quant Risk &amp; Basel Capital Adequacy</span>
+    </div>
+    <div class="qf-body">
+      Tchebysheff's inequality delivers a completely distribution-free bound on tail probability. While a Gaussian model claims a \(5\sigma\) loss happens with probability \(P(Z \le -5) \approx 2.8 \times 10^{-7}\) (once in 1.4 million trading days), Tchebysheff guarantees only \(P(|Y - \mu| \ge 5\sigma) \le 1/25 = 4\%\). When a quantitative risk desk faces unmodeled exotic derivatives, new crypto assets, or liquidity squeezes where return distributions cannot be trusted, Tchebysheff provides a rock-solid mathematical worst-case bound that cannot be invalidated by structural regime shifts.
+    </div>
+    <div class="qf-interview">
+      <b>Wall Street Quant Interview (Morgan Stanley / Citadel Risk):</b> "How does a chief risk officer use Tchebysheff's inequality to calculate a conservative 99% Value-at-Risk without assuming normality?"<br>
+      <i>Desk Takeaway:</i> Setting \(\alpha = 0.01\), Tchebysheff gives \(1/k^2 = 0.01 \implies k = 10\). A model-free 99% VaR bound requires setting aside \(10\sigma\) in capital, compared to the Gaussian \(z_{0.99} = 2.33\sigma\). The ratio \(10 / 2.33 \approx 4.3\times\) illustrates the immense capital buffer demanded when abandoning distributional assumptions.
+    </div>
+  </div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">
@@ -325,7 +351,19 @@ window.MathJax = {
     <dt>Poisson probability function</dt><dd>\(\class{tb}{p(y)=\dfrac{\lambda^ye^{-\lambda}}{y!}}\)</dd>
     <dt>Complement rule</dt><dd>\(\class{tb}{P(Y\ge2)=1-P(Y=0)-P(Y=1)}\)</dd>
   </dl></div>
-  <div class="qf"><b>Quant finance</b><span>The Poisson approximation to a rare binomial event is the standard way quants model rare-but-costly occurrences: operational-risk loss events, defaults scattered through a large retail loan book, or jump arrivals in a jump-diffusion option-pricing model — all cases where \(n\) is huge, \(p\) is tiny, and only \(np\) matters.</span></div>
+  <div class="qf">
+    <div class="qf-head">
+      <span class="qf-badge">⚡ Algorithmic Trading &amp; Microstructure: Poisson Order Flow</span>
+      <span class="qf-tag">HFT &amp; Merton Jump-Diffusion</span>
+    </div>
+    <div class="qf-body">
+      In electronic financial markets, millions of algorithmic traders send quotes per millisecond, each with a microscopic probability of being filled at a specific limit order price. The aggregate arrival of market orders hitting the bid/ask spread converges asymptotically to a <b>Poisson point process</b> with intensity \(\lambda = np\) (the foundational assumption of the Avellaneda-Stoikov market-making model). The same Poisson distribution models discontinuous price jumps in Merton's jump-diffusion model (\(S_t = S_0 e^{\mu t + \sigma W_t} \prod_{j=1}^{N_t} Y_j\)).
+    </div>
+    <div class="qf-interview">
+      <b>Wall Street Quant Interview (Optiver / Susquehanna / Citadel):</b> "In high-frequency market making, why do order arrival times follow an exponential distribution? If 3 orders arrive on average per second, what is the probability of zero orders arriving in the next 500 milliseconds?"<br>
+      <i>Desk Takeaway:</i> For a Poisson process with arrival rate \(\lambda = 3\) orders/sec, the inter-arrival time \(\Delta t \sim \text{Exponential}(\lambda)\). For \(\Delta t = 0.5\) seconds, the expected count is \(\lambda' = 3 \times 0.5 = 1.5\). The probability of no orders is \(P(N = 0) = e^{-1.5} \approx 22.31\%\). If a market maker does not adjust quotes when this quiet interval occurs, adverse selection risk escalates.
+    </div>
+  </div>
   <div class="part walk">
     <div class="part-title"><h3>Solution</h3><div class="walkbar"><span class="pos"></span><button data-a="prev">Back</button><button data-a="next" class="primary">Step through</button><button data-a="all">Show all</button></div></div>
     <ol class="steps">

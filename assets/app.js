@@ -47,6 +47,8 @@
     { t: 'Part C reading list', page: 'operations-research.html', anchor: 'readC', kw: 'sections textbook read hillier operations research' },
     { t: 'Distribution encyclopedia', page: 'encyclopedia.html', anchor: 'ency', kw: 'distributions pmf pdf shapes gallery' },
     { t: 'Concept bridge', page: 'bridge.html', anchor: 'bridge', kw: 'connections links probability inference' },
+    { t: 'Quant trading lab', page: 'quant.html', anchor: 'quant', kw: 'quant finance trading black scholes markowitz var portfolio wall street options statarb' },
+    { t: 'Science workbench', page: 'science.html', anchor: 'science', kw: 'science alphafold protein pdb pubchem chemistry clinvar deepmind' },
     { t: 'Answer checker', page: 'workbench.html', anchor: 'workbench', kw: 'check practice verify webassign key' },
     { t: 'Audit log', page: 'workbench.html', anchor: 'audit', kw: 'errors fixes gemini lab issues' }
   ];
@@ -146,7 +148,7 @@
   const targets = navLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
   const names = {
     top: ['Overview', 'Start here'], map: ['Overview', 'Problem map'], readA: ['Part A', 'Reading list'], readB: ['Part B', 'Reading list'],
-    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
+    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], quant: ['Study Tools', 'Quant trading lab'], science: ['Study Tools', 'Science workbench'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
   };
   let current = null, currentProblem = null;
   function updateCtx() {
@@ -176,7 +178,7 @@
       if ($('ctxMark')) $('ctxMark').hidden = true;
       const nxt = P.find(x => !done.has(x.id));
       if (nxt) addJump(`Continue: ${nxt.n} ${nxt.t}`, (nxt.page === PAGE ? '#' : nxt.page + '#') + nxt.id, '');
-      addJump('Problem map', 'index.html#map'); addJump('Concept bridge', 'bridge.html#bridge'); addJump('Answer checker', 'workbench.html#workbench');
+      addJump('Problem map', 'index.html#map'); addJump('Concept bridge', 'bridge.html#bridge'); addJump('Quant trading lab', 'quant.html#quant'); addJump('Science workbench', 'science.html#science'); addJump('Answer checker', 'workbench.html#workbench');
     }
   }
   function setCurrent(id) {
@@ -258,6 +260,8 @@
     DISTS.forEach(d => items.push({ kind: 'Distribution', icon: d.name.slice(0, 3), title: d.name, sub: d.sub, hue: d.hue, kw: 'distribution pmf pdf encyclopedia ' + d.id, run: () => nav('encyclopedia.html', d.id) }));
     BRIDGES.forEach(b => items.push({ kind: 'Bridge', icon: '⇄', title: b.t, sub: 'Concept bridge link', hue: 'neutral', kw: 'bridge connect', run: () => nav('bridge.html', 'link' + b.k) }));
     const act = (t, sub, kw, run) => items.push({ kind: 'Action', icon: '›', title: t, sub, hue: 'neutral', kw, run });
+    act('Open Quant trading lab', 'Black-Scholes, Markowitz frontier, VaR & pairs trading', 'quant finance trading options var markowitz wall street', () => nav('quant.html', 'quant'));
+    act('Open Science workbench', 'AlphaFold 3D, PubChem chemistry & ClinVar', 'science alphafold protein chemistry pdb drug', () => nav('science.html', 'science'));
     act('Toggle quiz mode', 'Blur answers so you can test yourself', 'quiz hide answers test', () => setQuiz(!document.body.classList.contains('quiz')));
     act('Continue with the next unmarked problem', 'Picks up where you left off', 'continue resume next', () => { const n = P.find(p => !done.has(p.id)); n ? nav(n.page, n.id) : nav('workbench.html', 'workbench'); });
     act('Mark current problem understood', 'Toggles the check for the problem in view', 'mark done understood', () => currentProblem ? toggleDone(currentProblem) : toast('Scroll to a problem first'));
@@ -312,6 +316,10 @@
   });
 
   /* ---------- animated stat counters (works with any .stat b[data-count] on the page) ---------- */
+  if ($('stSteps')) $('stSteps').dataset.count = 109;
+  if ($('stFigs')) $('stFigs').dataset.count = 20;
+  if ($('stChecks')) $('stChecks').dataset.count = 49;
+  if ($('stDists')) $('stDists').dataset.count = 16;
   document.querySelectorAll('.stat b[data-count]').forEach((el, i) => {
     const end = +el.dataset.count; el.textContent = end;
     if (reduce) return;
@@ -319,10 +327,6 @@
     const tick = now => { const p = Math.max(0, Math.min(1, (now - t0) / dur)); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
     requestAnimationFrame(tick);
   });
-  if ($('stSteps')) $('stSteps').dataset.count = 109;
-  if ($('stFigs')) $('stFigs').dataset.count = 20;
-  if ($('stChecks')) $('stChecks').dataset.count = 49;
-  if ($('stDists')) $('stDists').dataset.count = 16;
 
   /* ---------- theme changes: let page-specific scripts (ridgeline, bridge, canvases) repaint ---------- */
   const rethemed = () => { window.Atlas.retheme.forEach(fn => { try { fn(); } catch (e) { /* ignore */ } }); };

@@ -57,6 +57,8 @@ window.MathJax = {
     <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
     <div class="nav-group">Study Tools</div>
     <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
     <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
     <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
   </nav>
@@ -103,7 +105,19 @@ window.MathJax = {
     </dl>
   </div>
 
-  <div class="qf"><b>Quant finance</b><span>Weibull-type densities are the standard choice for time-to-default and time-to-prepayment modeling in credit risk. Finding a sufficient statistic and its MLE is exactly how a hazard-rate / default-intensity model gets calibrated from a loan book's historical survival data, and whether that estimator is an MVUE determines how much sampling noise ends up in a regulatory capital estimate.</span></div>
+  <div class="qf">
+    <div class="qf-head">
+      <span class="qf-badge">⚡ Credit Risk &amp; Fixed Income: Hazard Rates &amp; Default Intensity</span>
+      <span class="qf-tag">Credit Default Swaps &amp; Basel IRB</span>
+    </div>
+    <div class="qf-body">
+      Weibull and Generalized Gamma densities are the Wall Street standard for time-to-default and early mortgage prepayment modeling in structured credit (MBS, CLO, and CDS pricing). Finding the sufficient statistic and MLE is how hazard rates are calibrated from corporate default datasets. Because the sufficient statistic \(U = \sum Y_i^r\) condenses all sample information without loss, the estimator achieves the Cramér-Rao Lower Bound (MVUE), minimizing sampling variance in regulatory Basel Internal Ratings-Based (IRB) capital.
+    </div>
+    <div class="qf-interview">
+      <b>Wall Street Quant Interview (PIMCO / BlackRock / Goldman Fixed Income):</b> "What is the economic difference between a constant hazard rate (Exponential) and a time-varying hazard rate (Weibull with shape parameter \(r\)) in credit modeling?"<br>
+      <i>Desk Takeaway:</i> If \(r = 1\), the hazard rate is constant (memoryless Poisson default), meaning a firm that has survived 10 years has the exact same default probability tomorrow as a brand new startup. If \(r > 1\), the hazard rate increases with time (aging/wear-out, credit rating degradation). If \(r < 1\), the hazard rate decreases ('infant mortality'), typical of tech startups where surviving the first 2 years drastically lowers future failure probability.
+    </div>
+  </div>
 
   <!-- part a -->
   <div class="part walk">

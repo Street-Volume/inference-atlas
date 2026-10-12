@@ -1,0 +1,683 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>Science Workbench · Inference Atlas</title>
+<meta name="description" content="Biomolecular 3D AlphaFold structures, PubChem chemical pharmacology, ClinVar genomic variants, and biomedical literature with Google DeepMind Science Skills.">
+<meta property="og:title" content="Science Workbench · Inference Atlas">
+<meta property="og:description" content="Interactive 3D molecular viewer, pLDDT statistical confidence, and pharmacology workbench.">
+</head><body data-page="science.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="est"><span class="cdot"></span><span id="crPart">Study Tools</span><span class="sep">/</span><b id="crName">Science workbench</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" class="active" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="problem-wrap" id="science" data-hue="est" style="padding-top:32px">
+  <div class="hero-head" style="padding:0 0 28px 0">
+    <div class="eyebrow">Biomolecular & Chemical Discovery · Google DeepMind Science Skills</div>
+    <h1>Scientific <span class="grad">Inference Workbench</span></h1>
+    <p class="lede">Explore 3D macromolecular structures predicted by AlphaFold DB, experimental crystals from RCSB PDB, PubChem chemical pharmacology (Lipinski Rule of 5), pathogenic disease variants, and statistical evidence across biomedical databases.</p>
+
+    <!-- Quick-Try Example Pill Bar (Mandatory Science Skill Layout) -->
+    <div class="sci-pills-bar" style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Quick examples:</span>
+      <button class="sci-chip" data-type="protein" data-query="P04637" data-label="TP53 (P04637)">🧬 TP53 (p53)</button>
+      <button class="sci-chip" data-type="protein" data-query="P38398" data-label="BRCA1 (P38398)">🧬 BRCA1</button>
+      <button class="sci-chip" data-type="protein" data-query="P00533" data-label="EGFR (P00533)">🧬 EGFR</button>
+      <button class="sci-chip" data-type="protein" data-query="Q8NBP7" data-label="PCSK9 (Q8NBP7)">🧬 PCSK9</button>
+      <button class="sci-chip" data-type="pdb" data-query="4HHB" data-label="Hemoglobin (4HHB)">🔬 4HHB (Hemoglobin Crystal)</button>
+      <button class="sci-chip" data-type="drug" data-query="Imatinib" data-label="Imatinib">💊 Imatinib (Gleevec)</button>
+      <button class="sci-chip" data-type="drug" data-query="Aspirin" data-label="Aspirin">💊 Aspirin</button>
+    </div>
+  </div>
+
+  <!-- Domain Navigation Tabs -->
+  <div class="chips" id="sciTabs" style="margin-bottom:24px;border-bottom:1px solid var(--rule);padding-bottom:12px;">
+    <button class="chip" data-tab="tab-structure" data-hue="est" aria-pressed="true"><i></i>3D Structures & AlphaFold</button>
+    <button class="chip" data-tab="tab-chemistry" data-hue="mgf" aria-pressed="false"><i></i>Chemistry & Pharmacology</button>
+    <button class="chip" data-tab="tab-genomics" data-hue="test" aria-pressed="false"><i></i>Genomic Variants (ClinVar)</button>
+    <button class="chip" data-tab="tab-literature" data-hue="cont" aria-pressed="false"><i></i>Biomedical Literature</button>
+  </div>
+
+  <!-- TAB 1: 3D Protein Structure & AlphaFold Analysis -->
+  <div class="sci-tab-pane" id="tab-structure">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px">
+      <div style="flex:1;min-width:240px;display:flex;gap:8px">
+        <input type="text" id="structInput" placeholder="UniProt Accession (e.g. P04637) or PDB ID (e.g. 4HHB)" value="P04637" class="sci-input" style="flex:1;padding:10px 14px;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;color:var(--ink);font-family:var(--f-mono);font-size:13px">
+        <button id="loadStructBtn" class="btn primary" style="white-space:nowrap">Fetch & Render</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <label style="font-size:12px;color:var(--muted)">Color:</label>
+        <select id="colorModeSelect" class="sci-select" style="padding:8px 12px;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;color:var(--ink);font-size:12px">
+          <option value="plddt">AlphaFold pLDDT (4-tier)</option>
+          <option value="spectrum">Rainbow Spectrum</option>
+          <option value="ss">Secondary Structure</option>
+          <option value="element">CPK Elements</option>
+        </select>
+        <label style="font-size:12px;color:var(--muted)">Style:</label>
+        <select id="styleModeSelect" class="sci-select" style="padding:8px 12px;background:var(--sheet);border:1px solid var(--rule);border-radius:6px;color:var(--ink);font-size:12px">
+          <option value="cartoon">Cartoon Ribbon</option>
+          <option value="stick">Sidechain Sticks</option>
+          <option value="sphere">VDW Spheres</option>
+        </select>
+        <button id="spinBtn" class="btn" style="padding:8px 12px;font-size:12px">Toggle Spin</button>
+        <button id="resetCamBtn" class="btn" style="padding:8px 12px;font-size:12px">Reset View</button>
+      </div>
+    </div>
+
+    <!-- Split Viewer + Synchronized Inspector Layout -->
+    <div style="display:grid;grid-template-columns:minmax(320px, 1.4fr) minmax(280px, 1fr);gap:20px;align-items:start">
+      <!-- 3Dmol WebGL Viewer Container -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+        <div style="padding:10px 16px;background:var(--sheet-2);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;font-weight:600;color:var(--ink)" id="viewerTitle">3D Structure Viewer (WebGL)</span>
+          <span class="tag" id="provenanceBadge" style="background:rgba(57,226,201,0.12);color:var(--h-est);border:1px solid rgba(57,226,201,0.3);font-size:11px;padding:2px 8px;border-radius:4px">Predicted by AlphaFold DB</span>
+        </div>
+        <div id="viewer3d" style="width:100%;height:460px;position:relative;background:#0f172a">
+          <div id="viewerLoading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;background:rgba(15,23,42,0.85);z-index:10;font-size:14px">Loading 3D structure...</div>
+        </div>
+        <!-- AlphaFold pLDDT Legend -->
+        <div style="padding:12px 16px;background:var(--sheet);border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:11px">
+          <span style="font-weight:600;color:var(--muted)">pLDDT Confidence:</span>
+          <span style="display:flex;align-items:center;gap:4px"><i style="width:10px;height:10px;border-radius:2px;background:#0053D6;display:inline-block"></i> Very High (>90)</span>
+          <span style="display:flex;align-items:center;gap:4px"><i style="width:10px;height:10px;border-radius:2px;background:#65CBF3;display:inline-block"></i> Confident (70–90)</span>
+          <span style="display:flex;align-items:center;gap:4px"><i style="width:10px;height:10px;border-radius:2px;background:#FFDB13;display:inline-block"></i> Low (50–70)</span>
+          <span style="display:flex;align-items:center;gap:4px"><i style="width:10px;height:10px;border-radius:2px;background:#FF7D45;display:inline-block"></i> Very Low / Disordered (&lt;50)</span>
+        </div>
+      </div>
+
+      <!-- Synchronized Statistical Inspector -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+          <h3 style="margin:0 0 12px 0;font-size:15px;color:var(--ink)" id="metaProteinName">Cellular tumor antigen p53</h3>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px" id="metaOrganism">Homo sapiens (TaxId: 9606)</div>
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+            <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">Sequence Length</div>
+              <b style="font-size:18px;color:var(--ink)" id="statLength">393 aa</b>
+            </div>
+            <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">Mean pLDDT</div>
+              <b style="font-size:18px;color:var(--h-est)" id="statMeanPlddt">68.4</b>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px">
+              <span>Confidence Distribution</span>
+              <span id="statConfidentPct">61% confident (≥70)</span>
+            </div>
+            <div style="height:8px;background:var(--rule);border-radius:4px;overflow:hidden;display:flex" id="plddtBar">
+              <div id="barVeryHigh" style="width:30%;background:#0053D6" title="Very high"></div>
+              <div id="barConfident" style="width:31%;background:#65CBF3" title="Confident"></div>
+              <div id="barLow" style="width:15%;background:#FFDB13" title="Low"></div>
+              <div id="barVeryLow" style="width:24%;background:#FF7D45" title="Very low"></div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--rule);padding-top:14px;display:flex;flex-direction:column;gap:8px;font-size:12px">
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--muted)">UniProt Accession:</span>
+              <a href="https://www.uniprot.org/uniprotkb/P04637" target="_blank" rel="noopener" id="linkUniprot" style="color:var(--h-est);font-family:var(--f-mono)">P04637 ↗</a>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--muted)">AlphaFold DB Record:</span>
+              <a href="https://alphafold.ebi.ac.uk/entry/P04637" target="_blank" rel="noopener" id="linkAfdb" style="color:var(--h-est);font-family:var(--f-mono)">AF-P04637-F1 ↗</a>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span style="color:var(--muted)">AlphaGenome Atlas:</span>
+              <a href="https://deepmind.google.com/science/alphagenome/atlas?q=TP53" target="_blank" rel="noopener" id="linkAlphaGenome" style="color:var(--h-est);font-family:var(--f-mono)">deepmind.google.com ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <h4 style="margin:0 0 8px 0;font-size:13px;color:var(--ink)">Structural & Statistical Notes</h4>
+          <p style="font-size:12px;line-height:1.55;color:var(--ink-2);margin:0" id="structNotes">
+            AlphaFold per-residue pLDDT measures local structural confidence on a scale of 0 to 100. Disordered N- and C-terminal tails frequently display pLDDT &lt; 50, reflecting genuine intrinsic disorder rather than model failure. The core DNA-binding domain (residues 102–292) exhibits high confidence (&gt; 90).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Chemistry & Pharmacology (PubChem & Lipinski Rules) -->
+  <div class="sci-tab-pane" id="tab-chemistry" hidden>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;max-width:540px">
+      <input type="text" id="chemInput" placeholder="Drug or chemical name (e.g. Imatinib, Aspirin, Paclitaxel)" value="Imatinib" class="sci-input" style="flex:1;padding:10px 14px;background:var(--sheet);border:1px solid var(--rule);border-radius:8px;color:var(--ink);font-family:var(--f-mono);font-size:13px">
+      <button id="loadChemBtn" class="btn primary" style="white-space:nowrap">Analyze Compound</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:minmax(280px, 1fr) minmax(320px, 1.4fr);gap:20px;align-items:start">
+      <!-- 2D Structure Card -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;overflow:hidden;padding:18px;text-align:center">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <b style="font-size:16px;color:var(--ink)" id="chemName">Imatinib</b>
+          <span class="tag" style="background:rgba(181,157,255,0.12);color:var(--h-mgf);border:1px solid rgba(181,157,255,0.3);font-size:11px;padding:2px 8px;border-radius:4px" id="chemCidBadge">CID: 5291</span>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:14px;display:inline-block;max-width:100%;margin:0 auto">
+          <img id="chemImage" src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/5291/PNG" alt="Chemical structure" style="max-height:260px;width:auto;display:block;margin:0 auto">
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted)">
+          Depiction from NCBI PubChem PUG REST
+        </div>
+        <div style="margin-top:10px">
+          <a id="chemPubchemLink" href="https://pubchem.ncbi.nlm.nih.gov/compound/5291" target="_blank" rel="noopener" class="btn" style="font-size:12px;padding:6px 14px">View on PubChem ↗</a>
+        </div>
+      </div>
+
+      <!-- Lipinski Rule of 5 & Pharmacology Profile -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h3 style="margin:0;font-size:16px;color:var(--ink)">Lipinski Drug-Likeness Evaluation</h3>
+          <span id="lipinskiBadge" style="background:rgba(87,227,156,0.15);color:var(--ok);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600">Compliant (0 Violations)</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+          <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Molecular Weight (≤ 500 Da)</div>
+            <b style="font-size:16px;color:var(--ink)" id="chemMw">493.6 g/mol</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Partition Coeff (XLogP ≤ 5)</div>
+            <b style="font-size:16px;color:var(--ink)" id="chemXlogp">3.5</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">H-Bond Donors (≤ 5)</div>
+            <b style="font-size:16px;color:var(--ink)" id="chemHbd">2</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">H-Bond Acceptors (≤ 10)</div>
+            <b style="font-size:16px;color:var(--ink)" id="chemHba">7</b>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Topological Polar Surface Area (TPSA ≤ 140 Å²)</div>
+          <b style="font-size:14px;color:var(--ink)" id="chemTpsa">86.3 Å²</b>
+        </div>
+
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Canonical SMILES String</div>
+          <div style="padding:10px 12px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;font-family:var(--f-mono);font-size:11px;color:var(--ink);word-break:break-all" id="chemSmiles">
+            CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Genomic Variants & ClinVar -->
+  <div class="sci-tab-pane" id="tab-genomics" hidden>
+    <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="margin:0;font-size:16px;color:var(--ink)">Curated Cancer & Disease Variants (ClinVar & dbSNP)</h3>
+          <p style="margin:4px 0 0 0;font-size:12px;color:var(--muted)">High-impact missense mutations and clinical pathogenicity classifications</p>
+        </div>
+        <a href="https://deepmind.google.com/science/alphagenome/atlas" target="_blank" rel="noopener" class="btn" style="font-size:12px">Open AlphaGenome Atlas ↗</a>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;text-align:left">
+          <thead>
+            <tr style="border-bottom:2px solid var(--rule);color:var(--muted)">
+              <th style="padding:10px 8px">Gene</th>
+              <th style="padding:10px 8px">Variant (HGVS)</th>
+              <th style="padding:10px 8px">dbSNP / ClinVar</th>
+              <th style="padding:10px 8px">Clinical Significance</th>
+              <th style="padding:10px 8px">Associated Condition</th>
+              <th style="padding:10px 8px">AlphaGenome Deep Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--rule)">
+              <td style="padding:10px 8px;font-weight:600;color:var(--ink)">TP53</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)">p.Arg175His (R175H)</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)"><a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/12356/" target="_blank" rel="noopener" style="color:var(--h-est)">VCV000012356</a></td>
+              <td style="padding:10px 8px"><span style="background:rgba(220,38,38,0.15);color:#DC2626;padding:3px 8px;border-radius:12px;font-weight:600;font-size:11px">Pathogenic</span></td>
+              <td style="padding:10px 8px;color:var(--ink-2)">Li-Fraumeni syndrome 1</td>
+              <td style="padding:10px 8px"><a href="https://deepmind.google.com/science/alphagenome/atlas?q=chr17:7675088:C:T" target="_blank" rel="noopener" style="color:var(--h-est)">Explore locus ↗</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--rule)">
+              <td style="padding:10px 8px;font-weight:600;color:var(--ink)">TP53</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)">p.Arg248Gln (R248Q)</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)"><a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/12361/" target="_blank" rel="noopener" style="color:var(--h-est)">VCV000012361</a></td>
+              <td style="padding:10px 8px"><span style="background:rgba(220,38,38,0.15);color:#DC2626;padding:3px 8px;border-radius:12px;font-weight:600;font-size:11px">Pathogenic</span></td>
+              <td style="padding:10px 8px;color:var(--ink-2)">Li-Fraumeni syndrome 1</td>
+              <td style="padding:10px 8px"><a href="https://deepmind.google.com/science/alphagenome/atlas?q=chr17:7674220:C:T" target="_blank" rel="noopener" style="color:var(--h-est)">Explore locus ↗</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--rule)">
+              <td style="padding:10px 8px;font-weight:600;color:var(--ink)">BRCA1</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)">p.Cys61Gly (C61G)</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)"><a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/17667/" target="_blank" rel="noopener" style="color:var(--h-est)">VCV000017667</a></td>
+              <td style="padding:10px 8px"><span style="background:rgba(220,38,38,0.15);color:#DC2626;padding:3px 8px;border-radius:12px;font-weight:600;font-size:11px">Pathogenic</span></td>
+              <td style="padding:10px 8px;color:var(--ink-2)">Hereditary breast and ovarian cancer</td>
+              <td style="padding:10px 8px"><a href="https://deepmind.google.com/science/alphagenome/atlas?q=BRCA1" target="_blank" rel="noopener" style="color:var(--h-est)">Explore locus ↗</a></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--rule)">
+              <td style="padding:10px 8px;font-weight:600;color:var(--ink)">EGFR</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)">p.Leu858Arg (L858R)</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)"><a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/16609/" target="_blank" rel="noopener" style="color:var(--h-est)">VCV000016609</a></td>
+              <td style="padding:10px 8px"><span style="background:rgba(220,38,38,0.15);color:#DC2626;padding:3px 8px;border-radius:12px;font-weight:600;font-size:11px">Pathogenic</span></td>
+              <td style="padding:10px 8px;color:var(--ink-2)">Non-small cell lung cancer sensitivity</td>
+              <td style="padding:10px 8px"><a href="https://deepmind.google.com/science/alphagenome/atlas?q=EGFR" target="_blank" rel="noopener" style="color:var(--h-est)">Explore locus ↗</a></td>
+            </tr>
+            <tr>
+              <td style="padding:10px 8px;font-weight:600;color:var(--ink)">PCSK9</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)">p.Arg46Leu (R46L)</td>
+              <td style="padding:10px 8px;font-family:var(--f-mono)"><a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/178550/" target="_blank" rel="noopener" style="color:var(--h-est)">VCV000178550</a></td>
+              <td style="padding:10px 8px"><span style="background:rgba(5,150,105,0.15);color:#059669;padding:3px 8px;border-radius:12px;font-weight:600;font-size:11px">Benign (Loss of function)</span></td>
+              <td style="padding:10px 8px;color:var(--ink-2)">Low LDL cholesterol protection</td>
+              <td style="padding:10px 8px"><a href="https://deepmind.google.com/science/alphagenome/atlas?q=PCSK9" target="_blank" rel="noopener" style="color:var(--h-est)">Explore locus ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: Biomedical Literature & Evidence Search -->
+  <div class="sci-tab-pane" id="tab-literature" hidden>
+    <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:20px">
+      <div style="display:flex;gap:12px;margin-bottom:18px;max-width:620px">
+        <input type="text" id="litInput" placeholder="Search Europe PMC (e.g. AlphaFold, MLE phylogeny, Weibull oncology)" value="AlphaFold structure prediction" class="sci-input" style="flex:1;padding:10px 14px;background:var(--sheet-2);border:1px solid var(--rule);border-radius:8px;color:var(--ink);font-size:13px">
+        <button id="searchLitBtn" class="btn primary" style="white-space:nowrap">Search Europe PMC</button>
+      </div>
+
+      <div id="litResults" style="display:flex;flex-direction:column;gap:12px">
+        <div style="color:var(--muted);font-size:13px">Loading peer-reviewed literature...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>; Hillier and Lieberman, <i>Introduction to Operations Research</i>. Powered by Google DeepMind Science Skills (AlphaFold DB, RCSB PDB, PubChem, ClinVar, Europe PMC).</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="est">
+    <div class="ctx-eyebrow" id="ctxTopic">Study Tools</div>
+    <div class="ctx-title" id="ctxTitle">Science Workbench</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Capabilities</span><div id="ctxAns">3D AlphaFold, PubChem &amp; ClinVar</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within page">
+      <a href="#tab-structure"><span>3D Structures</span><span>AlphaFold</span></a>
+      <a href="#tab-chemistry"><span>Chemistry</span><span>PubChem</span></a>
+      <a href="#tab-genomics"><span>Genomics</span><span>ClinVar</span></a>
+      <a href="#tab-literature"><span>Literature</span><span>Europe PMC</span></a>
+    </nav>
+    <div class="ctx-nav"><a href="workbench.html#workbench" class="btn">← Checker</a><a href="bridge.html#bridge" class="btn primary">Bridge →</a></div>
+  </div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/app.js"></script>
+<script>
+// Science Workbench Page Logic
+(() => {
+  let viewer = null;
+  let isSpinning = false;
+
+  // Initialize 3Dmol viewer
+  function initViewer() {
+    const el = document.getElementById('viewer3d');
+    if (!el || !window.$3Dmol) return;
+    viewer = $3Dmol.createViewer(el, {
+      defaultcolors: $3Dmol.rasmolElementColors,
+      backgroundColor: '#0f172a'
+    });
+  }
+
+  // AlphaFold canonical pLDDT color function
+  function getPlddtColor(b) {
+    if (b > 90) return '#0053D6'; // Very high (>90): Dark Blue
+    if (b > 70) return '#65CBF3'; // Confident (70-90): Light Blue
+    if (b > 50) return '#FFDB13'; // Low (50-70): Yellow
+    return '#FF7D45';             // Very low (<50): Orange / Disordered
+  }
+
+  // Apply chosen color & style
+  function applyRepresentation() {
+    if (!viewer) return;
+    const colorMode = document.getElementById('colorModeSelect').value;
+    const styleMode = document.getElementById('styleModeSelect').value;
+
+    let colorSpec = {};
+    if (colorMode === 'plddt') {
+      colorSpec = { colorfunc: atom => getPlddtColor(atom.b) };
+    } else if (colorMode === 'spectrum') {
+      colorSpec = { color: 'spectrum' };
+    } else if (colorMode === 'ss') {
+      colorSpec = { color: 'ss' };
+    } else {
+      colorSpec = {};
+    }
+
+    const styleSpec = {};
+    if (styleMode === 'cartoon') styleSpec.cartoon = colorSpec;
+    else if (styleMode === 'stick') styleSpec.stick = colorSpec;
+    else if (styleMode === 'sphere') styleSpec.sphere = colorSpec;
+
+    viewer.setStyle({}, styleSpec);
+    viewer.render();
+  }
+
+  // Load AlphaFold or PDB Structure
+  async function loadStructure(query) {
+    const loadingEl = document.getElementById('viewerLoading');
+    if (loadingEl) loadingEl.style.display = 'flex';
+    if (!viewer) initViewer();
+
+    const clean = query.trim().toUpperCase();
+    const isPdb = clean.length === 4;
+
+    try {
+      if (isPdb) {
+        // Fetch PDB coordinate file
+        const cifRes = await fetch(`https://files.rcsb.org/download/${clean}.cif`);
+        if (!cifRes.ok) throw new Error(`Could not load PDB ${clean}`);
+        const cifData = await cifRes.text();
+
+        viewer.clear();
+        viewer.addModel(cifData, 'cif');
+        applyRepresentation();
+        viewer.zoomTo();
+        viewer.render();
+
+        // Update UI metadata
+        document.getElementById('viewerTitle').textContent = `RCSB PDB: ${clean} (Experimental Crystal)`;
+        document.getElementById('provenanceBadge').textContent = 'Experimentally Determined - RCSB PDB';
+        document.getElementById('provenanceBadge').style.color = 'var(--h-mgf)';
+        document.getElementById('metaProteinName').textContent = `PDB Entry ${clean}`;
+        document.getElementById('metaOrganism').textContent = 'Experimental 3D Macromolecular Structure';
+        document.getElementById('linkAfdb').textContent = `rcsb.org/structure/${clean} ↗`;
+        document.getElementById('linkAfdb').href = `https://www.rcsb.org/structure/${clean}`;
+        document.getElementById('structNotes').textContent = `High-resolution experimental crystal structure from RCSB PDB. B-factors represent atomic displacement and thermal mobility parameters.`;
+      } else {
+        // Fetch AlphaFold prediction from server proxy
+        const afRes = await fetch(`/api/science/alphafold/${clean}`);
+        if (!afRes.ok) throw new Error(`AlphaFold DB prediction not found for ${clean}`);
+        const afData = await afRes.json();
+        const pred = Array.isArray(afData) ? afData[0] : afData;
+
+        const cifUrl = pred.cifUrl || `https://alphafold.ebi.ac.uk/files/AF-${clean}-F1-model_v6.cif`;
+        const cifRes = await fetch(cifUrl);
+        if (!cifRes.ok) throw new Error('Could not download coordinate file');
+        const cifData = await cifRes.text();
+
+        viewer.clear();
+        viewer.addModel(cifData, 'cif');
+        applyRepresentation();
+        viewer.zoomTo();
+        viewer.render();
+
+        // Parse atoms to compute pLDDT distribution statistics
+        let sumB = 0, count = 0, vHigh = 0, conf = 0, low = 0, vLow = 0;
+        const atoms = viewer.selectedAtoms({});
+        atoms.forEach(a => {
+          if (a.b != null && a.atom === 'CA') { // Alpha carbons
+            const b = a.b;
+            sumB += b;
+            count++;
+            if (b > 90) vHigh++;
+            else if (b > 70) conf++;
+            else if (b > 50) low++;
+            else vLow++;
+          }
+        });
+
+        const meanB = count ? (sumB / count).toFixed(1) : '70.0';
+        const confidentPct = count ? Math.round(((vHigh + conf) / count) * 100) : 60;
+
+        document.getElementById('viewerTitle').textContent = `AlphaFold DB: ${pred.gene || clean} (${pred.uniprotId || clean})`;
+        document.getElementById('provenanceBadge').textContent = 'Predicted by AlphaFold DB (v6)';
+        document.getElementById('provenanceBadge').style.color = 'var(--h-est)';
+        document.getElementById('metaProteinName').textContent = pred.uniprotDescription || pred.gene || clean;
+        document.getElementById('metaOrganism').textContent = `${pred.organismScientificName || 'Homo sapiens'} (TaxId: ${pred.taxId || 9606})`;
+        document.getElementById('statLength').textContent = `${pred.uniprotEnd || count} aa`;
+        document.getElementById('statMeanPlddt').textContent = meanB;
+        document.getElementById('statConfidentPct').textContent = `${confidentPct}% confident (≥70)`;
+
+        if (count > 0) {
+          document.getElementById('barVeryHigh').style.width = (vHigh / count * 100) + '%';
+          document.getElementById('barConfident').style.width = (conf / count * 100) + '%';
+          document.getElementById('barLow').style.width = (low / count * 100) + '%';
+          document.getElementById('barVeryLow').style.width = (vLow / count * 100) + '%';
+        }
+
+        document.getElementById('linkUniprot').href = `https://www.uniprot.org/uniprotkb/${clean}`;
+        document.getElementById('linkUniprot').textContent = `${clean} ↗`;
+        document.getElementById('linkAfdb').href = `https://alphafold.ebi.ac.uk/entry/${clean}`;
+        document.getElementById('linkAfdb').textContent = `${pred.entryId || clean} ↗`;
+        document.getElementById('linkAlphaGenome').href = `https://deepmind.google.com/science/alphagenome/atlas?q=${pred.gene || clean}`;
+
+        document.getElementById('structNotes').textContent = `AlphaFold per-residue pLDDT measures local structural confidence on a scale of 0 to 100. Disordered loops frequently display pLDDT < 50, reflecting genuine intrinsic disorder. Well-folded globular domains exhibit high confidence (> 90).`;
+      }
+    } catch (err) {
+      if (window.Atlas && window.Atlas.toast) window.Atlas.toast('Error loading structure: ' + err.message);
+    } finally {
+      if (loadingEl) loadingEl.style.display = 'none';
+    }
+  }
+
+  // Chemistry: PubChem Loader
+  async function loadCompound(name) {
+    try {
+      const res = await fetch(`/api/science/pubchem/${encodeURIComponent(name)}`);
+      if (!res.ok) throw new Error('Compound not found in PubChem');
+      const data = await res.json();
+      const comp = data.PC_Compounds?.[0];
+      if (!comp) throw new Error('No compound data returned');
+
+      const cid = comp.id?.id?.cid;
+      let mw = 'Unknown', xlogp = 'N/A', hbd = 0, hba = 0, tpsa = 0, smiles = '';
+
+      comp.props?.forEach(p => {
+        const label = p.urn?.label;
+        const name = p.urn?.name;
+        if (label === 'Molecular Weight') mw = p.value?.sval || p.value?.fval;
+        if (label === 'Log P' && name === 'XLogP3') xlogp = p.value?.fval;
+        if (label === 'Hydrogen Acceptor' && name === 'Count') hba = p.value?.ival;
+        if (label === 'Hydrogen Donor' && name === 'Count') hbd = p.value?.ival;
+        if (label === 'Polar Surface Area' && name === 'Topological') tpsa = p.value?.fval;
+        if (label === 'SMILES' && name === 'Canonical') smiles = p.value?.sval;
+      });
+
+      document.getElementById('chemName').textContent = name;
+      document.getElementById('chemCidBadge').textContent = `CID: ${cid}`;
+      document.getElementById('chemImage').src = `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/PNG`;
+      document.getElementById('chemPubchemLink').href = `https://pubchem.ncbi.nlm.nih.gov/compound/${cid}`;
+
+      document.getElementById('chemMw').textContent = mw + ' g/mol';
+      document.getElementById('chemXlogp').textContent = xlogp;
+      document.getElementById('chemHbd').textContent = hbd;
+      document.getElementById('chemHba').textContent = hba;
+      document.getElementById('chemTpsa').textContent = tpsa + ' Å²';
+      document.getElementById('chemSmiles').textContent = smiles || 'Not available';
+
+      // Lipinski Rule of 5 evaluation
+      let violations = 0;
+      if (parseFloat(mw) > 500) violations++;
+      if (parseFloat(xlogp) > 5) violations++;
+      if (hbd > 5) violations++;
+      if (hba > 10) violations++;
+
+      const badge = document.getElementById('lipinskiBadge');
+      if (violations === 0) {
+        badge.textContent = 'Compliant (0 Violations)';
+        badge.style.background = 'rgba(87,227,156,0.15)';
+        badge.style.color = 'var(--ok)';
+      } else {
+        badge.textContent = `${violations} Violation(s) - Moderate Lipinski Alert`;
+        badge.style.background = 'rgba(255,194,77,0.15)';
+        badge.style.color = 'var(--tb)';
+      }
+    } catch (err) {
+      if (window.Atlas && window.Atlas.toast) window.Atlas.toast('PubChem error: ' + err.message);
+    }
+  }
+
+  // Literature: Europe PMC Loader
+  async function searchLiterature(q) {
+    const container = document.getElementById('litResults');
+    container.innerHTML = '<div style="color:var(--muted);font-size:13px">Searching Europe PMC...</div>';
+    try {
+      const res = await fetch(`/api/science/europepmc?query=${encodeURIComponent(q)}&pageSize=6`);
+      if (!res.ok) throw new Error('Search failed');
+      const data = await res.json();
+      const list = data.resultList?.result || [];
+      if (!list.length) {
+        container.innerHTML = '<div style="color:var(--muted);font-size:13px">No articles found. Try another query.</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div style="background:var(--sheet-2);border:1px solid var(--rule);border-radius:8px;padding:14px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px">
+            <a href="https://europepmc.org/article/${item.source}/${item.id}" target="_blank" rel="noopener" style="font-weight:600;font-size:14px;color:var(--ink);text-decoration:none">
+              ${item.title || 'Untitled'}
+            </a>
+            <span style="background:rgba(77,199,255,0.12);color:var(--h-cont);padding:2px 8px;border-radius:12px;font-size:11px;white-space:nowrap;font-weight:600">
+              Cited: ${item.citedByCount || 0}
+            </span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">
+            ${item.authorString || 'Authors'} · <i>${item.journalTitle || 'Journal'}</i> (${item.pubYear || 'Recent'})
+          </div>
+          <div style="display:flex;gap:12px;font-size:11px;font-family:var(--f-mono)">
+            ${item.pmid ? `<span style="color:var(--muted)">PMID: ${item.pmid}</span>` : ''}
+            ${item.doi ? `<span style="color:var(--muted)">DOI: ${item.doi}</span>` : ''}
+            <a href="https://europepmc.org/article/${item.source}/${item.id}" target="_blank" rel="noopener" style="color:var(--h-est);margin-left:auto">Open Record ↗</a>
+          </div>
+        </div>
+      `).join('');
+    } catch (err) {
+      container.innerHTML = `<div style="color:var(--bad);font-size:13px">Error: ${err.message}</div>`;
+    }
+  }
+
+  // Wire UI Events
+  document.querySelectorAll('#sciTabs .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#sciTabs .chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      const targetId = btn.dataset.tab;
+      document.querySelectorAll('.sci-tab-pane').forEach(p => p.hidden = true);
+      const pane = document.getElementById(targetId);
+      if (pane) pane.hidden = false;
+      if (targetId === 'tab-structure' && viewer) {
+        setTimeout(() => { viewer.resize(); viewer.render(); }, 50);
+      }
+    });
+  });
+
+  // Quick-Try Example Chips
+  document.querySelectorAll('.sci-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const type = chip.dataset.type;
+      const q = chip.dataset.query;
+      if (type === 'protein' || type === 'pdb') {
+        document.querySelector('#sciTabs .chip[data-tab="tab-structure"]').click();
+        document.getElementById('structInput').value = q;
+        loadStructure(q);
+      } else if (type === 'drug') {
+        document.querySelector('#sciTabs .chip[data-tab="tab-chemistry"]').click();
+        document.getElementById('chemInput').value = q;
+        loadCompound(q);
+      }
+    });
+  });
+
+  // Controls
+  document.getElementById('loadStructBtn').addEventListener('click', () => {
+    const val = document.getElementById('structInput').value;
+    if (val) loadStructure(val);
+  });
+  document.getElementById('colorModeSelect').addEventListener('change', applyRepresentation);
+  document.getElementById('styleModeSelect').addEventListener('change', applyRepresentation);
+
+  document.getElementById('spinBtn').addEventListener('click', () => {
+    if (!viewer) return;
+    isSpinning = !isSpinning;
+    viewer.spin(isSpinning);
+    document.getElementById('spinBtn').textContent = isSpinning ? 'Stop Spin' : 'Toggle Spin';
+  });
+
+  document.getElementById('resetCamBtn').addEventListener('click', () => {
+    if (!viewer) return;
+    viewer.zoomTo();
+    viewer.render();
+  });
+
+  document.getElementById('loadChemBtn').addEventListener('click', () => {
+    const val = document.getElementById('chemInput').value;
+    if (val) loadCompound(val);
+  });
+
+  document.getElementById('searchLitBtn').addEventListener('click', () => {
+    const val = document.getElementById('litInput').value;
+    if (val) searchLiterature(val);
+  });
+
+  // Initial load
+  initViewer();
+  loadStructure('P04637');
+  loadCompound('Imatinib');
+  searchLiterature('AlphaFold structure prediction');
+})();
+</script>
+</body></html>

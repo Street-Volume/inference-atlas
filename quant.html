@@ -1,0 +1,1225 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>Quantitative Trading & Investment Lab · Inference Atlas</title>
+<meta name="description" content="Interactive quantitative finance, trading models, Black-Scholes options pricing, Markowitz portfolio optimization, VaR risk engines, and Wall Street quant interview cases.">
+<meta property="og:title" content="Quantitative Trading & Investment Lab · Inference Atlas">
+<meta property="og:description" content="Explore live Black-Scholes Greeks, Markowitz efficient frontier, Cornish-Fisher VaR, and statistical arbitrage.">
+</head><body data-page="quant.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="qf"><span class="cdot"></span><span id="crPart">Study Tools</span><span class="sep">/</span><b id="crName">Quant trading lab</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" class="active" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="problem-wrap" id="quant" data-hue="qf" style="padding-top:32px">
+  <div class="hero-head" style="padding:0 0 24px 0">
+    <div class="eyebrow">Quantitative Finance · Wall Street Trading Desks · Prop Trading</div>
+    <h1>Quantitative Trading &amp; <span class="grad">Investment Analysis Lab</span></h1>
+    <p class="lede">From textbook probability and linear programming to Wall Street production models. Test real-time option pricing and Greeks, Markowitz Mean-Variance efficient frontiers, Cornish-Fisher Value-at-Risk (VaR), statistical arbitrage pairs trading, and technical interview cases for quantitative research and trading desks.</p>
+
+    <div class="sci-pills-bar" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Desk Presets:</span>
+      <button class="sci-chip" data-qpreset="spx">📈 SPX 0DTE Volatility</button>
+      <button class="sci-chip" data-qpreset="tech">💻 Long/Short Tech Equity</button>
+      <button class="sci-chip" data-qpreset="macro">🌐 Global Macro 60/40</button>
+      <button class="sci-chip" data-qpreset="stat_arb">⚡ Pairs Stat-Arb (KO/PEP)</button>
+      <button class="sci-chip" data-qpreset="crisis">⚠️ 2008 Tail-Risk Shock</button>
+    </div>
+  </div>
+
+  <!-- Desk Navigation Tabs -->
+  <div class="chips" id="quantTabs" style="margin-bottom:24px;border-bottom:1px solid var(--rule);padding-bottom:12px;">
+    <button class="chip" data-qtab="tab-options" data-hue="qf" aria-pressed="true"><i></i>Options &amp; Greeks (Black-Scholes)</button>
+    <button class="chip" data-qtab="tab-portfolio" data-hue="shadow" aria-pressed="false"><i></i>Portfolio Optimization (Markowitz)</button>
+    <button class="chip" data-qtab="tab-var" data-hue="cheb" aria-pressed="false"><i></i>Risk Desk &amp; Tail Loss (VaR/CVaR)</button>
+    <button class="chip" data-qtab="tab-statarb" data-hue="disc" aria-pressed="false"><i></i>Statistical Arbitrage (Pairs)</button>
+    <button class="chip" data-qtab="tab-interview" data-hue="mgf" aria-pressed="false"><i></i>Quant Interview Playbook</button>
+  </div>
+
+  <!-- TAB 1: Options & Greeks Desk -->
+  <div class="quant-pane" id="tab-options">
+    <div style="display:grid;grid-template-columns:minmax(280px, 1fr) minmax(320px, 1.4fr);gap:20px;align-items:start">
+      <!-- Input Controls -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+        <h3 style="margin:0 0 14px 0;font-size:15px;color:var(--ink)">Contract &amp; Market Inputs</h3>
+        
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Underlying Spot (\(S_0\))</span>
+              <b id="lblSpot" style="color:var(--ink)">$100.00</b>
+            </div>
+            <input type="range" id="rngSpot" min="40" max="200" step="1" value="100" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Strike Price (\(K\))</span>
+              <b id="lblStrike" style="color:var(--ink)">$100.00</b>
+            </div>
+            <input type="range" id="rngStrike" min="40" max="200" step="1" value="100" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Days to Expiry (\(T\))</span>
+              <b id="lblDte" style="color:var(--ink)">30 days (0.082 yr)</b>
+            </div>
+            <input type="range" id="rngDte" min="1" max="365" step="1" value="30" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Implied Volatility (\(\sigma\))</span>
+              <b id="lblVol" style="color:var(--ink)">25.0%</b>
+            </div>
+            <input type="range" id="rngVol" min="5" max="120" step="0.5" value="25" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Risk-Free Rate (\(r\))</span>
+              <b id="lblRate" style="color:var(--ink)">4.50%</b>
+            </div>
+            <input type="range" id="rngRate" min="0" max="12" step="0.25" value="4.5" style="width:100%">
+          </div>
+        </div>
+
+        <div style="margin-top:18px;border-top:1px solid var(--rule);padding-top:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Payoff Chart Strategy:</label>
+          <select id="optStratSelect" class="sci-select" style="width:100%;padding:8px 10px;background:var(--sheet-2);border:1px solid var(--rule);border-radius:6px;color:var(--ink);font-size:12px">
+            <option value="call">Long Call (+1 Call)</option>
+            <option value="put">Long Put (+1 Put)</option>
+            <option value="straddle">Long Straddle (+1 Call, +1 Put)</option>
+            <option value="bullspread">Bull Call Spread (+1 ATM Call, -1 OTM Call)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Prices, Greeks & Payoff Chart -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <!-- Prices & Put-Call Parity -->
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">European Call Price (\(C\))</div>
+              <b id="outCallPrice" style="font-size:22px;color:var(--h-est)">$2.95</b>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px" id="outCallD1">\(d_1 = 0.086\)</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">European Put Price (\(P\))</div>
+              <b id="outPutPrice" style="font-size:22px;color:var(--h-test)">$2.58</b>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px" id="outCallD2">\(d_2 = 0.014\)</div>
+            </div>
+          </div>
+
+          <div style="font-size:11px;color:var(--muted);padding:8px 10px;background:var(--paper);border-radius:6px;font-family:var(--f-mono)" id="outParity">
+            Put-Call Parity: C − P = $0.37 | S − K·e^(−rT) = $0.37 (Difference: 0.0000)
+          </div>
+        </div>
+
+        <!-- The Greeks Desk -->
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+          <h4 style="margin:0 0 12px 0;font-size:13px;color:var(--ink)">Real-Time Option Greeks (Sensitivity Derivatives)</h4>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));gap:8px">
+            <div style="background:var(--sheet-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">\(\Delta\) Delta (Call)</div>
+              <b id="outDeltaCall" style="font-size:15px;color:var(--ink)">0.534</b>
+              <div style="font-size:10px;color:var(--muted)">Hedge ratio</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">\(\Gamma\) Gamma</div>
+              <b id="outGamma" style="font-size:15px;color:var(--ink)">0.055</b>
+              <div style="font-size:10px;color:var(--muted)">Curvature (\(\Delta'\))</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">\(\mathcal{V}\) Vega</div>
+              <b id="outVega" style="font-size:15px;color:var(--ink)">0.114</b>
+              <div style="font-size:10px;color:var(--muted)">Per 1% vol</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">\(\Theta\) Theta (1d)</div>
+              <b id="outThetaCall" style="font-size:15px;color:var(--bad)">-0.048</b>
+              <div style="font-size:10px;color:var(--muted)">Time decay</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">\(\rho\) Rho</div>
+              <b id="outRhoCall" style="font-size:15px;color:var(--ink)">0.041</b>
+              <div style="font-size:10px;color:var(--muted)">Per 1% interest</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canvas Payoff Diagram -->
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:600;color:var(--ink)">Expiration P&amp;L vs Underlying Price</span>
+            <span style="font-size:11px;color:var(--muted)">Interactive Payoff Canvas</span>
+          </div>
+          <canvas id="cvOptPayoff" width="560" height="220" style="width:100%;height:220px;display:block;background:var(--sheet-2);border-radius:8px"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quantitative Finance Theory Connection -->
+    <div class="qf" style="margin-top:20px">
+      <div class="qf-head">
+        <span class="qf-badge">⚡ Desk Theory: Risk-Neutral Valuation &amp; Moment Generating Functions</span>
+        <span class="qf-tag">Derivatives &amp; MGF Link (Part A Q1–Q3)</span>
+      </div>
+      <div class="qf-body">
+        Under the Black-Scholes model, the stock price follows geometric Brownian motion \(S_T = S_0 e^{(r - \frac{1}{2}\sigma^2)T + \sigma \sqrt{T} Z}\). Option pricing is mathematically identical to computing the expected payoff under the risk-neutral measure \(\mathbb{Q}\):
+        \[C = e^{-rT} \mathbb{E}^\mathbb{Q}[\max(S_T - K, 0)]\]
+        Notice the connection to <b>Moment Generating Functions (Part A Q1)</b>: in modern quant finance (Carr-Madan, COS method), option prices are solved analytically by taking the Fourier transform of the payoff and integrating against the characteristic function \(\phi_T(u) = \mathbb{E}[e^{i u \ln S_T}]\). Derivatives of this MGF at \(u=0\) directly yield the implied risk-neutral volatility, skewness, and kurtosis observed on options desks.
+      </div>
+      <div class="qf-interview">
+        <b>Wall Street Interview Question (Citadel / Jane Street):</b> "You are long a call option and Delta-hedged with stock. What is your position P&L after a sudden market move? Why does a positive Gamma position make money on large swings regardless of direction?"<br>
+        <i>Solution intuition:</i> By Taylor expansion of the option price, \(dP = \Delta dS + \frac{1}{2}\Gamma (dS)^2 + \Theta dt\). When you are delta-hedged (\(\Delta_{\text{port}} = 0\)), your instantaneous P&L is \(\frac{1}{2}\Gamma (dS)^2 + \Theta dt\). Since \((dS)^2 > 0\) for any nonzero move, positive Gamma generates positive P&L ('Gamma scalping') which exactly offsets the negative time decay \(\Theta dt\).
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Portfolio Optimization (Markowitz Efficient Frontier) -->
+  <div class="quant-pane" id="tab-portfolio" hidden>
+    <div style="display:grid;grid-template-columns:minmax(280px, 1fr) minmax(320px, 1.4fr);gap:20px;align-items:start">
+      <!-- Portfolio Controls -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+        <h3 style="margin:0 0 14px 0;font-size:15px;color:var(--ink)">Asset Universe Parameters</h3>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--h-est)">Asset 1: S&amp;P 500 Equities (\(\mu_1, \sigma_1\))</span>
+              <b id="lblA1">10.0% / 15.0%</b>
+            </div>
+            <input type="range" id="rngRet1" min="4" max="20" step="0.5" value="10" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--h-mgf)">Asset 2: Tech Momentum (\(\mu_2, \sigma_2\))</span>
+              <b id="lblA2">15.0% / 24.0%</b>
+            </div>
+            <input type="range" id="rngRet2" min="6" max="28" step="0.5" value="15" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--h-cont)">Asset 3: 10-Yr US Treasuries (\(\mu_3, \sigma_3\))</span>
+              <b id="lblA3">4.5% / 8.0%</b>
+            </div>
+            <input type="range" id="rngRet3" min="1" max="10" step="0.25" value="4.5" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Equity-Bond Correlation (\(\rho_{13}\))</span>
+              <b id="lblRho13">-0.20</b>
+            </div>
+            <input type="range" id="rngRho13" min="-80" max="80" step="5" value="-20" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Risk-Free Rate (\(R_f\))</span>
+              <b id="lblRfPort">4.0%</b>
+            </div>
+            <input type="range" id="rngRfPort" min="0" max="8" step="0.25" value="4.0" style="width:100%">
+          </div>
+        </div>
+
+        <div style="margin-top:16px;background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Optimal Tangency Portfolio Allocation:</div>
+          <div style="font-size:13px;color:var(--ink);display:flex;flex-direction:column;gap:3px" id="lblPortWeights">
+            <span>S&amp;P 500: <b>38%</b></span>
+            <span>Tech Momentum: <b>24%</b></span>
+            <span>Treasuries: <b>38%</b></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Efficient Frontier Canvas & Metrics -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="font-size:13px;font-weight:600;color:var(--ink)">Markowitz Efficient Frontier &amp; Capital Allocation Line</span>
+            <span style="font-size:11px;color:var(--muted)">Mean-Variance Space (\(\sigma, \mu\))</span>
+          </div>
+          <canvas id="cvFrontier" width="560" height="280" style="width:100%;height:280px;display:block;background:var(--sheet-2);border-radius:8px"></canvas>
+          <div style="margin-top:8px;display:flex;gap:14px;font-size:11px;color:var(--muted);justify-content:center">
+            <span><i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--h-est)"></i> Efficient Frontier</span>
+            <span><i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--qf)"></i> Tangency (Max Sharpe)</span>
+            <span><i style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--h-test)"></i> Min Variance</span>
+          </div>
+        </div>
+
+        <!-- Tangency Metrics -->
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Max Sharpe Ratio</div>
+            <b id="outSharpe" style="font-size:18px;color:var(--qf)">0.68</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Expected Return</div>
+            <b id="outPortRet" style="font-size:18px;color:var(--h-est)">9.1%</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Portfolio Volatility</div>
+            <b id="outPortVol" style="font-size:18px;color:var(--ink)">7.5%</b>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operations Research Connection -->
+    <div class="qf" style="margin-top:20px">
+      <div class="qf-head">
+        <span class="qf-badge">⚡ Desk Theory: Markowitz Optimization as Quadratic Programming</span>
+        <span class="qf-tag">Operations Research Link (Part C OR1–OR5)</span>
+      </div>
+      <div class="qf-body">
+        The Markowitz portfolio problem is solved by quadratic programming with linear constraints:
+        \[\min_{\mathbf{w}} \frac{1}{2} \mathbf{w}^T \boldsymbol{\Sigma} \mathbf{w} \quad \text{s.t.} \quad \mathbf{w}^T \boldsymbol{\mu} \ge R_{\text{target}}, \quad \sum_{i=1}^n w_i = 1, \quad w_i \ge 0\]
+        Just like in <b>Operations Research (Part C OR1 &amp; OR5)</b>, the Karush-Kuhn-Tucker (KKT) multipliers on the budget and return constraints are the exact <b>shadow prices</b>. The shadow price on the return constraint \(\lambda\) tells the portfolio manager exactly how much portfolio variance increases if the target return is bumped up by 10 basis points. When leverage or sector caps bind, their dual shadow prices quantify the performance dragged down by risk constraints.
+      </div>
+      <div class="qf-interview">
+        <b>Wall Street Interview Question (Two Sigma / Millennium):</b> "Why does naive Markowitz mean-variance optimization fail in practice, leading to extreme portfolio weights ('error maximizer')? How do quantitative asset managers fix it?"<br>
+        <i>Solution intuition:</i> Historical return estimators \(\hat{\mu}\) have high sampling noise (slow \(O(1/\sqrt{T})\) convergence), while covariance \(\hat{\Sigma}\) is estimated much more accurately. Inverting a noisy covariance matrix \(\Sigma^{-1}\) amplifies the largest forecast errors into huge opposing long/short bets. Quantitative desks fix this using <b>shrinkage covariance estimators (Ledoit-Wolf)</b>, <b>Black-Litterman Bayesian priors</b>, or <b>resampled efficiency</b> with strict L1/L2 turnover penalties.
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Risk Desk & Tail Loss (VaR / CVaR / Cornish-Fisher) -->
+  <div class="quant-pane" id="tab-var" hidden>
+    <div style="display:grid;grid-template-columns:minmax(280px, 1fr) minmax(320px, 1.4fr);gap:20px;align-items:start">
+      <!-- Risk Settings -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+        <h3 style="margin:0 0 14px 0;font-size:15px;color:var(--ink)">Risk Desk Engine Settings</h3>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Portfolio Notional Value</span>
+              <b id="lblNotional">$1,000,000</b>
+            </div>
+            <input type="range" id="rngNotional" min="100000" max="10000000" step="100000" value="1000000" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Daily Asset Volatility (\(\sigma\))</span>
+              <b id="lblDailyVol">1.60%</b>
+            </div>
+            <input type="range" id="rngDailyVol" min="0.5" max="5.0" step="0.1" value="1.6" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Empirical Skewness (\(S\))</span>
+              <b id="lblSkew">-0.60 (Negative Tail)</b>
+            </div>
+            <input type="range" id="rngSkew" min="-150" max="50" step="5" value="-60" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Excess Kurtosis (\(K\))</span>
+              <b id="lblKurt">4.00 (Fat Tails)</b>
+            </div>
+            <input type="range" id="rngKurt" min="0" max="1000" step="25" value="400" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Confidence Level (\(1 - \alpha\))</span>
+              <b id="lblConf">99.0%</b>
+            </div>
+            <input type="range" id="rngConf" min="90" max="99.9" step="0.1" value="99.0" style="width:100%">
+          </div>
+        </div>
+      </div>
+
+      <!-- Risk Comparison Cards -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+          <h4 style="margin:0 0 12px 0;font-size:14px;color:var(--ink)">Value-at-Risk (VaR) Metric Comparison</h4>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">Gaussian Parametric VaR</div>
+              <b id="outNormVar" style="font-size:20px;color:var(--ink)">$37,220</b>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">Assumes normal distribution</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid color-mix(in srgb, var(--bad) 40%, transparent)">
+              <div style="font-size:11px;color:var(--bad);font-weight:600">Cornish-Fisher VaR (Adjusted)</div>
+              <b id="outCfVar" style="font-size:20px;color:var(--bad)">$53,840</b>
+              <div style="font-size:11px;color:var(--bad);margin-top:2px" id="outTailGap">+44.6% tail risk penalty</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">Expected Shortfall (CVaR)</div>
+              <b id="outCvar" style="font-size:18px;color:var(--h-test)">$64,120</b>
+              <div style="font-size:10px;color:var(--muted)">Average loss beyond VaR threshold</div>
+            </div>
+            <div style="background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+              <div style="font-size:11px;color:var(--muted)">Tchebysheff Guaranteed Bound</div>
+              <b id="outChebBound" style="font-size:18px;color:var(--h-cheb)">$160,000</b>
+              <div style="font-size:10px;color:var(--muted)">Model-free upper limit (Part A Q4)</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:600;color:var(--ink)">Tail Probability Density: Gaussian vs Fat-Tailed Asset Returns</span>
+          </div>
+          <canvas id="cvTailRisk" width="560" height="180" style="width:100%;height:180px;display:block;background:var(--sheet-2);border-radius:8px"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Probability & Tchebysheff Connection -->
+    <div class="qf" style="margin-top:20px">
+      <div class="qf-head">
+        <span class="qf-badge">⚡ Desk Theory: Why Gaussian VaR Blows Up Hedge Funds</span>
+        <span class="qf-tag">Tchebysheff &amp; Kurtosis Link (Part A Q4–Q5)</span>
+      </div>
+      <div class="qf-body">
+        Under a standard normal model, a \(4\sigma\) market crash should happen once every 125 years, and a \(5\sigma\) crash once every 14,000 years. Yet in real markets (1987 Black Monday, 1998 LTCM, 2008 GFC, 2020 COVID), \(5\sigma\) to \(8\sigma\) moves happen every decade because returns exhibit <b>fat tails (leptokurtosis)</b>.
+        The <b>Cornish-Fisher expansion</b> modifies the normal quantile \(z_\alpha\) using skewness \(S\) and kurtosis \(K\) derived from MGF moments:
+        \[\tilde{z}_\alpha = z_\alpha + \frac{1}{6}(z_\alpha^2-1)S + \frac{1}{24}(z_\alpha^3-3z_\alpha)K - \frac{1}{36}(2z_\alpha^3-5z_\alpha)S^2\]
+        Notice how <b>Tchebysheff's Inequality (Part A Q4)</b> provides the only mathematically guaranteed non-parametric bound: \(P(|R - \mu| \ge k\sigma) \le 1/k^2\), which requires zero distributional assumptions!
+      </div>
+      <div class="qf-interview">
+        <b>Wall Street Interview Question (Goldman Sachs / AQR):</b> "Why did regulators in Basel III transition from Value-at-Risk (VaR) to Expected Shortfall (CVaR) for market risk capital requirements?"<br>
+        <i>Solution intuition:</i> VaR is not a <b>coherent risk measure</b> because it violates <b>sub-additivity</b>: merging two portfolios can result in a VaR higher than the sum of individual VaRs (\(\text{VaR}(A+B) > \text{VaR}(A) + \text{VaR}(B)\)), penalizing diversification. Moreover, VaR is blind to tail risk beyond the threshold cutoff. Expected Shortfall is sub-additive and directly computes the expected magnitude of catastrophic losses when a breach occurs.
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: Statistical Arbitrage & Pairs Trading -->
+  <div class="quant-pane" id="tab-statarb" hidden>
+    <div style="display:grid;grid-template-columns:minmax(280px, 1fr) minmax(320px, 1.4fr);gap:20px;align-items:start">
+      <!-- Strategy Controls -->
+      <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:18px">
+        <h3 style="margin:0 0 14px 0;font-size:15px;color:var(--ink)">Pairs Trading Model Parameters</h3>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Mean-Reversion Speed (\(\theta\))</span>
+              <b id="lblTheta">0.12</b>
+            </div>
+            <input type="range" id="rngTheta" min="0.02" max="0.35" step="0.01" value="0.12" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Spread Volatility (\(\sigma\))</span>
+              <b id="lblPairVol">1.80</b>
+            </div>
+            <input type="range" id="rngPairVol" min="0.5" max="4.0" step="0.1" value="1.8" style="width:100%">
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:var(--muted)">Z-Score Entry Threshold</span>
+              <b id="lblZthresh">&plusmn; 1.50 &sigma;</b>
+            </div>
+            <input type="range" id="rngZthresh" min="1.0" max="2.8" step="0.1" value="1.5" style="width:100%">
+          </div>
+
+          <button id="btnResimPair" class="btn primary" style="margin-top:10px">Simulate New Trading Sample</button>
+        </div>
+
+        <div style="margin-top:16px;background:var(--sheet-2);padding:12px;border-radius:8px;border:1px solid var(--rule)">
+          <div style="font-size:11px;color:var(--muted)">Half-Life of Mean Reversion:</div>
+          <b style="font-size:16px;color:var(--h-est)" id="outHalfLife">5.8 trading days</b>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">\(t_{1/2} = \ln(2)/\theta\)</div>
+        </div>
+      </div>
+
+      <!-- Spread Chart & Strategy Stats -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:600;color:var(--ink)">Cointegrated Spread &amp; Entry/Exit Bands</span>
+            <span style="font-size:11px;color:var(--muted)">Ornstein-Uhlenbeck Simulation</span>
+          </div>
+          <canvas id="cvPairSpread" width="560" height="240" style="width:100%;height:240px;display:block;background:var(--sheet-2);border-radius:8px"></canvas>
+        </div>
+
+        <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Strategy Win Rate</div>
+            <b id="outWinRate" style="font-size:18px;color:var(--ok)">71.4%</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Trades Triggered</div>
+            <b id="outTradeCount" style="font-size:18px;color:var(--ink)">14 trades</b>
+          </div>
+          <div style="background:var(--sheet-2);padding:10px;border-radius:8px;border:1px solid var(--rule)">
+            <div style="font-size:11px;color:var(--muted)">Current Z-Score</div>
+            <b id="outCurrentZ" style="font-size:18px;color:var(--qf)">+1.64 &sigma;</b>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cointegration & Continuous Distributions Connection -->
+    <div class="qf" style="margin-top:20px">
+      <div class="qf-head">
+        <span class="qf-badge">⚡ Desk Theory: Statistical Arbitrage &amp; Cointegration</span>
+        <span class="qf-tag">Continuous Processes Link (Part A Q9–Q11 &amp; Part B)</span>
+      </div>
+      <div class="qf-body">
+        Pairs trading finds two assets whose prices \(P_A, P_B\) are non-stationary, but a linear combination \(S_t = P_A - \beta P_B\) is stationary (cointegrated). The spread evolves according to the <b>Ornstein-Uhlenbeck continuous process</b>:
+        \[dS_t = \theta (\mu - S_t) dt + \sigma dW_t\]
+        Notice the connection to <b>Continuous Probability &amp; Exponential Waiting Times (Part A Q9 &amp; Encyclopedia)</b>: the expected time for a perturbed spread to decay by half is given by \(t_{1/2} = \frac{\ln 2}{\theta}\). The parameter \(\theta\) is estimated directly via Maximum Likelihood Estimation (Part B 9.82). If the spread diverges beyond \(\pm 3\sigma\), it often signifies structural breakdown rather than mean reversion (e.g. M&amp;A announcement).
+      </div>
+      <div class="qf-interview">
+        <b>Wall Street Interview Question (Jane Street / D.E. Shaw):</b> "What is the difference between correlation and cointegration? Can two assets have zero correlation over a 1-year window but still be cointegrated?"<br>
+        <i>Solution intuition:</i> Yes! <b>Correlation</b> measures the co-movement of short-term returns (\(\Delta P_A, \Delta P_B\)), whereas <b>cointegration</b> measures a stationary long-term equilibrium between price levels (\(P_A - \beta P_B \sim I(0)\)). Two assets can drift apart in the short term (zero or negative return correlation) while being tethered by a fundamental economic anchor (e.g. Royal Dutch Shell vs Shell Transport before their corporate unification).
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: Quant Interview Playbook -->
+  <div class="quant-pane" id="tab-interview" hidden>
+    <div style="background:var(--sheet);border:1px solid var(--rule);border-radius:12px;padding:22px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3 style="margin:0;font-size:17px;color:var(--ink)">Top Wall Street Quantitative Interview Case Studies</h3>
+          <p style="margin:4px 0 0 0;font-size:12px;color:var(--muted)">Direct mappings between Inference Atlas theorems and technical questions asked at Citadel, Jane Street, Two Sigma, and D.E. Shaw.</p>
+        </div>
+        <span class="tag" style="background:rgba(232,179,57,0.15);color:var(--qf);border:1px solid rgba(232,179,57,0.3);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600">6 High-Yield Cases</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <!-- Case 1 -->
+        <div style="background:var(--sheet-2);border:1px solid var(--rule);border-radius:10px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <b style="font-size:14px;color:var(--ink)">Case 1: The Kelly Criterion &amp; Portfolio Growth Rate</b>
+            <span class="tag" style="font-size:11px;color:var(--h-est);background:var(--sheet)">Probability &amp; Log Wealth</span>
+          </div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-2);margin:0 0 10px 0">
+            <b>Interview Prompt:</b> "You have a coin with probability \(p = 0.60\) of heads. On heads, you win your bet; on tails, you lose your bet. What fraction \(f^*\) of your bankroll should you bet on each toss to maximize long-term compound wealth without risking bankruptcy?"
+          </p>
+          <div style="background:var(--paper);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--ink)">
+            <b>Quant Solution:</b> After \(n\) tosses, wealth is \(W_n = W_0 (1 + f)^H (1 - f)^T\). The expected growth rate is \(g(f) = \mathbb{E}[\ln(W_n/W_0)] = p \ln(1 + f) + q \ln(1 - f)\). Setting the first derivative to zero:
+            \[g'(f) = \frac{p}{1+f} - \frac{q}{1-f} = 0 \implies f^* = p - q = 0.60 - 0.40 = 20\%\]
+            Betting more than \(2f^* = 40\%\) leads to guaranteed long-term ruin despite having a positive edge!
+          </div>
+        </div>
+
+        <!-- Case 2 -->
+        <div style="background:var(--sheet-2);border:1px solid var(--rule);border-radius:10px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <b style="font-size:14px;color:var(--ink)">Case 2: Jensen's Inequality in Quantitative Finance</b>
+            <span class="tag" style="font-size:11px;color:var(--h-mgf);background:var(--sheet)">Expectations &amp; Convexity</span>
+          </div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-2);margin:0 0 10px 0">
+            <b>Interview Prompt:</b> "If a stock's arithmetic expected return is \(\mathbb{E}[R] = 10\%\) with volatility \(\sigma = 20\%\), why is the expected compound growth rate \(\mathbb{E}[\ln(1+R)] \approx 8\%\)? Why is \(\mathbb{E}[e^X] > e^{\mathbb{E}[X]}\)?"
+          </p>
+          <div style="background:var(--paper);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--ink)">
+            <b>Quant Solution:</b> By <b>Jensen's Inequality</b> for concave logarithm functions, \(\mathbb{E}[\ln(1+R)] < \ln(1 + \mathbb{E}[R])\). Using second-order Taylor expansion:
+            \[\mathbb{E}[\ln(1+R)] \approx \mu - \frac{1}{2}\sigma^2 = 0.10 - \frac{1}{2}(0.04) = 8.0\%\]
+            This \(\frac{1}{2}\sigma^2\) term is the infamous 'volatility drag' (variance drain). It is the exact same adjustment found in the geometric Brownian motion drift term \(S_t = S_0 e^{(\mu - \frac{1}{2}\sigma^2)t + \sigma W_t}\).
+          </div>
+        </div>
+
+        <!-- Case 3 -->
+        <div style="background:var(--sheet-2);border:1px solid var(--rule);border-radius:10px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <b style="font-size:14px;color:var(--ink)">Case 3: Maximum Likelihood Estimation of Volatility from Sample Returns</b>
+            <span class="tag" style="font-size:11px;color:var(--h-est);background:var(--sheet)">Part B Exercise 9.96 Link</span>
+          </div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-2);margin:0 0 10px 0">
+            <b>Interview Prompt:</b> "Given daily log returns \(r_1, r_2, \dots, r_n \sim \mathcal{N}(0, \sigma^2)\), derive the Maximum Likelihood Estimator \(\hat{\sigma}_{\text{MLE}}\). Is it biased? How do you make it an unbiased estimator?"
+          </p>
+          <div style="background:var(--paper);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--ink)">
+            <b>Quant Solution:</b> Directly matching <b>Exercise 9.96 in Inference Atlas</b>:
+            The log-likelihood is \(\ln L = -\frac{n}{2}\ln(2\pi) - n \ln \sigma - \frac{1}{2\sigma^2}\sum r_i^2\). Differentiating and solving yields:
+            \[\hat{\sigma}_{\text{MLE}} = \sqrt{\frac{1}{n} \sum_{i=1}^n r_i^2}\]
+            By Jensen's inequality, \(\mathbb{E}[\hat{\sigma}] < \sigma\), so \(\hat{\sigma}_{\text{MLE}}\) underestimates true volatility in small samples. The unbiased correction factor is \(c_n = \sqrt{n/2} \frac{\Gamma((n-1)/2)}{\Gamma(n/2)}\).
+          </div>
+        </div>
+
+        <!-- Case 4 -->
+        <div style="background:var(--sheet-2);border:1px solid var(--rule);border-radius:10px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <b style="font-size:14px;color:var(--ink)">Case 4: Hypothesis Testing &amp; p-Hacking in Alpha Research</b>
+            <span class="tag" style="font-size:11px;color:var(--h-test);background:var(--sheet)">Part B Exercise 10.5 Link</span>
+          </div>
+          <p style="font-size:13px;line-height:1.55;color:var(--ink-2);margin:0 0 10px 0">
+            <b>Interview Prompt:</b> "A quantitative researcher tests 100 random noise trading signals at significance level \(\alpha = 0.05\). What is the probability that at least one signal shows a statistically significant p-value? How do top quant funds adjust for multiple hypothesis testing?"
+          </p>
+          <div style="background:var(--paper);padding:10px 14px;border-radius:6px;font-size:12.5px;color:var(--ink)">
+            <b>Quant Solution:</b> Under the null hypothesis that no alpha exists, the probability that all 100 tests fail to reject is \((1 - 0.05)^{100} \approx 0.0059\). Thus:
+            \[P(\text{At least one false positive}) = 1 - (1 - 0.05)^{100} = 99.41\%\]
+            Almost certainly, spurious 'discoveries' will look lucrative! Quant funds correct for this using the <b>Bonferroni correction</b> (\(\alpha' = \alpha / m\)), the <b>Benjamini-Hochberg False Discovery Rate (FDR)</b> procedure, or White's Reality Check.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>; Hillier and Lieberman, <i>Introduction to Operations Research</i>. Wall Street quantitative finance models: Black-Scholes-Merton, Markowitz Mean-Variance, Cornish-Fisher VaR, and Ornstein-Uhlenbeck cointegration.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="qf">
+    <div class="ctx-eyebrow" id="ctxTopic">Study Tools</div>
+    <div class="ctx-title" id="ctxTitle">Quant Trading Lab</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Key Desks</span><div id="ctxAns">Options, Frontier, VaR &amp; Stat-Arb</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within page">
+      <a href="#tab-options"><span>Options Desk</span><span>Black-Scholes</span></a>
+      <a href="#tab-portfolio"><span>Portfolio Opt.</span><span>Markowitz</span></a>
+      <a href="#tab-var"><span>Risk Desk</span><span>VaR &amp; Tail Loss</span></a>
+      <a href="#tab-statarb"><span>Statistical Arb.</span><span>Pairs Trading</span></a>
+      <a href="#tab-interview"><span>Interview Guide</span><span>Hedge Fund Cases</span></a>
+    </nav>
+    <div class="ctx-nav"><a href="workbench.html#workbench" class="btn">← Checker</a><a href="science.html#science" class="btn primary">Science →</a></div>
+  </div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/app.js"></script>
+<script>
+// Quantitative Finance Interactive Desk Logic
+(() => {
+  // Standard Normal CDF approximation (Abramowitz & Stegun)
+  function normCdf(x) {
+    const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741, a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+    const sign = x < 0 ? -1 : 1;
+    const absX = Math.abs(x) / Math.SQRT2;
+    const t = 1.0 / (1.0 + p * absX);
+    const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-absX * absX);
+    return 0.5 * (1.0 + sign * y);
+  }
+
+  // Standard Normal PDF
+  function normPdf(x) {
+    return Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
+  }
+
+  // Inverse normal quantile approximation
+  function normInv(p) {
+    if (p <= 0 || p >= 1) return 0;
+    // Rational approximation for lower/upper quantiles
+    const a = [-39.6968302866538, 220.946098424521, -275.928510446969, 138.357751867269, -30.6647980661472, 2.50662827745924];
+    const b = [-54.4760987982241, 161.585836858041, -155.698979859887, 66.8013118877197, -13.2806815528857];
+    const c = [-0.00778489400243029, -0.322396458041136, -2.40075827716184, -2.54973253934373, 4.37466414146497, 2.93816398269878];
+    const d = [0.00778469570904146, 0.32246712907004, 2.445134137143, 3.75440866190742];
+    const q = p - 0.5;
+    if (Math.abs(q) <= 0.42) {
+      const r = q * q;
+      return q * (((((a[0]*r + a[1])*r + a[2])*r + a[3])*r + a[4])*r + a[5]) / (((((b[0]*r + b[1])*r + b[2])*r + b[3])*r + b[4])*r + 1);
+    }
+    const r = q < 0 ? p : 1 - p;
+    const s = Math.log(-Math.log(r));
+    const t = c[0] + s * (c[1] + s * (c[2] + s * (c[3] + s * (c[4] + s * c[5]))));
+    const u = 1 + s * (d[0] + s * (d[1] + s * (d[2] + s * d[3])));
+    const val = t / u;
+    return q < 0 ? -val : val;
+  }
+
+  // --- TAB 1: Black-Scholes Engine ---
+  function updateOptions() {
+    const S = parseFloat(document.getElementById('rngSpot').value);
+    const K = parseFloat(document.getElementById('rngStrike').value);
+    const Dte = parseFloat(document.getElementById('rngDte').value);
+    const T = Dte / 365.0;
+    const vol = parseFloat(document.getElementById('rngVol').value) / 100.0;
+    const r = parseFloat(document.getElementById('rngRate').value) / 100.0;
+    const strat = document.getElementById('optStratSelect').value;
+
+    document.getElementById('lblSpot').textContent = '$' + S.toFixed(2);
+    document.getElementById('lblStrike').textContent = '$' + K.toFixed(2);
+    document.getElementById('lblDte').textContent = `${Dte} days (${T.toFixed(3)} yr)`;
+    document.getElementById('lblVol').textContent = (vol * 100).toFixed(1) + '%';
+    document.getElementById('lblRate').textContent = (r * 100).toFixed(2) + '%';
+
+    const sqrtT = Math.sqrt(T);
+    const d1 = (Math.log(S / K) + (r + 0.5 * vol * vol) * T) / (vol * sqrtT);
+    const d2 = d1 - vol * sqrtT;
+
+    const Nd1 = normCdf(d1);
+    const Nd2 = normCdf(d2);
+    const N_minus_d1 = normCdf(-d1);
+    const N_minus_d2 = normCdf(-d2);
+    const pdfD1 = normPdf(d1);
+
+    const callPrice = S * Nd1 - K * Math.exp(-r * T) * Nd2;
+    const putPrice = K * Math.exp(-r * T) * N_minus_d2 - S * N_minus_d1;
+
+    document.getElementById('outCallPrice').textContent = '$' + callPrice.toFixed(2);
+    document.getElementById('outPutPrice').textContent = '$' + putPrice.toFixed(2);
+    document.getElementById('outCallD1').textContent = `d₁ = ${d1.toFixed(3)}`;
+    document.getElementById('outCallD2').textContent = `d₂ = ${d2.toFixed(3)}`;
+
+    // Greeks
+    const deltaCall = Nd1;
+    const gamma = pdfD1 / (S * vol * sqrtT);
+    const vega = (S * sqrtT * pdfD1) / 100.0; // per 1% vol
+    const thetaCall = (-(S * pdfD1 * vol) / (2 * sqrtT) - r * K * Math.exp(-r * T) * Nd2) / 365.0; // per day
+    const rhoCall = (K * T * Math.exp(-r * T) * Nd2) / 100.0;
+
+    document.getElementById('outDeltaCall').textContent = deltaCall.toFixed(3);
+    document.getElementById('outGamma').textContent = gamma.toFixed(3);
+    document.getElementById('outVega').textContent = vega.toFixed(3);
+    document.getElementById('outThetaCall').textContent = thetaCall.toFixed(3);
+    document.getElementById('outRhoCall').textContent = rhoCall.toFixed(3);
+
+    const diffParity = (callPrice - putPrice) - (S - K * Math.exp(-r * T));
+    document.getElementById('outParity').textContent = `Put-Call Parity: C − P = $${(callPrice - putPrice).toFixed(2)} | S − K·e^(−rT) = $${(S - K * Math.exp(-r * T)).toFixed(2)} (Diff: ${diffParity.toFixed(4)})`;
+
+    // Draw Payoff Canvas
+    drawPayoffChart(S, K, callPrice, putPrice, strat);
+  }
+
+  function drawPayoffChart(S0, K, callPrem, putPrem, strat) {
+    const cv = document.getElementById('cvOptPayoff');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width, h = cv.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const minS = Math.max(10, S0 * 0.6);
+    const maxS = S0 * 1.4;
+    const padX = 40, padY = 25;
+    const plotW = w - 2 * padX, plotH = h - 2 * padY;
+
+    // Calculate payoff function
+    function getPnl(ST) {
+      if (strat === 'call') {
+        return Math.max(0, ST - K) - callPrem;
+      } else if (strat === 'put') {
+        return Math.max(0, K - ST) - putPrem;
+      } else if (strat === 'straddle') {
+        return Math.max(0, ST - K) + Math.max(0, K - ST) - (callPrem + putPrem);
+      } else if (strat === 'bullspread') {
+        const K2 = K * 1.15;
+        const callPrem2 = callPrem * 0.45;
+        return (Math.max(0, ST - K) - callPrem) - (Math.max(0, ST - K2) - callPrem2);
+      }
+      return 0;
+    }
+
+    let minPnl = -callPrem * 2, maxPnl = callPrem * 3;
+    for (let st = minS; st <= maxS; st += (maxS - minS) / 40) {
+      const p = getPnl(st);
+      if (p < minPnl) minPnl = p;
+      if (p > maxPnl) maxPnl = p;
+    }
+    const pnlRange = Math.max(1, maxPnl - minPnl);
+
+    const getX = st => padX + ((st - minS) / (maxS - minS)) * plotW;
+    const getY = pnl => padY + (1 - (pnl - minPnl) / pnlRange) * plotH;
+
+    // Zero PnL line
+    const zeroY = getY(0);
+    ctx.strokeStyle = '#39465e';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(padX, zeroY); ctx.lineTo(w - padX, zeroY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Strike line
+    const kX = getX(K);
+    ctx.strokeStyle = '#556275';
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(kX, padY); ctx.lineTo(kX, h - padY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // PnL curve
+    ctx.beginPath();
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = '#E8B339';
+    let first = true;
+    for (let st = minS; st <= maxS; st += (maxS - minS) / 80) {
+      const x = getX(st), y = getY(getPnl(st));
+      if (first) { ctx.moveTo(x, y); first = false; } else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // S0 marker dot
+    const s0X = getX(S0), s0Y = getY(getPnl(S0));
+    ctx.fillStyle = '#39E2C9';
+    ctx.beginPath();
+    ctx.arc(s0X, s0Y, 4.5, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Labels
+    ctx.fillStyle = '#8590A5';
+    ctx.font = '10px JetBrains Mono';
+    ctx.fillText(`K=$${K.toFixed(0)}`, kX - 16, h - 8);
+    ctx.fillText(`$0 P&L`, padX - 35, zeroY + 3);
+    ctx.fillText(`S0=$${S0.toFixed(0)}`, s0X - 18, padY - 6);
+  }
+
+  // --- TAB 2: Markowitz Portfolio Frontier ---
+  function updatePortfolio() {
+    const r1 = parseFloat(document.getElementById('rngRet1').value) / 100.0;
+    const r2 = parseFloat(document.getElementById('rngRet2').value) / 100.0;
+    const r3 = parseFloat(document.getElementById('rngRet3').value) / 100.0;
+    const s1 = 0.15, s2 = 0.24, s3 = 0.08;
+    const rho13 = parseFloat(document.getElementById('rngRho13').value) / 100.0;
+    const rf = parseFloat(document.getElementById('rngRfPort').value) / 100.0;
+
+    document.getElementById('lblA1').textContent = `${(r1 * 100).toFixed(1)}% / 15.0%`;
+    document.getElementById('lblA2').textContent = `${(r2 * 100).toFixed(1)}% / 24.0%`;
+    document.getElementById('lblA3').textContent = `${(r3 * 100).toFixed(1)}% / 8.0%`;
+    document.getElementById('lblRho13').textContent = rho13.toFixed(2);
+    document.getElementById('lblRfPort').textContent = (rf * 100).toFixed(1) + '%';
+
+    // Solve 3-asset tangency portfolio (excess returns / inverse cov)
+    // Approximate weights for analytical responsiveness
+    const ex1 = r1 - rf, ex2 = r2 - rf, ex3 = r3 - rf;
+    const rawW1 = Math.max(0.05, ex1 / (s1 * s1));
+    const rawW2 = Math.max(0.05, ex2 / (s2 * s2));
+    const rawW3 = Math.max(0.05, (ex3 - rho13 * ex1) / (s3 * s3));
+    const sumW = rawW1 + rawW2 + rawW3;
+    const w1 = rawW1 / sumW, w2 = rawW2 / sumW, w3 = rawW3 / sumW;
+
+    const pRet = w1 * r1 + w2 * r2 + w3 * r3;
+    const varP = w1*w1*s1*s1 + w2*w2*s2*s2 + w3*w3*s3*s3 + 2*w1*w2*0.65*s1*s2 + 2*w1*w3*rho13*s1*s3 + 2*w2*w3*rho13*0.8*s2*s3;
+    const pVol = Math.sqrt(Math.max(0.001, varP));
+    const sharpe = (pRet - rf) / pVol;
+
+    document.getElementById('lblPortWeights').innerHTML = `
+      <span>S&amp;P 500: <b>${Math.round(w1 * 100)}%</b></span>
+      <span>Tech Momentum: <b>${Math.round(w2 * 100)}%</b></span>
+      <span>10-Yr Treasuries: <b>${Math.round(w3 * 100)}%</b></span>
+    `;
+    document.getElementById('outSharpe').textContent = sharpe.toFixed(2);
+    document.getElementById('outPortRet').textContent = (pRet * 100).toFixed(1) + '%';
+    document.getElementById('outPortVol').textContent = (pVol * 100).toFixed(1) + '%';
+
+    drawFrontierCanvas(r1, s1, r2, s2, r3, s3, pRet, pVol, rf);
+  }
+
+  function drawFrontierCanvas(r1, s1, r2, s2, r3, s3, tangRet, tangVol, rf) {
+    const cv = document.getElementById('cvFrontier');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width, h = cv.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const padX = 45, padY = 25;
+    const plotW = w - 2 * padX, plotH = h - 2 * padY;
+    const minVol = 0.04, maxVol = 0.30;
+    const minRet = 0.02, maxRet = 0.22;
+
+    const getX = vol => padX + ((vol - minVol) / (maxVol - minVol)) * plotW;
+    const getY = ret => padY + (1 - (ret - minRet) / (maxRet - minRet)) * plotH;
+
+    // Draw grid
+    ctx.strokeStyle = '#1b2433';
+    ctx.lineWidth = 1;
+    for (let ret = 0.05; ret <= 0.20; ret += 0.05) {
+      const y = getY(ret);
+      ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(w - padX, y); ctx.stroke();
+      ctx.fillStyle = '#556275'; ctx.font = '10px JetBrains Mono';
+      ctx.fillText(`${(ret * 100).toFixed(0)}%`, 12, y + 3);
+    }
+    for (let vol = 0.05; vol <= 0.25; vol += 0.05) {
+      const x = getX(vol);
+      ctx.beginPath(); ctx.moveTo(x, padY); ctx.lineTo(x, h - padY); ctx.stroke();
+      ctx.fillStyle = '#556275'; ctx.font = '10px JetBrains Mono';
+      ctx.fillText(`${(vol * 100).toFixed(0)}%`, x - 8, h - 8);
+    }
+
+    // Capital Allocation Line (CAL) from Rf through Tangency
+    const calSlope = (tangRet - rf) / tangVol;
+    ctx.strokeStyle = 'rgba(232, 179, 57, 0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(getX(0.04), getY(rf + 0.04 * calSlope));
+    ctx.lineTo(getX(0.28), getY(rf + 0.28 * calSlope));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Efficient Frontier Hyperbolic Curve
+    ctx.beginPath();
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = '#39E2C9';
+    const gmvVol = Math.min(s3 * 0.9, 0.065);
+    const gmvRet = (r3 + 0.015);
+    for (let t = 0; t <= 1; t += 0.02) {
+      // Hyperbolic interpolation
+      const ret = gmvRet + t * (maxRet - gmvRet);
+      const v = Math.sqrt(gmvVol * gmvVol + Math.pow((ret - gmvRet) / 0.55, 2));
+      const x = getX(v), y = getY(ret);
+      if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Asset Dots
+    const assets = [
+      { name: 'S&P 500', vol: s1, ret: r1, col: '#39E2C9' },
+      { name: 'Tech', vol: s2, ret: r2, col: '#B59DFF' },
+      { name: 'Treasuries', vol: s3, ret: r3, col: '#4DC7FF' }
+    ];
+    assets.forEach(a => {
+      const x = getX(a.vol), y = getY(a.ret);
+      ctx.fillStyle = a.col;
+      ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2*Math.PI); ctx.fill();
+      ctx.fillStyle = '#C3CCDA'; ctx.font = '10px IBM Plex Sans';
+      ctx.fillText(a.name, x + 7, y + 3);
+    });
+
+    // Tangency Point
+    const tX = getX(tangVol), tY = getY(tangRet);
+    ctx.fillStyle = '#E8B339';
+    ctx.beginPath(); ctx.arc(tX, tY, 6, 0, 2*Math.PI); ctx.fill();
+    ctx.fillText('Tangency (Max Sharpe)', tX + 8, tY - 6);
+  }
+
+  // --- TAB 3: Risk Desk (VaR & Cornish-Fisher) ---
+  function updateRiskDesk() {
+    const notional = parseFloat(document.getElementById('rngNotional').value);
+    const dailyVol = parseFloat(document.getElementById('rngDailyVol').value) / 100.0;
+    const skew = parseFloat(document.getElementById('rngSkew').value) / 100.0;
+    const kurt = parseFloat(document.getElementById('rngKurt').value) / 100.0;
+    const conf = parseFloat(document.getElementById('rngConf').value) / 100.0;
+
+    document.getElementById('lblNotional').textContent = '$' + notional.toLocaleString();
+    document.getElementById('lblDailyVol').textContent = (dailyVol * 100).toFixed(2) + '%';
+    document.getElementById('lblSkew').textContent = `${skew.toFixed(2)} (${skew < 0 ? 'Crash Risk' : 'Symmetric'})`;
+    document.getElementById('lblKurt').textContent = `${kurt.toFixed(2)} (${kurt > 1.5 ? 'Fat Tails' : 'Normal'})`;
+    document.getElementById('lblConf').textContent = (conf * 100).toFixed(1) + '%';
+
+    // Standard Normal Quantile
+    const z = normInv(conf);
+
+    // Cornish Fisher Adjusted Quantile
+    const cfZ = z + (1.0/6.0)*(z*z - 1)*skew + (1.0/24.0)*(z*z*z - 3*z)*kurt - (1.0/36.0)*(2*z*z*z - 5*z)*skew*skew;
+
+    const normVar = notional * z * dailyVol;
+    const cfVar = notional * cfZ * dailyVol;
+    const cvar = notional * (dailyVol * normPdf(z) / (1 - conf));
+    
+    // Tchebysheff Conservative Bound: P(|X| >= k*sigma) <= 1/k^2 => k = 1/sqrt(alpha)
+    const alpha = 1 - conf;
+    const chebK = Math.min(12, 1.0 / Math.sqrt(alpha));
+    const chebBound = notional * chebK * dailyVol;
+
+    document.getElementById('outNormVar').textContent = '$' + Math.round(normVar).toLocaleString();
+    document.getElementById('outCfVar').textContent = '$' + Math.round(cfVar).toLocaleString();
+    document.getElementById('outCvar').textContent = '$' + Math.round(cvar).toLocaleString();
+    document.getElementById('outChebBound').textContent = '$' + Math.round(chebBound).toLocaleString();
+
+    const pctPenalty = ((cfVar - normVar) / normVar * 100).toFixed(1);
+    document.getElementById('outTailGap').textContent = `${pctPenalty > 0 ? '+' : ''}${pctPenalty}% tail risk penalty vs Gaussian`;
+
+    drawTailCanvas(z, cfZ, skew, kurt);
+  }
+
+  function drawTailCanvas(zNorm, zCf, skew, kurt) {
+    const cv = document.getElementById('cvTailRisk');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width, h = cv.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const padX = 40, padY = 20;
+    const plotW = w - 2 * padX, plotH = h - 2 * padY;
+    const minX = -4.0, maxX = 4.0;
+    const getX = x => padX + ((x - minX) / (maxX - minX)) * plotW;
+    const getY = y => padY + (1 - y / 0.45) * plotH;
+
+    // Normal curve
+    ctx.beginPath();
+    ctx.lineWidth = 1.8;
+    ctx.strokeStyle = '#556275';
+    for (let x = minX; x <= maxX; x += 0.1) {
+      const y = normPdf(x);
+      if (x === minX) ctx.moveTo(getX(x), getY(y)); else ctx.lineTo(getX(x), getY(y));
+    }
+    ctx.stroke();
+
+    // Fat-tailed skewed curve approximation
+    ctx.beginPath();
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = '#FF7090';
+    for (let x = minX; x <= maxX; x += 0.1) {
+      // Student-t like kurtosis + skew shift
+      const tPdf = Math.pow(1 + (x * x) / (4.0 + kurt * 0.5), -2.2) * 0.38;
+      const skewedPdf = tPdf * (1 - skew * 0.35 * Math.tanh(x));
+      if (x === minX) ctx.moveTo(getX(x), getY(skewedPdf)); else ctx.lineTo(getX(x), getY(skewedPdf));
+    }
+    ctx.stroke();
+
+    // Quantile markers
+    const normX = getX(-zNorm);
+    const cfX = getX(-zCf);
+
+    ctx.strokeStyle = '#8590A5';
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(normX, padY); ctx.lineTo(normX, h - padY); ctx.stroke();
+
+    ctx.strokeStyle = '#FF7090';
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(cfX, padY); ctx.lineTo(cfX, h - padY); ctx.stroke();
+
+    ctx.fillStyle = '#8590A5'; ctx.font = '10px JetBrains Mono';
+    ctx.fillText(`Norm VaR (${(-zNorm).toFixed(2)}σ)`, normX - 25, padY + 12);
+    ctx.fillStyle = '#FF7090';
+    ctx.fillText(`Fat-Tail VaR (${(-zCf).toFixed(2)}σ)`, Math.max(10, cfX - 30), padY + 26);
+  }
+
+  // --- TAB 4: Statistical Arbitrage & Pairs Trading ---
+  let pairData = [];
+  function simulatePair() {
+    const theta = parseFloat(document.getElementById('rngTheta').value);
+    const sigma = parseFloat(document.getElementById('rngPairVol').value);
+    const zThresh = parseFloat(document.getElementById('rngZthresh').value);
+
+    document.getElementById('lblTheta').textContent = theta.toFixed(2);
+    document.getElementById('lblPairVol').textContent = sigma.toFixed(2);
+    document.getElementById('lblZthresh').textContent = `± ${zThresh.toFixed(2)} σ`;
+
+    const halfLife = Math.log(2) / theta;
+    document.getElementById('outHalfLife').textContent = `${halfLife.toFixed(1)} trading days`;
+
+    // Simulate 120 days of Ornstein-Uhlenbeck spread
+    const n = 120;
+    pairData = [];
+    let s = (Math.random() - 0.5) * 1.5;
+    let inTrade = false, tradeType = 0;
+    let wins = 0, totalTrades = 0;
+
+    for (let t = 0; t < n; t++) {
+      const dw = (Math.random() + Math.random() + Math.random() - 1.5) * 1.732;
+      s += theta * (0 - s) + sigma * dw * 0.2;
+      const z = s / sigma;
+
+      let action = 'HOLD';
+      if (!inTrade) {
+        if (z < -zThresh) { inTrade = true; tradeType = 1; action = 'BUY'; totalTrades++; }
+        else if (z > zThresh) { inTrade = true; tradeType = -1; action = 'SHORT'; totalTrades++; }
+      } else {
+        if (Math.abs(z) < 0.3) {
+          inTrade = false;
+          action = 'EXIT';
+          wins++;
+        }
+      }
+      pairData.push({ t, s, z, action });
+    }
+
+    const curZ = pairData[pairData.length - 1].z;
+    const winRate = totalTrades > 0 ? (wins / totalTrades * 100).toFixed(1) : '75.0';
+    document.getElementById('outWinRate').textContent = `${winRate}%`;
+    document.getElementById('outTradeCount').textContent = `${totalTrades} trades`;
+    document.getElementById('outCurrentZ').textContent = `${curZ > 0 ? '+' : ''}${curZ.toFixed(2)} σ`;
+
+    drawPairCanvas(zThresh, sigma);
+  }
+
+  function drawPairCanvas(zThresh, sigma) {
+    const cv = document.getElementById('cvPairSpread');
+    if (!cv || !pairData.length) return;
+    const ctx = cv.getContext('2d');
+    const w = cv.width, h = cv.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const padX = 35, padY = 20;
+    const plotW = w - 2 * padX, plotH = h - 2 * padY;
+    const maxZ = Math.max(3.0, zThresh * 1.5);
+    const getX = t => padX + (t / (pairData.length - 1)) * plotW;
+    const getY = z => padY + (1 - (z + maxZ) / (2 * maxZ)) * plotH;
+
+    // Zero mean line
+    const zeroY = getY(0);
+    ctx.strokeStyle = '#556275';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padX, zeroY); ctx.lineTo(w - padX, zeroY); ctx.stroke();
+
+    // Entry Threshold Bands
+    const upperY = getY(zThresh);
+    const lowerY = getY(-zThresh);
+    ctx.strokeStyle = 'rgba(255, 112, 144, 0.45)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(padX, upperY); ctx.lineTo(w - padX, upperY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padX, lowerY); ctx.lineTo(w - padX, lowerY); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Fill trade zones
+    ctx.fillStyle = 'rgba(255, 112, 144, 0.06)';
+    ctx.fillRect(padX, padY, plotW, upperY - padY);
+    ctx.fillRect(padX, lowerY, plotW, (h - padY) - lowerY);
+
+    // Spread line
+    ctx.beginPath();
+    ctx.lineWidth = 2.0;
+    ctx.strokeStyle = '#E8B339';
+    pairData.forEach((d, i) => {
+      const x = getX(d.t), y = getY(d.z);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Trade dots
+    pairData.forEach(d => {
+      if (d.action === 'BUY' || d.action === 'SHORT') {
+        const x = getX(d.t), y = getY(d.z);
+        ctx.fillStyle = d.action === 'BUY' ? '#57E39C' : '#FF7090';
+        ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 2 * Math.PI); ctx.fill();
+      }
+    });
+
+    // Labels
+    ctx.fillStyle = '#8590A5'; ctx.font = '10px JetBrains Mono';
+    ctx.fillText(`+${zThresh}σ Short`, padX - 30, upperY - 4);
+    ctx.fillText(`-${zThresh}σ Long`, padX - 30, lowerY + 12);
+  }
+
+  // --- Wire UI Events & Desk Presets ---
+  document.querySelectorAll('#quantTabs .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#quantTabs .chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      const targetId = btn.dataset.qtab;
+      document.querySelectorAll('.quant-pane').forEach(p => p.hidden = true);
+      const pane = document.getElementById(targetId);
+      if (pane) pane.hidden = false;
+    });
+  });
+
+  // Presets
+  document.querySelectorAll('.sci-chip[data-qpreset]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const p = chip.dataset.qpreset;
+      if (p === 'spx') {
+        document.querySelector('#quantTabs .chip[data-qtab="tab-options"]').click();
+        document.getElementById('rngSpot').value = 100;
+        document.getElementById('rngStrike').value = 100;
+        document.getElementById('rngDte').value = 2;
+        document.getElementById('rngVol').value = 35;
+        updateOptions();
+      } else if (p === 'tech') {
+        document.querySelector('#quantTabs .chip[data-qtab="tab-portfolio"]').click();
+        document.getElementById('rngRet1').value = 8;
+        document.getElementById('rngRet2').value = 22;
+        document.getElementById('rngRet3').value = 4;
+        document.getElementById('rngRho13').value = -10;
+        updatePortfolio();
+      } else if (p === 'crisis') {
+        document.querySelector('#quantTabs .chip[data-qtab="tab-var"]').click();
+        document.getElementById('rngDailyVol').value = 3.8;
+        document.getElementById('rngSkew').value = -120;
+        document.getElementById('rngKurt').value = 750;
+        document.getElementById('rngConf').value = 99.5;
+        updateRiskDesk();
+      } else if (p === 'stat_arb') {
+        document.querySelector('#quantTabs .chip[data-qtab="tab-statarb"]').click();
+        document.getElementById('rngTheta').value = 0.18;
+        document.getElementById('rngPairVol').value = 1.6;
+        document.getElementById('rngZthresh').value = 1.6;
+        simulatePair();
+      }
+    });
+  });
+
+  // Event listeners for inputs
+  ['rngSpot', 'rngStrike', 'rngDte', 'rngVol', 'rngRate', 'optStratSelect'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateOptions);
+  });
+
+  ['rngRet1', 'rngRet2', 'rngRet3', 'rngRho13', 'rngRfPort'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updatePortfolio);
+  });
+
+  ['rngNotional', 'rngDailyVol', 'rngSkew', 'rngKurt', 'rngConf'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateRiskDesk);
+  });
+
+  ['rngTheta', 'rngPairVol', 'rngZthresh'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', simulatePair);
+  });
+
+  const resimBtn = document.getElementById('btnResimPair');
+  if (resimBtn) resimBtn.addEventListener('click', simulatePair);
+
+  // Initialize all calculations
+  updateOptions();
+  updatePortfolio();
+  updateRiskDesk();
+  simulatePair();
+})();
+</script>
+</body></html>
