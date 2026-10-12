@@ -105,6 +105,7 @@
     { t: 'MVUE guide', page: 'mvue-guide.html', anchor: 'mvue', kw: 'mvue sufficiency completeness rao blackwell lehmann scheffe minimum variance unbiased pooled estimator' },
     { t: 'Testing vocabulary', page: 'testing-vocab.html', anchor: 'testvocab', kw: 'hypothesis test null alternative type i type ii error alpha beta power rejection region' },
     { t: 'Midterm roadmap', page: 'midterm-guide.html', anchor: 'midterm', kw: 'midterm m466 exam study guide modules priority roadmap mistakes' },
+    { t: 'R lab: build a pmf', page: 'r-lab.html', anchor: 'rlab', kw: 'r project 2 custom distribution pmf cdf cumsum dbinom dpois binomial poisson sliders build' },
     { t: 'Answer checker', page: 'workbench.html', anchor: 'workbench', kw: 'check practice verify webassign key' },
     { t: 'Audit log', page: 'workbench.html', anchor: 'audit', kw: 'errors fixes gemini lab issues' }
   ];
@@ -204,7 +205,7 @@
   const targets = navLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
   const names = {
     top: ['Overview', 'Start here'], map: ['Overview', 'Problem map'], readA: ['Part A', 'Reading list'], readB: ['Part B', 'Reading list'],
-    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], quant: ['Study Tools', 'Quant trading lab'], science: ['Study Tools', 'Science workbench'], mle: ['Study Tools', 'MLE toolkit'], mvue: ['Study Tools', 'MVUE guide'], testvocab: ['Study Tools', 'Testing vocabulary'], midterm: ['Study Tools', 'Midterm roadmap'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
+    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], quant: ['Study Tools', 'Quant trading lab'], science: ['Study Tools', 'Science workbench'], mle: ['Study Tools', 'MLE toolkit'], mvue: ['Study Tools', 'MVUE guide'], testvocab: ['Study Tools', 'Testing vocabulary'], midterm: ['Study Tools', 'Midterm roadmap'], rlab: ['Study Tools', 'R lab: build a pmf'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
   };
   let current = null, currentProblem = null;
   function updateCtx() {
