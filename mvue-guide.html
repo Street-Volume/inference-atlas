@@ -1,0 +1,220 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>MVUE Guide — Inference Atlas</title></head><body data-page="mvue-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="midterm-guide.html#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="mvue" data-hue="est">
+  <div class="ex-head"><span class="ex-num">Ω</span><h2>Finding an MVUE: sufficiency, completeness and Rao–Blackwell</h2></div>
+  <p class="prose">Wackerly, Mendenhall &amp; Scheaffer (2008), Chapter 9, especially §§9.4–9.5. An MVUE claim is really two separate claims bundled together: that an estimator is <i>unbiased</i>, \(E[T]=\tau(\theta)\), and that it has <i>minimum variance among every unbiased estimator</i>. The second half is the one students skip, and it's the one an exam grader checks for.</p>
+
+  <div class="tools">
+    <span class="tag">The four-step recipe</span>
+    <dl>
+      <dt>Likelihood → sufficient statistic U → check completeness → unbiased h(U) → unique MVUE</dt>
+      <dd>1. Use the factorization criterion to find a sufficient statistic \(U\) (Theorem 9.4, p. 461). 2. Establish completeness when needed — minimal sufficiency alone is not enough. 3. Construct \(h\) so that \(E[h(U)]=\tau(\theta)\). 4. Combine complete sufficiency with Rao–Blackwell to conclude \(h(U)\) is the <i>unique</i> MVUE.</dd>
+    </dl>
+  </div>
+  <div class="flag"><b>Chain</b><span>Sufficient ≠ Minimal sufficient ≠ Complete sufficient. Each arrow in the recipe above is a real logical step — none of them is automatic from the last.</span></div>
+
+  <div class="tools">
+    <span class="tag">Factorization criterion and sufficiency</span>
+    <dl>
+      <dt>Theorem 9.4 (p. 461)</dt>
+      <dd>\(U\) is sufficient for \(\theta\) when the likelihood factors as \(\class{tb}{L(y_1,\dots,y_n\mid\theta)=g(U,\theta)\,h(y_1,\dots,y_n)}\), where \(h\) does not depend on \(\theta\). The purpose is information reduction: \(U\) summarizes everything in the sample that is relevant to \(\theta\). Example 9.5 (pp. 461–462) illustrates this in an exponential model.</dd>
+    </dl>
+  </div>
+
+  <div class="tools">
+    <span class="tag">What Rao–Blackwell actually guarantees</span>
+    <dl>
+      <dt>Theorem 9.5, Rao–Blackwell (pp. 464–465)</dt>
+      <dd>If \(T\) is unbiased for \(\tau(\theta)\) and \(U\) is sufficient for \(\theta\), then \(T^*=E(T\mid U)\) satisfies \(E[T^*]=\tau(\theta)\) and \(Var(T^*)\le Var(T)\). Conditioning on a sufficient statistic preserves unbiasedness and can only reduce (or leave unchanged) the variance.</dd>
+    </dl>
+  </div>
+  <div class="flag"><b>Caution</b><span>Rao–Blackwell guarantees variance reduction relative to the estimator you started from — not, by itself, a global minimum over <i>every</i> unbiased estimator. That last mile needs completeness.</span></div>
+
+  <div class="part">
+    <div class="part-title"><h3>The role and limitation of minimal sufficiency</h3></div>
+    <p class="prose">A minimal sufficient statistic is a maximally compressed representation of the sample information relevant to \(\theta\). Exercise 9.66 (pp. 471–472) gives a likelihood-ratio method for verifying it. But <b>minimal sufficient ⇏ complete</b> — so \(U\) being minimal sufficient and \(h(U)\) being unbiased do not, by themselves, prove \(h(U)\) is an MVUE.</p>
+  </div>
+
+  <div class="tools">
+    <span class="tag">Completeness: the missing ingredient</span>
+    <dl>
+      <dt>Exercise 9.68 (p. 472)</dt>
+      <dd>\(U\) is complete when \(E[g(U)]=0\) for every \(\theta\) implies \(g(U)=0\) almost surely. Intuitively: no nontrivial function of \(U\) has expectation zero for every parameter value. This produces uniqueness — if \(g_1(U)\) and \(g_2(U)\) are both unbiased for \(\tau(\theta)\), then \(E[g_1(U)-g_2(U)]=0\) for every \(\theta\), and completeness forces \(g_1(U)=g_2(U)\) almost surely.</dd>
+    </dl>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><h3>The Lehmann–Scheffé logic</h3></div>
+    <ol class="steps">
+      <li><div><p>Suppose \(U\) is complete and sufficient, and \(h(U)\) is unbiased for \(\tau(\theta)\). Take <i>any</i> other unbiased estimator \(T\).</p></div></li>
+      <li><div><p>Rao–Blackwell gives \(T^*=E(T\mid U)\), a function of \(U\) with \(Var(T^*)\le Var(T)\).</p></div></li>
+      <li><div><p>Both \(T^*\) and \(h(U)\) are unbiased functions of \(U\) for the same target, so completeness forces \(T^*=h(U)\) almost surely.</p></div></li>
+      <li><div><p>Hence \(Var[h(U)]=Var[T^*]\le Var[T]\) for <i>every</i> unbiased \(T\) — exactly the MVUE property.</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Lehmann–Scheffé</span><p>Complete sufficiency + unbiasedness ⇒ unique MVUE.</p></div>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><h3>Representative example: Weibull, Example 9.7 (pp. 466–467)</h3></div>
+    <p class="prose">This is the same density that drives <a href="inference.html#ex982">9.82</a> on this site, worked here from the theory side rather than the exam side.</p>
+    <ol class="steps">
+      <li><div><p>Let \(Y_1,\dots,Y_n\) be a random sample from \(f(y\mid\theta)=(2y/\theta)\exp(-y^2/\theta)\), \(y\gt0\). The likelihood is</p>
+        \[ L(\theta)=\left(\frac2\theta\right)^n\left(\prod y_i\right)\exp\!\left\{-\frac1\theta\sum y_i^2\right\} \]
+        <p class="why">Factorization identifies \(U=\sum Y_i^2\) as sufficient. Example 9.7 describes \(U\) as the <i>minimal</i> sufficient statistic; Exercise 9.66(b) verifies that by the likelihood-ratio method.</p></div></li>
+      <li><div><p>Let \(W_i=Y_i^2\). The transformation shows \(W_i\) is exponential with mean \(\theta\), so \(E(Y_i^2)=\theta\) and</p>
+        \[ E(U)=n\theta\ \Longrightarrow\ E(U/n)=\theta \]</div></li>
+      <li><div><p>So \(\hat\theta=U/n=\frac1n\sum Y_i^2\) is an unbiased function of the sufficient statistic. The text concludes this is the MVUE, on the background fact that the statistics used in §9.5 additionally have the completeness property (developed in Exercise 9.68).</p>
+        <p class="why">In a fully explicit solution, state the complete-sufficiency justification whenever it's available — don't just cite Rao–Blackwell and stop.</p></div></li>
+    </ol>
+  </div>
+
+  <div class="flag"><b>Do not memorize</b><span>"Exponential family ⇒ complete" as an unconditional rule. Many standard one-parameter regular exponential-family models (Bernoulli, Poisson, exponential, and relatives) have natural statistics that are complete and sufficient <i>under the relevant conditions</i> — but membership in the family alone doesn't establish completeness; the natural-parameter-space conditions matter. Multiparameter models need extra care: Example 9.8 (pp. 467–468) treats a normal model with both \(\mu\) and \(\sigma^2\) unknown and gets \(\sum Y_i\) and \(\sum Y_i^2\) as <i>jointly</i> sufficient — don't argue "normal is exponential family, so automatically complete."</span></div>
+
+  <div class="answer">
+    <span class="tag">Exam-ready solution template</span>
+    <p>(1) By the factorization criterion, \(U=\dots\) is sufficient for \(\theta\). (2) \(U\) is complete because [state the applicable theorem/conditions]. (3) Since \(E[h(U)]=\tau(\theta)\), \(h(U)\) is unbiased for \(\tau(\theta)\). (4) Therefore, by the complete-sufficiency / Lehmann–Scheffé argument, \(h(U)\) is the unique MVUE of \(\tau(\theta)\).</p>
+    <p class="why">Avoid this inference: <b>U minimal sufficient + h(U) unbiased ⇏ h(U) is MVUE</b>, in general.</p>
+  </div>
+
+  <div class="tablewrap">
+    <table class="fix">
+      <thead><tr><th>Textbook reference</th><th>What to learn</th></tr></thead>
+      <tbody>
+        <tr><td>Theorem 9.4, p. 461</td><td>Factorization criterion for identifying sufficient statistics.</td></tr>
+        <tr><td>Example 9.5, pp. 461–462</td><td>Illustration of sufficiency in an exponential model.</td></tr>
+        <tr><td>Theorem 9.5, pp. 464–465</td><td>Rao–Blackwell: conditioning on a sufficient statistic preserves unbiasedness, never increases variance.</td></tr>
+        <tr><td>Example 9.6, p. 466</td><td>Bernoulli example using \(U=\sum Y_i\) to obtain the MVUE of \(p\).</td></tr>
+        <tr><td>Example 9.7, pp. 466–467</td><td>Weibull example using \(U=\sum Y_i^2\) to obtain the MVUE of \(\theta\) — the same density as 9.82.</td></tr>
+        <tr><td>Example 9.8, pp. 467–468</td><td>Normal model with both \(\mu\) and \(\sigma^2\) unknown; jointly sufficient statistics.</td></tr>
+        <tr><td>Exercise 9.65, p. 471</td><td>Direct Rao–Blackwell calculation in a Bernoulli model.</td></tr>
+        <tr><td>Exercise 9.66, pp. 471–472</td><td>Likelihood-ratio method for minimal sufficiency, applied to Bernoulli and Weibull.</td></tr>
+        <tr><td>Exercise 9.68, p. 472</td><td>Definition of completeness, uniqueness of unbiased functions of a complete statistic, and the connection to the unique MVUE.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="takeaway">Recommended study sequence: Theorem 9.4 → Theorem 9.5 → Example 9.7 → Exercise 9.65 → Exercise 9.66 → Exercise 9.68. That order makes the progression from sufficiency, to variance reduction, to practical MVUE construction, to minimal sufficiency, and finally to completeness/uniqueness, especially clear.</p>
+</section>
+
+<div class="chapter" data-hue="shadow">Extension: unequal, known-ratio variances</div>
+<section class="ex" id="pooled" data-hue="shadow">
+  <div class="ex-head"><span class="ex-num">+</span><h2>A pooled estimator when the two variances aren't equal</h2></div>
+  <div class="problem">
+    <span class="tag">Motivation</span>
+    <p>The standard two-sample pooled variance assumes \(\sigma_1^2=\sigma_2^2=\sigma^2\) and weights \(S_1^2\) and \(S_2^2\) by their degrees of freedom. But sometimes the two populations don't share a variance outright — instead their variances are <i>known proportional multiples</i> of a single baseline parameter: \(Var(X)=a\sigma^2\) and \(Var(Y)=b\sigma^2\), with \(a,b\gt0\) known constants and \(\sigma^2\) the unknown target.</p>
+  </div>
+  <div class="part">
+    <div class="part-title"><h3>Derivation</h3></div>
+    <ol class="steps">
+      <li><div><p><b>Transform to standard chi-square variables.</b> Let \(X_1,\dots,X_n\sim N(\mu_1,a\sigma^2)\) and \(Y_1,\dots,Y_m\sim N(\mu_2,b\sigma^2)\) be independent samples. For any normal sample of size \(k\) with variance \(\sigma_W^2\), \(\frac{(k-1)S_W^2}{\sigma_W^2}\sim\chi^2(k-1)\) (Theorem 7.2). Applying this to each sample:</p>
+        \[ \frac{(n-1)S_1^2}{a\sigma^2}\sim\chi^2(n-1),\qquad \frac{(m-1)S_2^2}{b\sigma^2}\sim\chi^2(m-1) \]</div></li>
+      <li><div><p><b>Combine the independent chi-squares.</b> By the additive property (Ex. 6.59), \(U_1+U_2\sim\chi^2(\nu_1+\nu_2)\), so</p>
+        \[ \frac{(n-1)S_1^2}{a\sigma^2}+\frac{(m-1)S_2^2}{b\sigma^2}\sim\chi^2(n+m-2) \]
+        <p>Factoring out the unknown baseline \(1/\sigma^2\):</p>
+        \[ \frac1{\sigma^2}\left[\frac{(n-1)S_1^2}{a}+\frac{(m-1)S_2^2}{b}\right]\sim\chi^2(n+m-2) \]</div></li>
+      <li><div><p><b>Take expectations.</b> Since \(E[\chi^2(\nu)]=\nu\) (Theorem 4.9),</p>
+        \[ E\left[\frac{(n-1)S_1^2/a+(m-1)S_2^2/b}{\sigma^2}\right]=n+m-2 \]
+        <p>Dividing by the total degrees of freedom \(n+m-2\) gives an unbiased estimator of \(\sigma^2\).</p></div></li>
+    </ol>
+    <div class="answer"><span class="tag">Extended pooled estimator</span><p>\[ \class{dv}{S_p^2=\frac{\dfrac1a(n-1)S_1^2+\dfrac1b(m-1)S_2^2}{n+m-2}} \]</p>
+    <p class="why">Set \(a=b=1\) and this collapses back to the familiar equal-variance pooled estimator.</p></div>
+  </div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body></html>

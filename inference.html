@@ -69,6 +69,8 @@ window.MathJax = {
     <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
     <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
     <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="mvue-guide.html#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="midterm-guide.html#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
     <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
     <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
   </nav>
@@ -89,6 +91,40 @@ window.MathJax = {
     <li><div><b>Distribution of the sum of two independent uniforms</b> (Example 6.3, which the exercise's hint points to)<br><span class="for">Needed for 10.5</span></div></li>
   </ol>
   <div class="flag"><b>Verify</b><span>I'm confident the factorization theorem is Theorem 9.4 in the 7th edition. I'm not confident about the numbering of the invariance property or the Rao–Blackwell theorem, so this guide names them instead of numbering them. Write the numbers in from your copy.</span></div>
+
+  <p class="prose" style="margin-top:4px"><b>Strategy table: matching a question to a method.</b></p>
+  <div class="tablewrap">
+    <table class="fix">
+      <thead><tr><th>The question asks…</th><th>What you do</th><th>Results used</th></tr></thead>
+      <tbody>
+        <tr><td>Find a sufficient statistic</td><td>Factor \(L\) into \(g(u,\theta)\,h(\text{data})\); known constants (like \(r\)) go in \(h\).</td><td>Def./Thm 9.4</td></tr>
+        <tr><td>Find an MLE (one parameter)</td><td>Write \(\ln L\); differentiate; set to 0; solve; check \(\ell''\lt0\) and the sign of \(\ell'\).</td><td>§9.7</td></tr>
+        <tr><td>Find an MLE (two parameters)</td><td>Both partials \(=0\); solve together; check \(A\lt0\) and \(AC-B^2\gt0\).</td><td>§9.7</td></tr>
+        <tr><td>MLE of a function of θ</td><td>Invariance: plug the MLE into the function.</td><td>§9.7</td></tr>
+        <tr><td>Is the MLE an MVUE?</td><td>Unbiased? A function of a complete sufficient statistic? If both, Lehmann–Scheffé.</td><td>Thm 9.4; L–S</td></tr>
+        <tr><td>Find α</td><td>Assume H₀; find the distribution of the statistic; compute P(statistic in the rejection region).</td><td>§10.2</td></tr>
+        <tr><td>Equalize α for two tests</td><td>Compute α for the first test; write the second's α as a function of c; solve.</td><td>§10.2; Ex. 6.3</td></tr>
+        <tr><td>Probability about U₁ + U₂</td><td>Area in the unit square, or the triangular density directly.</td><td>Example 6.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tools">
+    <span class="tag">Common mistakes on these three problems</span>
+    <dl>
+      <dt>Putting the known constant r into the statistic</dt><dd>r is known, so \(r^n(\prod y_i)^{r-1}\) belongs in \(h\), not in the sufficient statistic.</dd>
+      <dt>Dropping terms from ln L too early</dt><dd>Terms without θ still belong in \(\ell(\theta)\) — they only disappear once you differentiate.</dd>
+      <dt>Sign errors with 1/θ</dt><dd>\(\frac{d}{d\theta}(-u\theta^{-1})=+u\theta^{-2}\), not \(-u\theta^{-2}\).</dd>
+      <dt>Skipping the maximum check</dt><dd>\(\ell'=0\) also holds at minimums — show \(\ell''\lt0\) too.</dd>
+      <dt>Dividing by n − 1 in the MLE of σ²</dt><dd>The MLE divides by n. Dividing by n − 1 gives the unbiased \(S^2\), a different estimator.</dd>
+      <dt>Taking square roots term by term</dt><dd>\(\sqrt{\frac1n\sum(Y_i-\bar Y)^2}\ne\frac1n\sum|Y_i-\bar Y|\).</dd>
+      <dt>Assuming an MLE is unbiased</dt><dd>Check first — the normal \(\hat\sigma^2\) and the uniform \(Y_{(n)}\) are both biased MLEs.</dd>
+      <dt>Computing α under the alternative</dt><dd>α is always computed assuming H₀ is true, never under Hₐ.</dd>
+      <dt>Using the wrong half of the triangle</dt><dd>Since \(P(S\gt1)=0.5\gt0.05\), the cutoff must satisfy \(c\gt1\) — use the \(2-s\) piece of the density.</dd>
+      <dt>Keeping the wrong root</dt><dd>\((2-c)^2=0.1\) gives \(c=2\pm\sqrt{0.1}\); only \(2-\sqrt{0.1}\) is below 2.</dd>
+      <dt>Rounding √0.1 too early</dt><dd>Keep 0.316228 until the last line to avoid compounding rounding error.</dd>
+    </dl>
+  </div>
 </section>
 
 <div class="chapter" data-hue="est">Point estimation</div>

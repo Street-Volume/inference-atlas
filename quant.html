@@ -13,7 +13,17 @@
 window.MathJax = {
   loader: { load: ['[tex]/html'] },
   tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
 };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
@@ -57,6 +67,8 @@ window.MathJax = {
     <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
     <a href="quant.html#quant" class="active" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
     <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="mvue-guide.html#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="midterm-guide.html#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
     <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
     <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
   </nav>

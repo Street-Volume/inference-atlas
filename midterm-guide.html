@@ -1,0 +1,225 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5FA"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#06080D"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%2232%22%20y2%3D%2232%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23B59DFF%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22%23FFC24D%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22%235CE38F%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22%234DC7FF%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22%2339E2C9%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23FF7B9B%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20fill%3D%22%2306080D%22%20text-anchor%3D%22middle%22%3E%26%238721%3B%3C/text%3E%3C/svg%3E">
+<title>Midterm Roadmap — Inference Atlas</title></head><body data-page="midterm-guide.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+window.MathJax = {
+  loader: { load: ['[tex]/html'] },
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#39E2C9"/><stop offset="0.5" stop-color="#4DC7FF"/><stop offset="1" stop-color="#B59DFF"/></linearGradient>
+    <symbol id="ico-check" viewBox="0 0 16 16"><circle class="check-circ" cx="8" cy="8" r="7.5"/><path class="check-path" d="M4.6 8.3 7 10.6l4.4-5"/></symbol>
+  </defs>
+</svg>
+
+<div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="menu-btn" id="menuBtn" aria-label="Open contents" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
+    <a class="brand" href="index.html#top"><span class="brand-mark">∑</span><span class="brand-name">Inference Atlas<span class="vchip">v3</span></span></a>
+    <div class="crumb" id="crumb" data-hue="neutral"><span class="cdot"></span><span id="crPart">Overview</span><span class="sep">/</span><b id="crName">Start here</b></div>
+    <div class="tb-space"></div>
+    <button class="search-btn" id="searchBtn" aria-label="Search problems and figures"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><span class="sl">Search or jump to…</span><kbd id="kbdHint">Ctrl K</kbd></button>
+    <button class="switch" id="quizSw" role="switch" aria-checked="false" title="Blur answer boxes so you can test yourself first (Q)"><span class="trk"></span><span class="sl">Quiz mode</span></button>
+    <button class="ring" id="ringBtn" title="Problems marked understood" aria-label="Progress"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5"/><circle class="rfg" id="ringFg" cx="18" cy="18" r="15" fill="none" stroke-width="3.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><span id="ringTxt">0/19</span></button>
+  </div>
+  <div class="tb-progress" aria-hidden="true"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+<aside class="rail rail-left" id="railLeft" aria-label="Contents">
+  <nav class="navlist" aria-label="Sections">
+    <div class="nav-group">Start</div>
+    <a href="index.html#top" data-hue="neutral"><span class="st"><i></i></span><span class="n">◎</span><span class="lbl">Overview</span></a>
+    <a href="index.html#map" data-hue="neutral"><span class="st"><i></i></span><span class="n">▦</span><span class="lbl">Problem map</span></a>
+    <div class="nav-group">Part A · Probability<span class="nav-badge" data-part="A">0/11</span></div>
+    <a href="probability.html#readA" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part B · Mathematical Statistics<span class="nav-badge" data-part="B">0/3</span></div>
+    <a href="inference.html#readB" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Part C · Operations Research<span class="nav-badge" data-part="C">0/5</span></div>
+    <a href="operations-research.html#readC" data-hue="neutral"><span class="st"><i></i></span><span class="n">00</span><span class="lbl">Reading list</span></a>
+    <div class="nav-group">Encyclopedia</div>
+    <a href="encyclopedia.html#ency" data-hue="ency"><span class="st"><i></i></span><span class="n">∫</span><span class="lbl">16 distributions</span></a>
+    <div class="nav-group">Study Tools</div>
+    <a href="bridge.html#bridge" data-hue="neutral"><span class="st"><i></i></span><span class="n">⇄</span><span class="lbl">Concept bridge</span></a>
+    <a href="quant.html#quant" data-hue="qf"><span class="st"><i></i></span><span class="n">⚡</span><span class="lbl">Quant trading lab</span></a>
+    <a href="science.html#science" data-hue="est"><span class="st"><i></i></span><span class="n">⚛</span><span class="lbl">Science workbench</span></a>
+    <a href="mvue-guide.html#mvue" data-hue="est"><span class="st"><i></i></span><span class="n">Ω</span><span class="lbl">MVUE guide</span></a>
+    <a href="#midterm" data-hue="neutral"><span class="st"><i></i></span><span class="n">✦</span><span class="lbl">Midterm roadmap</span></a>
+    <a href="workbench.html#workbench" data-hue="neutral"><span class="st"><i></i></span><span class="n">✎</span><span class="lbl">Answer checker</span></a>
+    <a href="workbench.html#audit" data-hue="neutral"><span class="st"><i></i></span><span class="n">✓</span><span class="lbl">Audit log</span></a>
+  </nav>
+  <div class="rail-foot"><kbd>J</kbd><span>next problem</span><kbd>K</kbd><span>previous problem</span><kbd>M</kbd><span>mark understood</span><kbd>Q</kbd><span>quiz mode</span><kbd>/</kbd><span>search</span></div>
+</aside>
+
+<main class="main" id="main">
+<section class="ex" id="midterm" data-hue="neutral">
+  <div class="ex-head"><span class="ex-num">✦</span><h2>M466 Midterm Study Guide: Modules 1–8</h2></div>
+  <p class="prose">Wackerly, Mendenhall &amp; Scheaffer, Modules 1–8. Midterm window: 3.5 hours once started, open note. Course-wide roadmap — this page is strategy and priority, not new worked problems. Where a listed homework problem already has a full derivation on this site, it's linked.</p>
+  <div class="flag"><b>Most important prep principle</b><span>Treat every assigned homework problem as an exam prototype. Expect one or two questions to be recognizable homework structures with a changed distribution, parameter, numerical value, target, or an added justification step that tests deeper understanding.</span></div>
+
+  <div class="part">
+    <div class="part-title"><h3>1. Midterm scope and priority map</h3></div>
+    <p class="prose">The natural study boundary is Modules 1–8: probability/distribution review; Chapters 8.1–8.9; 9.1–9.7; 10.1–10.5. Later material (p-values as a separate section, small-sample tests, Neyman–Pearson, likelihood-ratio tests, regression, ANOVA, categorical data) comes after the midterm window.</p>
+    <div class="tablewrap">
+      <table class="fix">
+        <thead><tr><th>Priority</th><th>Material</th><th>What you should be able to do</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sev hi">A</span></td><td>Assigned HW structures (Modules 3–7)</td><td>Re-solve from a blank page; explain why each theorem/distribution applies; handle a changed parameterization or target.</td></tr>
+          <tr><td><span class="sev hi">A</span></td><td>8.4–8.9, 9.2–9.7, 10.1–10.5</td><td>Derive, not merely quote, estimators/intervals/tests and state assumptions.</td></tr>
+          <tr><td><span class="sev md">B</span></td><td>8.1–8.3 + Modules 1 review</td><td>Bias, MSE, common unbiased estimators, transformations, MGFs, sampling distributions used inside later derivations.</td></tr>
+          <tr><td><span class="sev md">B</span></td><td>Module 8 large-sample testing</td><td>Set H₀/Hₐ, rejection region, α, β, sample size; connect two-sided tests to CIs.</td></tr>
+          <tr><td><span class="sev lo">C</span></td><td>Proof details not used in HW</td><td>Know theorem meaning and proof strategy; don't memorize long algebra disproportionately.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tools">
+    <span class="tag">2. Concept roadmap: how the topics fit together</span>
+    <dl>
+      <dt>Point estimation</dt><dd>Asks for a statistic \(T(Y_1,\dots,Y_n)\) estimating \(\theta\). First check bias and MSE; among unbiased estimators, compare variances/relative efficiency.</dd>
+      <dt>Consistency</dt><dd>An asymptotic requirement — the estimator should concentrate around the target as \(n\) grows. Common route: show \(E(T_n)=\theta\) and \(Var(T_n)\to0\), then Chebyshev's inequality (Theorem 9.1).</dd>
+      <dt>Sufficiency</dt><dd>Asks whether a statistic retains all sample information about \(\theta\). The factorization criterion is the standard tool — see the <a href="mvue-guide.html#mvue">MVUE guide</a> for the full chain through to completeness.</dd>
+      <dt>Rao–Blackwell</dt><dd>Conditioning an unbiased estimator on a sufficient statistic cannot increase variance — the bridge from sufficiency to MVUE construction.</dd>
+      <dt>MOM and MLE</dt><dd>Systematic ways to create estimators. MOM equates sample and population moments; MLE maximizes the likelihood over the parameter space — see <a href="inference.html#readB">Part B reading list</a>.</dd>
+      <dt>Confidence intervals and tests</dt><dd>CIs invert a pivotal probability statement. Tests formalize decisions with Type I error α and Type II error β. For standard two-sided procedures, the CI and the test give the same reject/do-not-reject conclusion.</dd>
+    </dl>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><h3>3. Homework problems: highest-yield midterm candidates</h3></div>
+    <p class="prose">Pre-midterm sheets M3–M7. Master these first — they already match the course sequence and require the exact derivation skills the syllabus emphasizes. Rows marked with a link have a full worked derivation on this site already.</p>
+    <div class="tablewrap">
+      <table class="fix">
+        <thead><tr><th>Module</th><th>HW</th><th>Core skill</th><th>Likely deeper-understanding tweak</th></tr></thead>
+        <tbody>
+          <tr><td>M3</td><td>8.23</td><td>Large-sample estimation: one mean, difference of means, difference of proportions; "bound on error."</td><td>Change confidence level; ask for required n; ask which standard error applies; require assumptions.</td></tr>
+          <tr><td>M3</td><td>8.47</td><td>Exact exponential CI from the pivot \(2\Sigma Y_i/\theta\sim\chi^2(2n)\), derived by MGF.</td><td>Replace 95% by another level; change scale/rate parameterization; derive rather than quote the pivot.</td></tr>
+          <tr><td>M3</td><td>8.60</td><td>Large-sample CI for a population mean, interpreted against a benchmark value.</td><td>Turn the CI into a two-sided test; change confidence level; ask whether practical and statistical conclusions differ.</td></tr>
+          <tr><td>M4</td><td>8.70</td><td>Sample-size determination for a binomial proportion, known planning p and conservative p = .5.</td><td>Unknown p; different margin/probability; explain why .5 is conservative.</td></tr>
+          <tr><td>M4</td><td>8.82</td><td>Two separate large-sample mean CIs; interpretation against historical/reference values.</td><td>Ask difference of means instead; alter confidence level; connect inclusion to hypothesis testing.</td></tr>
+          <tr><td>M4</td><td>8.96</td><td>Exact CI for σ² from a small normal sample using χ².</td><td>Ask for CI on σ instead; swap tail quantiles; ask why normality matters.</td></tr>
+          <tr><td>M5</td><td>9.3</td><td>Unbiasedness + relative efficiency for two estimators involving Ȳ and a sample maximum.</td><td>Change the uniform interval; compare MSE instead of variance; ask which estimator improves with n.</td></tr>
+          <tr><td>M5</td><td>9.17</td><td>Consistency of \(\bar X-\bar Y\) for \(\mu_1-\mu_2\).</td><td>Unequal sample sizes; prove via expectation/variance + Chebyshev; identify required independence.</td></tr>
+          <tr><td>M5</td><td>9.19</td><td>Consistency of Ȳ for \(\theta/(\theta+1)\) under \(f(y)=\theta y^{\theta-1}\), \(0\lt y\lt1\).</td><td>Ask for a consistent estimator of θ via transformation; require mean/variance calculation.</td></tr>
+          <tr><td>M6</td><td>9.40</td><td>Factorization criterion: show \(\Sigma Y_i^2\) is sufficient for Rayleigh θ.</td><td>Change the density but preserve exponential-family structure; ask for a minimal-looking statistic.</td></tr>
+          <tr><td>M6</td><td>9.34</td><td>Consistency of \((1/n)\Sigma Y_i^2\) for Rayleigh θ, using \(Y^2\) exponential with mean θ.</td><td>Combine with sufficiency/MVUE; ask to derive the variance and use Chebyshev.</td></tr>
+          <tr><td>M6</td><td>9.58</td><td>Use sufficient statistic \(\Sigma Y_i^2\) to find an MVUE of Rayleigh θ.</td><td>Start from a different unbiased estimator and Rao–Blackwellize it; justify minimum variance. See the <a href="mvue-guide.html#mvue">MVUE guide</a>.</td></tr>
+          <tr><td>M6</td><td>9.69</td><td>MOM estimator; prove consistency; compare with the sufficient statistic.</td><td>Ask for the MLE too; ask whether MOM is a function of the sufficient statistic and what that implies.</td></tr>
+          <tr><td>M7</td><td><a href="inference.html#ex982">9.82</a></td><td>For a gamma-form density: find the sufficient statistic, the MLE, and decide whether the estimator is an MVUE.</td><td>Change the known shape r; ask unbiasedness/variance; connect the MLE to Rao–Blackwell.</td></tr>
+          <tr><td>M7</td><td><a href="inference.html#ex996">9.96</a></td><td>Derive the MLE of σ for \(N(\mu,\sigma^2)\) when both are unknown.</td><td>Ask for σ² instead; distinguish the MLE's divisor n from the unbiased S²'s divisor n − 1.</td></tr>
+          <tr><td>M7</td><td><a href="inference.html#ex105">10.5</a></td><td>Construct competing rejection regions with equal α for shifted uniforms.</td><td>Compute power at a given θ; compare tests; alter the threshold or sample size.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tools">
+    <span class="tag">4. How to solve the most likely "tweaked HW" questions</span>
+    <dl>
+      <dt>A. Pivot → confidence interval</dt>
+      <dd>1) Write the exact distribution of the pivot, including degrees of freedom. 2) Put the middle probability \(1-\alpha\) between the correct quantiles. 3) Algebraically isolate the parameter. 4) Check endpoint order after inversion. 5) Substitute data only after the symbolic interval is correct. <span class="why">Common trap: for χ² pivots with the unknown parameter in the denominator, the lower parameter endpoint uses the <i>larger</i> χ² critical value.</span></dd>
+      <dt>B. Prove consistency</dt>
+      <dd>Compute \(E(T_n)\) and \(Var(T_n)\). If \(E(T_n)=\theta\) (or tends to θ) and \(Var(T_n)\to0\), write a short Chebyshev argument: \(P(|T_n-\theta|\ge\varepsilon)\le Var(T_n)/\varepsilon^2\to0\) (adjust for bias if needed). For a transformed target \(g(\theta)\), first show \(T_n\to\theta\) in probability, then use continuity of \(g\) when justified.</dd>
+      <dt>C. Find a sufficient statistic</dt>
+      <dd>Write the joint density/product. Separate it into a θ-dependent factor involving the sample only through \(T(y)\) and a θ-free factor \(h(y)\). Don't omit support indicators if the support depends on θ. For exponential-family-looking densities, collect sums like \(\Sigma Y_i\), \(\Sigma Y_i^2\), or \(\Sigma\log Y_i\).</dd>
+      <dt>D. Find an MLE</dt>
+      <dd>Write \(L(\theta)\), then \(\ell(\theta)\). Differentiate, solve the score equation, verify the candidate is a maximum and lies in the parameter space. If the support depends on θ (uniform-type models), the maximum may occur at a boundary — calculus alone can miss it. Normal model warning: with μ unknown, \(\hat\mu_{MLE}=\bar y\) and \(\hat\sigma^2_{MLE}=(1/n)\Sigma(Y_i-\bar y)^2\), which differs from the unbiased \(S^2\) with divisor \(n-1\).</dd>
+      <dt>E. Compute α, β, and power</dt>
+      <dd>α: evaluate the rejection probability under H₀; choose critical constants from that equation. \(\beta(\theta_1)\): express the acceptance/nonrejection event in terms of the statistic, but evaluate its distribution under \(\theta=\theta_1\), not under \(\theta_0\). If comparing two tests at the same α, compute or reason about power at relevant alternatives — same size does not mean same power.</dd>
+    </dl>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><h3>5. Module-by-module mastery checklist</h3></div>
+    <div class="tablewrap">
+      <table class="fix">
+        <thead><tr><th>Unit</th><th>You are ready when you can…</th></tr></thead>
+        <tbody>
+          <tr><td>Modules 1–2 review</td><td>Recognize common distributions and parameterizations; obtain E and Var; use transformations/MGFs; know sampling distributions of Ȳ and S² under normality; bias and MSE.</td></tr>
+          <tr><td>Module 3: 8.4–8.6</td><td>Error of estimation; confidence coefficient; pivotal quantities; large-sample CIs for means/proportions and differences.</td></tr>
+          <tr><td>Module 4: 8.7–8.9</td><td>Sample-size formulas; t intervals for normal means with σ unknown; χ² interval for σ²; assumptions.</td></tr>
+          <tr><td>Module 5: 9.1–9.3</td><td>Relative efficiency and consistency — prove rather than just state.</td></tr>
+          <tr><td>Module 6: 9.4–9.6</td><td>Factorization criterion; sufficient statistics; Rao–Blackwell/MVUE logic; MOM.</td></tr>
+          <tr><td>Module 7: 9.7 + 10.1–10.2</td><td>Likelihood and log-likelihood; MLE derivation; null/alternative, rejection region, α, β, power.</td></tr>
+          <tr><td>Module 8: 10.3–10.5</td><td>Common large-sample Z tests; Type II error/sample size; confidence interval ↔ test relationship.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><h3>7. Open-note packet: what to have ready</h3></div>
+    <div class="flag"><b>Goal</b><span>Open-note does not mean there is time to search. Build a compact packet that lets you locate a theorem or critical formula in seconds.</span></div>
+    <ol class="reading">
+      <li><div><b>Page 1 — distribution facts you actually use</b><br><span class="for">Normal, t, χ², exponential/gamma, uniform, Rayleigh transformation Y², plus means/variances and key sampling distributions.</span></div></li>
+      <li><div><b>Page 2 — estimation</b><br><span class="for">Bias/MSE, relative efficiency, consistency proof template, factorization criterion, Rao–Blackwell, MOM, MLE checklist.</span></div></li>
+      <li><div><b>Page 3 — confidence intervals</b><br><span class="for">Large-sample mean/proportion/differences, t, χ² variance, exponential χ² pivot, sample-size formulas.</span></div></li>
+      <li><div><b>Page 4 — testing</b><br><span class="for">Hypotheses, α/β/power, Z rejection regions, β/sample-size workflow, CI/test duality.</span></div></li>
+      <li><div><b>After those four pages</b><br><span class="for">Your worked HW solutions M3–M7, each labeled by problem number and one-line "method." Put the problem number in a visible margin/tab so you can jump directly to it.</span></div></li>
+    </ol>
+  </div>
+
+  <div class="tools">
+    <span class="tag">9. High-frequency mistakes to eliminate</span>
+    <dl>
+      <dt>t vs. z</dt><dd>Using z when the exact small-sample normal-mean problem calls for t.</dd>
+      <dt>n vs. n − 1</dt><dd>Using n instead of n − 1 in S², or n − 1 instead of n for the normal variance MLE.</dd>
+      <dt>χ² endpoints</dt><dd>Reversing χ² endpoints when isolating σ² or θ from a denominator pivot.</dd>
+      <dt>"Efficient" without a comparison class</dt><dd>Calling an estimator "efficient" without first being clear about the comparison class (often: unbiased estimators).</dd>
+      <dt>Unbiased ⇏ consistent</dt><dd>Claiming consistency only because an estimator is unbiased. Unbiasedness alone does not imply consistency.</dd>
+      <dt>Dropping the support</dt><dd>Forgetting the support/indicator in likelihood factorization, especially when the support depends on θ.</dd>
+      <dt>Declaring an MLE too early</dt><dd>Solving \(\ell'(\theta)=0\) and declaring an MLE without checking it's a maximum, a boundary, or even in the parameter space.</dd>
+      <dt>β under the wrong hypothesis</dt><dd>Computing β under H₀ instead of under the specified alternative.</dd>
+      <dt>Misusing p̂ in sample-size planning</dt><dd>Using p̂ inside a sample-size planning formula when the problem says no information about p is available — use .5 for the conservative binomial choice.</dd>
+      <dt>Numerical answer only</dt><dd>The exam explicitly requires work for full credit — show the distribution/pivot/test statistic and substitution, not just a final number.</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>Textbook: Wackerly, Mendenhall and Scheaffer, <i>Mathematical Statistics with Applications</i>, 7th ed. (Cengage); Hillier and Lieberman, <i>Introduction to Operations Research</i>, 10th ed. (McGraw Hill). Progress, quiz mode and checker entries are saved only in this browser. Simulations use fresh random draws, so your numbers will differ slightly each run.</footer>
+</main>
+
+<aside class="rail rail-right" aria-label="Current problem">
+  <div class="ctx" id="ctx" data-hue="neutral">
+    <div class="ctx-eyebrow" id="ctxTopic">Overview</div>
+    <div class="ctx-title" id="ctxTitle">19 problems across three courses</div>
+    <div class="ctx-ans" id="ctxAnsBox"><span class="tag" id="ctxAnsTag">Your progress</span><div id="ctxAns">0 of 19 marked understood</div></div>
+    <div class="meter" id="ctxMeterWrap"><i id="ctxMeter"></i></div>
+    <button class="mark" id="ctxMark" aria-pressed="false" hidden><svg><use href="#ico-check"/></svg><span>Mark understood</span></button>
+    <nav class="ctx-jump" id="ctxJump" aria-label="Jump within problem"></nav>
+    <div class="ctx-nav"><button id="ctxPrev">← Previous</button><button id="ctxNext" class="primary">Next →</button></div>
+  </div>
+  <div class="ctx-help" style="margin-top:14px"><span><kbd>J</kbd> <kbd>K</kbd> move</span><span><kbd>M</kbd> mark</span><span><kbd>Q</kbd> quiz</span><span><kbd>/</kbd> search</span></div>
+</aside>
+</div>
+
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="7" r="4.8"/><path d="m10.6 10.6 3.4 3.4" stroke-linecap="round"/></svg><input id="palInput" type="text" placeholder="Search problems, figures, sections or actions" autocomplete="off" spellcheck="false" aria-controls="palList"></div>
+  <ul class="pal-list" id="palList" role="listbox"></ul>
+  <div class="pal-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span><span>Try "poisson", "figure", "quiz", "power"</span></div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="assets/app.js"></script>
+</body></html>

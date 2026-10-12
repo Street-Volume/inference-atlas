@@ -49,6 +49,8 @@
     { t: 'Concept bridge', page: 'bridge.html', anchor: 'bridge', kw: 'connections links probability inference' },
     { t: 'Quant trading lab', page: 'quant.html', anchor: 'quant', kw: 'quant finance trading black scholes markowitz var portfolio wall street options statarb' },
     { t: 'Science workbench', page: 'science.html', anchor: 'science', kw: 'science alphafold protein pdb pubchem chemistry clinvar deepmind' },
+    { t: 'MVUE guide', page: 'mvue-guide.html', anchor: 'mvue', kw: 'mvue sufficiency completeness rao blackwell lehmann scheffe minimum variance unbiased pooled estimator' },
+    { t: 'Midterm roadmap', page: 'midterm-guide.html', anchor: 'midterm', kw: 'midterm m466 exam study guide modules priority roadmap mistakes' },
     { t: 'Answer checker', page: 'workbench.html', anchor: 'workbench', kw: 'check practice verify webassign key' },
     { t: 'Audit log', page: 'workbench.html', anchor: 'audit', kw: 'errors fixes gemini lab issues' }
   ];
@@ -148,7 +150,7 @@
   const targets = navLinks.map(a => document.getElementById(a.getAttribute('href').slice(1))).filter(Boolean);
   const names = {
     top: ['Overview', 'Start here'], map: ['Overview', 'Problem map'], readA: ['Part A', 'Reading list'], readB: ['Part B', 'Reading list'],
-    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], quant: ['Study Tools', 'Quant trading lab'], science: ['Study Tools', 'Science workbench'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
+    readC: ['Part C', 'Reading list'], ency: ['Encyclopedia', 'Distribution spotlight'], bridge: ['Study Tools', 'Concept bridge'], quant: ['Study Tools', 'Quant trading lab'], science: ['Study Tools', 'Science workbench'], mvue: ['Study Tools', 'MVUE guide'], midterm: ['Study Tools', 'Midterm roadmap'], workbench: ['Study Tools', 'Answer checker'], audit: ['Study Tools', 'Audit log']
   };
   let current = null, currentProblem = null;
   function updateCtx() {
