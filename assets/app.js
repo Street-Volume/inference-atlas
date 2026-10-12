@@ -102,7 +102,12 @@
     });
     if ($('ringFg')) $('ringFg').style.strokeDashoffset = (94.25 * (1 - k / N)).toFixed(2);
     if ($('ringTxt')) $('ringTxt').textContent = k + '/' + N;
-    ['A', 'B', 'C'].forEach(pt => { const ps = P.filter(p => p.part === pt), el = $('cb' + pt); if (el) el.style.width = (100 * ps.filter(p => done.has(p.id)).length / ps.length) + '%'; });
+    ['A', 'B', 'C'].forEach(pt => {
+      const ps = P.filter(p => p.part === pt), n = ps.filter(p => done.has(p.id)).length;
+      const el = $('cb' + pt); if (el) el.style.width = (100 * n / ps.length) + '%';
+      const badge = document.querySelector('.nav-badge[data-part="' + pt + '"]');
+      if (badge) { badge.textContent = n + '/' + ps.length; badge.classList.toggle('done', n === ps.length); }
+    });
     const nxt = P.find(p => !done.has(p.id));
     const cb = $('continueBtn');
     if (cb) {
