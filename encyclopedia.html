@@ -9,7 +9,17 @@
 window.MathJax = {
   loader: { load: ['[tex]/html'] },
   tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], packages: { '[+]': ['html'] } },
-  svg: { fontCache: 'global' }
+  svg: { fontCache: 'global' },
+  startup: {
+    // Typesetting (and web-font swap) reflows the page after the browser's native
+    // #hash scroll already ran, leaving a deep link scrolled to the wrong spot.
+    // Re-align once both have settled.
+    pageReady() {
+      return MathJax.startup.defaultPageReady()
+        .then(() => (document.fonts ? document.fonts.ready : Promise.resolve()))
+        .then(() => { if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView({ block: 'start' }); } });
+    }
+  }
 };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
