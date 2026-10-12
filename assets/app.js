@@ -17,6 +17,38 @@
 
   /* ---------- problem metadata (every page; drives nav, search, progress, stepping) ---------- */
   const P = [
+    { id: 'h5-1', n: 'H5·1', t: 'A coin-matching game', topic: 'Expectation & variance', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E(Y)=2.25 · V(Y)=21.1875 · price $2.25', kw: 'mean variance fair game coin' },
+    { id: 'h5-2', n: 'H5·2', t: 'Late-night TV preference', topic: 'Expectation & variance', hue: 'disc', part: 'A', page: 'probability.html', ans: 'μ=1.68 · σ=0.8598 · within 2sd: 1.0', kw: 'binomial leno distribution histogram' },
+    { id: 'h5-3', n: 'H5·3', t: 'Pricing an insurance policy', topic: 'Expectation & variance', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'Premium C = $170', kw: 'insurance expected profit premium' },
+    { id: 'h5-4', n: 'H5·4', t: 'A tail-sum identity for E(Y)', topic: 'Expectation & variance', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E(Y) = Σ P(Y≥k), proved', kw: 'tail sum swap order summation proof' },
+    { id: 'h5-5', n: 'H5·5', t: 'Scaling a random variable: W=3Y', topic: 'Expectation & variance', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E(W)=3μ · V(W)=9σ²', kw: 'linear transform scale theorem 3.4' },
+    { id: 'h5-6', n: 'H5·6', t: 'The general linear transform aY+b', topic: 'Expectation & variance', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E(aY+b)=aμ+b · V(aY+b)=a²σ²', kw: 'theorem 3.3 3.4 3.5 3.6 proof' },
+    { id: 'h5-7', n: 'H5·7', t: 'Defectives split across two lines', topic: 'Binomial & hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '4/7 ≈ 0.5714', kw: 'hypergeometric defectives assembly lines' },
+    { id: 'h5-8', n: 'H5·8', t: 'Patent life of a new drug', topic: 'Binomial & hypergeometric', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'μ=7.90 · σ=2.13 · P=0.96', kw: 'mean variance table patent interval' },
+    { id: 'h5-9', n: 'H5·9', t: 'Which random variables are binomial?', topic: 'Binomial & hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: 'Classify 5 variables, binomial or not', kw: 'sat binomial classification concept' },
+    { id: 'h5-10', n: 'H5·10', t: 'A four-component backup subsystem', topic: 'Binomial & hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.1536 · 0.9728', kw: 'binomial reliability subsystem backup' },
+    { id: 'h5-11', n: 'H5·11', t: 'Recovery from a stomach disease', topic: 'Binomial & hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.114 · 0.952 · 0.886 · 0.762', kw: 'binomial table recovery appendix' },
+    { id: 'h6-1', n: 'H6·1', t: 'First programming-trained applicant', topic: 'Geometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.1114', kw: 'geometric applicant interview' },
+    { id: 'h6-2', n: 'H6·2', t: 'The memoryless property', topic: 'Geometric', hue: 'disc', part: 'A', page: 'probability.html', ans: 'Proved: P(Y>a+b|Y>a)=P(Y>b)', kw: 'memoryless geometric proof' },
+    { id: 'h6-3', n: 'H6·3', t: 'CPA audit errors', topic: 'Geometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.0064 · 0.0080', kw: 'geometric audit cpa errors' },
+    { id: 'h6-4', n: 'H6·4', t: 'Failures before the first success', topic: 'Geometric', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E=(1−p)/p · V=(1−p)/p²', kw: 'geometric transform linear theorem' },
+    { id: 'h6-5', n: 'H6·5', t: 'Nondefective engines on the line', topic: 'Negative binomial', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.093 · 0.930', kw: 'negative binomial engines assembly' },
+    { id: 'h6-6', n: 'H6·6', t: 'Exploratory wells and pollutants', topic: 'Geometric & negative binomial', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.052 · 0.105 · μ=5 · σ²=3.333', kw: 'geometric negative binomial wells pollutant' },
+    { id: 'h6-7', n: 'H6·7', t: 'Choosing among teaching candidates', topic: 'Hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.0775 · μ=3.2308 · σ=0.9326', kw: 'hypergeometric candidates teaching' },
+    { id: 'h6-8', n: 'H6·8', t: 'Ranked software packages', topic: 'Hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: 'Hypergeometric, N=7, n=2, r=4', kw: 'hypergeometric software ranking identify' },
+    { id: 'h6-9', n: 'H6·9', t: 'Non-conforming thermistors', topic: 'Hypergeometric', hue: 'disc', part: 'A', page: 'probability.html', ans: 'pmf fractions, two cases', kw: 'hypergeometric thermistors pmf fractions' },
+    { id: 'h6-10', n: 'H6·10', t: 'A Poisson(5) random variable', topic: 'Poisson', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.065 · 0.133 · 0.867 · 0.238', kw: 'poisson probability conditional' },
+    { id: 'h6-11', n: 'H6·11', t: 'Finding λ from p(0)=p(1)', topic: 'Poisson', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.003', kw: 'poisson lambda solve equal probabilities' },
+    { id: 'h6-12', n: 'H6·12', t: 'Customer service times', topic: 'Poisson', hue: 'disc', part: 'A', page: 'probability.html', ans: '80 min · 800 min² · 0.008', kw: 'poisson queue service time scaling' },
+    { id: 'h6-13', n: 'H6·13', t: 'Poisson approximation for sales', topic: 'Poisson', hue: 'disc', part: 'A', page: 'probability.html', ans: '0.982', kw: 'poisson approximation binomial sales' },
+    { id: 'h6-14', n: 'H6·14', t: 'Expected profit with rope defects', topic: 'Poisson', hue: 'cheb', part: 'A', page: 'probability.html', ans: 'E(X)=49', kw: 'poisson profit expectation theorem' },
+    { id: 'quiz4-1', n: 'Qz4·1', t: 'Diagnostic test reliability', topic: 'Bayes’ theorem', hue: 'test', part: 'A', page: 'probability.html', ans: 'P(D|T+)=0.2177', kw: 'bayes diagnostic test sensitivity specificity' },
+    { id: 'quiz4-2', n: 'Qz4·2', t: 'Airport travelers', topic: 'Bayes’ theorem', hue: 'test', part: 'A', page: 'probability.html', ans: '0.52 · 0.12 · 0.2308 · 0.80', kw: 'bayes airport travelers business' },
+    { id: 'quiz4-3', n: 'Qz4·3', t: 'Smoking and lung cancer mortality', topic: 'Bayes’ theorem', hue: 'test', part: 'A', page: 'probability.html', ans: 'P(L|S)=0.0340', kw: 'bayes smoking lung cancer total probability' },
+    { id: 'quiz4-4', n: 'Qz4·4', t: 'Matching animal pictures to words', topic: 'Counting', hue: 'test', part: 'A', page: 'probability.html', ans: 'p(0{:}3)=1/3,1/2,0,1/6', kw: 'derangement permutation matching counting' },
+    { id: 'quiz4-5', n: 'Qz4·5', t: 'Proving P(∅)=0 from the axioms', topic: 'Axioms', hue: 'test', part: 'A', page: 'probability.html', ans: 'Proved from Axioms 2 and 3', kw: 'axioms probability proof empty set' },
+    { id: 'w13-1', n: 'W13·1', t: 'Geometric MGF to a linear transform', topic: 'Worksheet 13', hue: 'mgf', part: 'A', page: 'probability.html', ans: 'm_X(t)=pe^t/(1−qe^t) · E(X)=1/p', kw: 'mgf geometric linear transform derivative' },
+    { id: 'w13-2', n: 'W13·2', t: 'Replacing television tubes', topic: 'Worksheet 13', hue: 'cheb', part: 'A', page: 'probability.html', ans: '(81.03, 118.97)', kw: 'tchebysheff tv tubes binomial interval' },
     { id: 'q1', n: 'Q1', t: 'Geometric MGF proof', topic: 'Generating functions', hue: 'mgf', part: 'A', page: 'probability.html', ans: 'm(t) = pe^t / (1 − qe^t), qe^t < 1', kw: 'geometric series moment generating proof blanks' },
     { id: 'q2', n: 'Q2', t: 'Identify the distribution from its MGF', topic: 'Generating functions', hue: 'mgf', part: 'A', page: 'probability.html', ans: 'Binomial(6, 0.2) · Geometric(0.5) · Poisson(5)', kw: 'binomial geometric poisson uniqueness match' },
     { id: 'q3', n: 'Q3', t: 'Moments from a finite MGF', topic: 'Generating functions', hue: 'mgf', part: 'A', page: 'probability.html', ans: 'E(Y) = 19/9 · V(Y) = 26/81', kw: 'mean variance derivative moments probabilities' },
@@ -28,6 +60,12 @@
     { id: 'q9', n: 'Q9', t: 'Finding c, F(y) and an area two ways', topic: 'Continuous', hue: 'cont', part: 'A', page: 'probability.html', ans: 'c = 0.5 · F = y²/4 · 0.75', kw: 'density normalize cdf trapezoid geometry' },
     { id: 'q10', n: 'Q10', t: 'From a piecewise F back to f', topic: 'Continuous', hue: 'cont', part: 'A', page: 'probability.html', ans: '0.4727 · 0.7500 · 0.7160', kw: 'piecewise cdf derivative conditional' },
     { id: 'q11', n: 'Q11', t: 'A piecewise demand density', topic: 'Continuous', hue: 'cont', part: 'A', page: 'probability.html', ans: '0.045 · 0.855', kw: 'piecewise density cdf demand integrate' },
+    { id: 'w14-1', n: 'W14·1', t: 'Constructing f, F, probabilities, percentiles', topic: 'Worksheet 14', hue: 'cont', part: 'A', page: 'probability.html', ans: 'c=0.5 · percentiles 1, √2, √3', kw: 'pdf cdf percentile construction' },
+    { id: 'quiz7-1', n: 'Qz7·1', t: 'Reading a binomial MGF backward', topic: 'Quiz 7', hue: 'mgf', part: 'A', page: 'probability.html', ans: 'P(Y≤9)=0.651', kw: 'mgf binomial identify match' },
+    { id: 'quiz7-2', n: 'Qz7·2', t: 'Repair costs on sampled machines', topic: 'Quiz 7', hue: 'disc', part: 'A', page: 'probability.html', ans: '($31.20, $308.80)', kw: 'hypergeometric chebyshev repair cost' },
+    { id: 'quiz7-3', n: 'Qz7·3', t: 'Chebyshev bounds from mean & variance', topic: 'Quiz 7', hue: 'cheb', part: 'A', page: 'probability.html', ans: '0.75 · C=10', kw: 'chebyshev bound lower bound solve' },
+    { id: 'quiz7-4', n: 'Qz7·4', t: 'Building F(y) from a pmf table', topic: 'Quiz 7', hue: 'cont', part: 'A', page: 'probability.html', ans: 'Step function F(y)', kw: 'discrete cdf step function pmf' },
+    { id: 'quiz7-5', n: 'Qz7·5', t: 'Weekly kerosene demand', topic: 'Quiz 7', hue: 'cont', part: 'A', page: 'probability.html', ans: '0.08 · 0.82', kw: 'continuous pdf cdf kerosene demand' },
     { id: 'ex982', n: '9.82', t: 'Sufficient statistic, MLE and MVUE', topic: 'Point estimation', hue: 'est', part: 'B', page: 'inference.html', ans: 'U = ΣYᵢʳ · θ̂ = U/n · MVUE: yes', kw: 'sufficiency factorization likelihood score mle mvue rao blackwell weibull gamma' },
     { id: 'ex996', n: '9.96', t: 'MLE of σ for a normal sample', topic: 'Point estimation', hue: 'est', part: 'B', page: 'inference.html', ans: 'σ̂ = √((1/n) Σ(Yᵢ − Ȳ)²)', kw: 'normal sigma invariance mle bias' },
     { id: 'ex105', n: '10.5', t: 'Matching α for two tests', topic: 'Hypothesis testing', hue: 'test', part: 'B', page: 'inference.html', ans: 'c = 2 − √0.10 ≈ 1.684', kw: 'type i error alpha rejection region triangle uniform power test' },
@@ -355,7 +393,7 @@
   });
 
   /* ---------- animated stat counters (works with any .stat b[data-count] on the page) ---------- */
-  if ($('stSteps')) $('stSteps').dataset.count = 151;
+  if ($('stSteps')) $('stSteps').dataset.count = 263;
   if ($('stFigs')) $('stFigs').dataset.count = 20;
   if ($('stChecks')) $('stChecks').dataset.count = 49;
   if ($('stDists')) $('stDists').dataset.count = 16;
